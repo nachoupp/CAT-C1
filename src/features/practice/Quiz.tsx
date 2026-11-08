@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Page, Card, Btn, Bar, Pill, Note } from "../../components/ui";
 import { BANK } from "../../content";
-import { getState, setState, markDone } from "../../lib/store";
+import { getState, setState, award } from "../../lib/store";
 import { grade, pickForSession } from "../../lib/srs";
 import { isoDate } from "../../lib/dates";
 import { askJSON, AiError } from "../../lib/ai";
@@ -91,7 +91,7 @@ Respon NOMÉS amb un array JSON: [{"q":"...","ok":"opció correcta","no":["distr
     if (last) {
       const total = ok;
       setState((s) => ({ ...s, quizzes: [...s.quizzes, { at: Date.now(), ok: total, n: items.length, kind: ai ? ("ai" as const) : ("practice" as const) }].slice(-200) }));
-      markDone("repas");
+      award("quiz", "repas");
     }
     setK(k + 1); setChosen(null);
   };

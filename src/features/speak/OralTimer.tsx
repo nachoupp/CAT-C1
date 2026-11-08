@@ -4,7 +4,7 @@ import { ORAL, ofTheDay } from "../../content";
 import { isoDate } from "../../lib/dates";
 import { fmtClock } from "../../lib/text";
 import { canSpeak, speak } from "../../lib/speech";
-import { markDone } from "../../lib/store";
+import { award } from "../../lib/store";
 import { toast } from "../../lib/toast";
 
 type Dur = "120" | "180" | "300";
@@ -19,7 +19,7 @@ export default function OralTimer() {
   useEffect(() => { setLeft(+dur); setRun(false); }, [dur]);
   useEffect(() => {
     if (!run) return;
-    if (left <= 0) { setRun(false); toast("Temps!"); markDone("oral"); return; }
+    if (left <= 0) { setRun(false); toast("Temps!"); award("practice", "exposicio"); return; }
     const t = setTimeout(() => setLeft(left - 1), 1000);
     return () => clearTimeout(t);
   }, [run, left]);

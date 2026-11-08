@@ -4,8 +4,23 @@ export interface QuizResult { at: number; ok: number; n: number; kind: "practice
 export interface WritingResult { at: number; promptId: string; score: number; words: number }
 export interface SpeakingResult { at: number; scenario: string; score: number | null }
 
+export type StepKey = "descobreix" | "practica" | "escriu" | "parla" | "examen";
+export interface UnitProgress { steps: Partial<Record<StepKey, { at: number; score?: number }>>; passed: boolean; examScore?: number; rewritten?: boolean }
+export interface NotebookEntry {
+  id: string; wrong: string; right: string; note: string; link?: string;
+  source: "escriptura" | "oral" | "test" | "examen" | "ia"; count: number; added: string; card: import("./srs").Card;
+}
+export interface MockResult { at: number; examId: string; areas: Partial<Record<AreaKey, number>> }
+export interface XpEvent { at: number; kind: string; xp: number }
+
 export interface AppState {
-  version: 4;
+  version: 5;
+  xp: XpEvent[];
+  units: Record<string, UnitProgress>;
+  checkpoints: Record<string, { passed: boolean; score: number; at: number }>;
+  notebook: NotebookEntry[];
+  mocks: MockResult[];
+  officialKeys: Record<string, Record<string, string>>;
   log: Record<string, Record<string, true>>;
   cards: Record<string, import("./srs").Card>;
   quizzes: QuizResult[];

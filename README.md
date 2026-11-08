@@ -3,6 +3,12 @@
 Entrenador expert per aprovar el **certificat C1 de català** del Govern de les Illes Balears (GOIB),
 pensat per a una persona amb nivell real B1-B2 i poc temps: 25 minuts al dia, amb l'examen com a guia.
 
+## Mètode
+Cada setmana, una unitat de 5 sessions de 25 minuts: **descobreix** (test previ, píndola, text model anotat) →
+**practica** (20 exercicis) → **escriu guiat** (esquelet) → **parla** (lectura amb model i exposició 4/3/2) →
+**examen de la unitat** (text tipus GOIB, correcció focalitzada i reescriptura). Els errors van al quadern i tornen
+en el repàs espaiat. Cada 3 unitats hi ha un control.
+
 ## Què fa
 | Àrea de l'examen | A l'app |
 |---|---|

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Page, Card, Btn, Bar, Pill, Segmented, List, Row } from "../../components/ui";
 import { BANK } from "../../content";
-import { setState, markDone } from "../../lib/store";
+import { setState, award } from "../../lib/store";
 import { grade } from "../../lib/srs";
 import { isoDate } from "../../lib/dates";
 import { shuffle, fmtClock } from "../../lib/text";
@@ -49,7 +49,7 @@ function Run({ n }: { n: number }) {
       items.forEach((it, i) => { if (it.id && answers[i] !== null) cards[it.id] = grade(cards[it.id], answers[i] === it.answer, today); });
       return { ...s, cards, quizzes: [...s.quizzes, { at: Date.now(), ok, n, kind: "exam" as const }].slice(-200) };
     });
-    markDone("sim");
+    award("quiz", "simulacre-a2");
   };
   useEffect(() => { if (left <= 0) finish(); });
 

@@ -3,14 +3,22 @@ import { Page, Section, List, Row, Icon, Card, Btn, Note } from "../../component
 import { ROLEPLAYS } from "../../content";
 import { askAI, askJSON, AiError, type Turn } from "../../lib/ai";
 import { canSpeak, speak, stopSpeaking, listen, recognizerCtor } from "../../lib/speech";
-import { useStore, setState, markDone } from "../../lib/store";
+import { useStore, setState, award } from "../../lib/store";
 import type { Roleplay } from "../../lib/types";
+import { UNITS } from "../../content/units";
 import { toast } from "../../lib/toast";
 
 const rules = (r: Roleplay) => `${r.brief}
 Normes: parla sempre en català estàndard (formes balears permeses), nivell C1 però clar. Respostes curtes: 2-4 frases, i acaba amb una pregunta o una proposta. No corregeixis l'alumne durant la conversa ni facis de professor. Sense llistes ni format. Comença tu amb la primera intervenció.`;
 
 interface Evaluation { nota: number; punts_forts: string[]; errors: { original: string; correccio: string }[]; expressions: string[]; consell: string }
+
+export function UnitSpeak({ unitId }: { unitId: string }) {
+  const u = UNITS.find((x) => x.id === unitId);
+  if (!u?.content) return <Speak />;
+  const role: Roleplay = { id: `unit-${u.id}`, title: `Conversa · Unitat ${u.n}`, subtitle: u.oralTask, brief: u.content.oral.bot };
+  return <Chat role={role} onExit={() => { stopSpeaking(); history.back(); }} />;
+}
 
 export default function Speak() {
   const [role, setRole] = useState<Roleplay | null>(null);
@@ -76,7 +84,7 @@ Conversa:\n${tr}`);
       const nota = Math.max(0, Math.min(30, Number(r.nota) || 0));
       setEv({ ...r, nota });
       setState((s) => ({ ...s, speaking: [...s.speaking, { at: Date.now(), scenario: role.id, score: Math.round((nota / 30) * 100) }].slice(-100) }));
-      markDone("oral");
+      award("oral", "conversa");
     } catch (e) { toast(e instanceof AiError ? e.message : "No s'ha pogut avaluar."); }
     finally { setBusy(false); }
   };

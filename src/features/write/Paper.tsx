@@ -11,7 +11,7 @@ const SHEETS = [
 
 export function PaperList() {
   return (
-    <Page title="Fitxes en paper" subtitle="L'examen escrit és a mà. Fes la fitxa en paper i corregeix-la des d'Escriu amb una foto." back={{ to: "escriu", label: "Escriu" }}>
+    <Page title="Fitxes en paper" subtitle="L'examen escrit és a mà. Fes la fitxa en paper i corregeix-la des d'Escriu amb una foto." back={{ to: "practica", label: "Practica" }}>
       <List>
         <Row title="Fitxa 0 · Diagnòstic inicial" detail="Gramàtica, redacció breu i oral · 45 min" to="fitxa0" />
         {SHEETS.map((x) => <Row key={x.n} title={`Fitxa ${x.n} · ${x.t}`} detail={x.s} right={<Pill tone="muted">Aviat</Pill>} chevron={false} />)}

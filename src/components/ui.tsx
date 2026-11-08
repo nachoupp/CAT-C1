@@ -106,8 +106,9 @@ export function Segmented<T extends string>({ value, options, onChange }: { valu
   );
 }
 
-export function Icon({ children, tone = "accent" }: { children: ReactNode; tone?: "accent" | "good" | "warn" | "bad" | "fg" }) {
-  const c = { accent: "bg-accent", good: "bg-good", warn: "bg-warn", bad: "bg-bad", fg: "bg-fg text-bg" }[tone];
+export type IconTone = "accent" | "good" | "warn" | "bad" | "fg" | "comp" | "sist" | "escr" | "oral" | "gold";
+export function Icon({ children, tone = "accent" }: { children: ReactNode; tone?: IconTone }) {
+  const c = { accent: "bg-accent", good: "bg-good", warn: "bg-warn", bad: "bg-bad", fg: "bg-fg text-bg", comp: "bg-comp", sist: "bg-sist", escr: "bg-escr", oral: "bg-oral", gold: "bg-gold" }[tone];
   return <div className={`grid size-8 flex-none place-items-center rounded-lg text-sm font-bold text-white ${c}`}>{children}</div>;
 }
 

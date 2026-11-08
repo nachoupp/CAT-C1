@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Page, Card, Btn, Bar } from "../../components/ui";
 import { IDIOMS, BARBARISMS, CONNECTORS } from "../../content";
-import { setState, markDone } from "../../lib/store";
+import { setState, award } from "../../lib/store";
 import { shuffle } from "../../lib/text";
 import { go } from "../../lib/router";
 
@@ -27,7 +27,7 @@ export function MatchGame() {
       const nd = new Set(done); nd.add(expr); setDone(nd);
       if (nd.size === set.length) {
         setState((s) => ({ ...s, games: { ...s.games, match: s.games.match === undefined ? err : Math.min(s.games.match, err) } }));
-        markDone("joc");
+        award("quiz", "joc");
       }
     } else { setErr(err + 1); setBad([expr, meaning]); }
   };
@@ -75,7 +75,7 @@ export function BarbGame() {
     if (k + 1 >= items.length) {
       const total = ok;
       setState((s) => ({ ...s, games: { ...s.games, barb: Math.max(s.games.barb ?? 0, total) } }));
-      markDone("joc");
+      award("quiz", "joc");
     }
     setK(k + 1); setAns(null);
   };

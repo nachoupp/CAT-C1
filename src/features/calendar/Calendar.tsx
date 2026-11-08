@@ -29,7 +29,7 @@ export default function CalendarView() {
     );
   };
   return (
-    <Page title="Calendari" subtitle="Convocatòries amb seu a Eivissa. Dates del 2027 segons la previsió oficial." back={{ to: "avui", label: "Avui" }}>
+    <Page title="Calendari" subtitle="Convocatòries amb seu a Eivissa. Dates del 2027 segons la previsió oficial." back={{ to: "perfil", label: "Perfil" }}>
       {years.map((y) => <Section key={y} title={y}><List>{upcoming.filter((m) => m.date.startsWith(y)).map(row)}</List></Section>)}
       {past.length > 0 && <Section title="Ja passat"><List>{past.map(row)}</List></Section>}
       <div className="mt-5"><Btn block onClick={download}>Afegeix-ho al meu calendari</Btn></div>

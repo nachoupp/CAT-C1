@@ -1,6 +1,6 @@
 import { Page, Section, List, Row, Check, Pill, Card, ExtLink, Note } from "../../components/ui";
 import { EXAMS, LINKS } from "../../content";
-import { useStore, setState, markDone } from "../../lib/store";
+import { useStore, setState, award } from "../../lib/store";
 import { isoDate } from "../../lib/dates";
 
 export default function Audios() {
@@ -8,10 +8,10 @@ export default function Audios() {
   const toggle = (id: string) => {
     const on = !done[id];
     setState((s) => { const a = { ...s.audios }; if (on) a[id] = isoDate(); else delete a[id]; return { ...s, audios: a }; });
-    if (on) markDone("comprensio");
+    if (on) award("practice", "comprensio");
   };
   return (
-    <Page title="Àudios oficials" subtitle="Cada convocatòria té dos àudios de comprensió oral i el PDF amb les preguntes." back={{ to: "practica", label: "Practica" }}>
+    <Page title="Àudios oficials" subtitle="Cada convocatòria té dos àudios de comprensió oral i el PDF amb les preguntes." back={{ to: "perfil", label: "Perfil" }}>
       <Card className="bg-accent/10 p-4 text-[14.5px]">Obre el PDF, llegeix les preguntes de l'Àrea 1, escolta l'àudio dues vegades i respon en paper. Comprova-ho amb el solucionari. Guarda les convocatòries 2025-2026 per als simulacres complets.</Card>
       <Section title="Convocatòries">
         <List>

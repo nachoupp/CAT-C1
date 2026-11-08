@@ -1,11 +1,19 @@
 import { useSyncExternalStore } from "react";
 import type { AppState } from "./types";
 import { isoDate } from "./dates";
+import { XP, type XpKind } from "./game";
 
-const KEY = "parla-c1:v4";
+const KEY = "parla-c1:v5";
+const OLD_KEY = "parla-c1:v4";
 
 export const initialState = (): AppState => ({
-  version: 4,
+  version: 5,
+  xp: [],
+  units: {},
+  checkpoints: {},
+  notebook: [],
+  mocks: [],
+  officialKeys: {},
   log: {},
   cards: {},
   quizzes: [],
@@ -18,10 +26,18 @@ export const initialState = (): AppState => ({
   settings: { tts: true, nextExam: "2027-03-06", goalExam: "2027-10-02" }
 });
 
+/** Accepta estats antics (v4) i hi afegeix els camps nous. */
+export function migrate(raw: unknown): AppState {
+  const base = initialState();
+  if (!raw || typeof raw !== "object") return base;
+  const o = raw as Partial<AppState>;
+  return { ...base, ...o, settings: { ...base.settings, ...(o.settings ?? {}) }, version: 5 };
+}
+
 function load(): AppState {
   try {
-    const raw = localStorage.getItem(KEY);
-    if (raw) return { ...initialState(), ...(JSON.parse(raw) as Partial<AppState>), version: 4 };
+    const raw = localStorage.getItem(KEY) ?? localStorage.getItem(OLD_KEY);
+    if (raw) return migrate(JSON.parse(raw));
   } catch { /* emmagatzematge no disponible */ }
   return initialState();
 }
@@ -74,7 +90,16 @@ export function exportCode(s: AppState): string {
 }
 
 export function importCode(code: string): AppState {
-  const parsed = JSON.parse(decodeURIComponent(escape(atob(code.trim())))) as Partial<AppState>;
+  const parsed: unknown = JSON.parse(decodeURIComponent(escape(atob(code.trim()))));
   if (typeof parsed !== "object" || parsed === null) throw new Error("codi no vàlid");
-  return { ...initialState(), ...parsed, version: 4 };
+  return migrate(parsed);
+}
+
+/** Suma punts i marca el dia com a actiu. */
+export function award(kind: XpKind, task?: string, day: string = isoDate()): void {
+  setState((s) => ({
+    ...s,
+    xp: [...s.xp, { at: Date.now(), kind, xp: XP[kind] }].slice(-3000),
+    log: { ...s.log, [day]: { ...(s.log[day] ?? {}), [task ?? kind]: true } }
+  }));
 }

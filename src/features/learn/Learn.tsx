@@ -32,7 +32,7 @@ export default function Learn() {
   );
 }
 
-function Dictionary() {
+export function Dictionary() {
   const [w, setW] = useState("");
   const [out, setOut] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -70,10 +70,10 @@ export function LessonView({ id }: { id: string }) {
   useEffect(() => {
     if (l) setState((s) => (s.lessons[l.id] ? s : { ...s, lessons: { ...s.lessons, [l.id]: isoDate() } }));
   }, [l]);
-  if (!l) return <Page title="No trobada" back={{ to: "apren", label: "Aprèn" }}><Note>Aquesta píndola no existeix.</Note></Page>;
+  if (!l) return <Page title="No trobada" back={{ to: "quadern", label: "Quadern" }}><Note>Aquesta píndola no existeix.</Note></Page>;
   const next = LESSONS[(i + 1) % LESSONS.length];
   return (
-    <Page title={l.title} subtitle={l.area} back={{ to: "apren", label: "Aprèn" }}>
+    <Page title={l.title} subtitle={l.area} back={{ to: "quadern", label: "Quadern" }}>
       {/* Contingut propi de l'app (no prové de l'usuari) */}
       <Card className="prose-lesson p-4 text-[17px] leading-relaxed"><div dangerouslySetInnerHTML={{ __html: l.html }} /></Card>
       {l.example && (

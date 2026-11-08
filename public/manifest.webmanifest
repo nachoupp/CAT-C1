@@ -3,7 +3,7 @@
   "short_name": "Parla C1",
   "description": "Entrenador per al certificat C1 de català",
   "lang": "ca",
-  "start_url": "/#avui",
+  "start_url": "/#ruta",
   "display": "standalone",
   "background_color": "#f2f2f7",
   "theme_color": "#1f6feb",

@@ -4,12 +4,14 @@
 :root {
   --bg: #f2f2f7; --card: #ffffff; --fg: #1c1c1e; --muted: #6e6e73; --line: rgb(60 60 67 / 0.14);
   --accent: #1f6feb; --good: #248a3d; --bad: #d70015; --warn: #b25000; --bar: rgb(249 249 251 / 0.86);
+  --comp: #0b7f91; --sist: #5856d6; --escr: #c45a00; --oral: #d3245c; --gold: #a67c00;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #000000; --card: #1c1c1e; --fg: #f5f5f7; --muted: #98989f; --line: rgb(84 84 88 / 0.55);
     --accent: #4c8dff; --good: #30d158; --bad: #ff453a; --warn: #ff9f0a; --bar: rgb(22 22 24 / 0.86);
+    --comp: #40c8e0; --sist: #8e8cff; --escr: #ff9f0a; --oral: #ff5c8a; --gold: #ffd60a;
     color-scheme: dark;
   }
 }
@@ -24,6 +26,11 @@
   --color-good: var(--good);
   --color-bad: var(--bad);
   --color-warn: var(--warn);
+  --color-comp: var(--comp);
+  --color-sist: var(--sist);
+  --color-escr: var(--escr);
+  --color-oral: var(--oral);
+  --color-gold: var(--gold);
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
@@ -36,3 +43,8 @@ body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; font-
 .tabular { font-variant-numeric: tabular-nums; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 @media print { nav { display: none !important; } body { background: #fff; color: #000; } }
+
+mark.note { background: color-mix(in srgb, var(--accent) 16%, transparent); color: inherit; border-radius: 4px; padding: 0 2px; cursor: pointer; }
+mark.note[aria-pressed="true"] { background: color-mix(in srgb, var(--accent) 32%, transparent); }
+@keyframes pop { 0% { transform: scale(.85); opacity: 0 } 60% { transform: scale(1.05); opacity: 1 } 100% { transform: scale(1) } }
+.pop { animation: pop .35s ease-out both; }
