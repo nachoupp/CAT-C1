@@ -23,7 +23,13 @@ Posa'n **una**:
 - `ANTHROPIC_API_KEY` (console.anthropic.com). De pagament per ús. Opcional: `ANTHROPIC_MODEL`.
 
 ## 3. Veu natural en català
-Posa'n **una**:
+Pots posar-ne una o diverses; l'ordre de preferència és Aina → Azure → ElevenLabs, i si la primera falla s'usa la següent.
+
+- **Projecte Aina (gratuït, accent balear)**: el model Matxa del BSC té veus balears (Olga, Quim), centrals (Èlia, Grau), nord-occidentals i valencianes. Llicència: ús no comercial i de recerca, que és el cas d'un estudi personal. No es pot executar dins Vercel (és un contenidor de 3,5 GB), així que cal un servidor:
+  1. A https://huggingface.co → New Space → SDK **Docker** → *Blank*, maquinari *CPU basic* (gratuït). Pot ser privat.
+  2. Puja-hi els dos fitxers de `deploy/aina-tts/` (`Dockerfile` i `README.md`). Espera que l'estat passi a *Running* (la primera vegada uns minuts).
+  3. A Vercel: `AINA_TTS_URL` = `https://<usuari>-<nom-space>.hf.space`. Si el Space és privat, afegeix `AINA_TTS_TOKEN` amb un token de lectura de Hugging Face (Settings → Access Tokens).
+  4. Els Spaces gratuïts s'adormen després d'uns dies sense ús: el primer àudio després de dormir pot trigar a arribar (o sonar la veu de reserva). També el pots executar al teu ordinador: `docker run -p 8000:8000 projecteaina/tts-api:latest`.
 - **Azure Speech (recomanat)**: portal.azure.com → crea un recurs *Speech* (pla gratuït F0 disponible) → copia una clau i la regió.
   - `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION` (p. ex. `westeurope`)
   - Veus: Joana, Enric i Alba (ca-ES, neuronals). Es trien a Perfil → Veu.

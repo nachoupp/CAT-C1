@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Page, Section, Card, Btn, List, Row, Icon, Pill } from "../../components/ui";
 import { useStore, getState, setState, exportCode, importCode } from "../../lib/store";
 import { level, totalXp, medals, weekStreak, weekStart, activeDays, WEEK_GOAL, LEVELS } from "../../lib/game";
@@ -6,7 +6,7 @@ import { readiness } from "../../lib/readiness";
 import { addDays, isoDate } from "../../lib/dates";
 import { toast } from "../../lib/toast";
 import { AccountCard } from "../account/Account";
-import { VOICES, playText } from "../../lib/audio";
+import { VOICES, playText, serverVoices, type VoiceInfo } from "../../lib/audio";
 import { Segmented } from "../../components/ui";
 
 export default function Profile() {
@@ -63,13 +63,7 @@ export default function Profile() {
         </div>
       </Section>
 
-      <Section title="Veu">
-        <Card className="space-y-3 p-4">
-          <Segmented value={s.settings.voice ?? "joana"} onChange={(v) => setState((x) => ({ ...x, settings: { ...x.settings, voice: v } }))} options={VOICES.map((v) => ({ value: v.id, label: v.label }))} />
-          <Btn variant="soft" onClick={() => void playText("Bon dia! Aquesta és la veu que sentiràs als exemples, a les lectures i a les converses.")}>Prova la veu</Btn>
-          <p className="text-[13px] text-muted">Veus neuronals en català quan el servidor les té activades; si no, la veu del dispositiu.</p>
-        </Card>
-      </Section>
+      <VoiceSection />
 
       <Section title="Organització">
         <List>
@@ -104,6 +98,32 @@ function Backup() {
             <Btn onClick={doImport}>Importa</Btn>
           </div>
         )}
+      </Card>
+    </Section>
+  );
+}
+
+const VOICE_NOTE: Record<string, string> = {
+  aina: "Veus del Projecte Aina (BSC). Olga i Quim tenen accent balear, el que sentiràs a l'examen de la GOIB; Èlia i Grau, central.",
+  azure: "Veus neuronals de Microsoft Azure en català central.",
+  elevenlabs: "Veu d'ElevenLabs (model v3) en català."
+};
+
+function VoiceSection() {
+  const saved = useStore((x) => x.settings.voice);
+  const [info, setInfo] = useState<VoiceInfo | null>(null);
+  useEffect(() => { void serverVoices().then(setInfo); }, []);
+  const options = info?.voices.length ? info.voices : [...VOICES];
+  const value = options.some((o) => o.id === saved) ? (saved as string) : options[0].id;
+  const pick = (v: string) => setState((x) => ({ ...x, settings: { ...x.settings, voice: v } }));
+  return (
+    <Section title="Veu">
+      <Card className="space-y-3 p-4">
+        {info?.provider !== "elevenlabs" && <Segmented value={value} onChange={pick} options={options.map((o) => ({ value: o.id, label: o.label.split(" · ")[0] }))} />}
+        <Btn variant="soft" onClick={() => void playText("Bon dia! Aquesta és la veu que sentiràs als exemples, a les lectures i a les converses.")}>Prova la veu</Btn>
+        <p className="text-[13px] text-muted">
+          {info?.provider ? VOICE_NOTE[info.provider] : "Encara no hi ha veu natural configurada al servidor: ara sona la veu del dispositiu."}
+        </p>
       </Card>
     </Section>
   );

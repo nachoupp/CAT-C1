@@ -1,5 +1,5 @@
 /**
- * Àudio en català: primer la veu neuronal del servidor (/api/tts, Azure o ElevenLabs);
+ * Àudio en català: primer la veu neuronal del servidor (/api/tts: Aina/Matxa, Azure o ElevenLabs);
  * si no està configurada, la veu del dispositiu.
  */
 import { accessToken } from "./supabase";
@@ -16,10 +16,27 @@ export const VOICES = [
   { id: "alba", label: "Alba" }
 ] as const;
 
+export type Voice = { id: string; label: string };
+export type VoiceInfo = { provider: string | null; voices: Voice[] };
+let voicesP: Promise<VoiceInfo> | null = null;
+
+/** Veus que ofereix el servidor (depèn del proveïdor configurat a Vercel). */
+export function serverVoices(): Promise<VoiceInfo> {
+  voicesP ??= (async () => {
+    try {
+      const token = await accessToken();
+      const r = await fetch("/api/tts?list=1", { headers: token ? { Authorization: `Bearer ${token}` } : {} });
+      if (!r.ok) return { provider: null, voices: [] };
+      return (await r.json()) as VoiceInfo;
+    } catch { return { provider: null, voices: [] }; }
+  })();
+  return voicesP;
+}
+
 /** URL d'àudio neuronal per a un text, o null si el servidor no en té. */
 export async function neuralUrl(text: string, rate = 1): Promise<string | null> {
   if (neuralOff) return null;
-  const voice = getState().settings.voice ?? "joana";
+  const voice = getState().settings.voice ?? "";
   const key = `${voice}|${rate}|${text}`;
   const hit = cache.get(key);
   if (hit) return hit;

@@ -17,6 +17,7 @@ Metodologia completa: document «Método Parla C1 · Metodología y hoja de ruta
 - **v5.2**: comptes amb Supabase (registre per correu, recuperació de contrasenya, progrés sincronitzat i fusionat
   entre dispositius), IA i veu protegides amb sessió, veu neuronal catalana (/api/tts: Azure o ElevenLabs),
   reproductor d'àudio propi (velocitat, ±5 s, repetició, límit d'audicions als simulacres).
+- **v5.3**: veu del Projecte Aina (Matxa, accent balear) com a proveïdor preferent, amb reserva automàtica a Azure/ElevenLabs.
 
 ## Proper
 1. Unitats 7-9 (fase 2) i Control 3.
