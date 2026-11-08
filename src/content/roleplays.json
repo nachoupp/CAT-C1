@@ -1,0 +1,26 @@
+[
+ {
+  "id": "inter",
+  "title": "Interacció d'examen",
+  "subtitle": "Àrea 4 · exercici 2 · arribeu a un acord",
+  "brief": "Fes de company/a d'examen a la prova oral C1 del GOIB (exercici d'interacció). Situació: heu de decidir junts com gastar 3.000 € que l'associació de veïns ha rebut per millorar el barri d'Eivissa. Defensa una opció diferent de la de l'alumne, negocia i, al final, arribeu a un acord."
+ },
+ {
+  "id": "feina",
+  "title": "Entrevista de feina",
+  "subtitle": "Registre formal",
+  "brief": "Fes d'entrevistador/a de recursos humans d'un hotel d'Eivissa que busca un/a responsable de recepció. Fes preguntes una a una i reacciona a les respostes."
+ },
+ {
+  "id": "ajunt",
+  "title": "A l'Ajuntament",
+  "subtitle": "Fer una reclamació oral",
+  "brief": "Fes de funcionari/ària d'atenció ciutadana de l'Ajuntament d'Eivissa. L'alumne ve a fer una reclamació sobre el soroll al seu carrer. Demana dades, explica el procediment i posa algun petit obstacle realista."
+ },
+ {
+  "id": "lliure",
+  "title": "Conversa lliure",
+  "subtitle": "Actualitat, cultura, opinió",
+  "brief": "Fes de conversador/a culte/a i amable. Proposa un tema d'actualitat de les Illes Balears i debat-lo amb l'alumne, fent preguntes que l'obliguin a argumentar."
+ }
+]

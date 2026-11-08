@@ -1,0 +1,50 @@
+[
+ {
+  "id": "w1",
+  "title": "Correu a l'EOI demanant informació",
+  "words": 170,
+  "minutes": 40,
+  "exercise": "Àrea 3 · exercici 1",
+  "brief": "Vols matricular-te a un curs intensiu de català a l'Escola Oficial d'Idiomes d'Eivissa. Escriu un correu formal per demanar informació sobre horaris, preu i requisits, i explica per què t'interessa."
+ },
+ {
+  "id": "w2",
+  "title": "Convocatòria d'una reunió de veïns",
+  "words": 170,
+  "minutes": 40,
+  "exercise": "Àrea 3 · exercici 1",
+  "brief": "Ets el president de la comunitat de veïns. Redacta una convocatòria per a una reunió extraordinària sobre les obres de la façana: data, hora, lloc, ordre del dia (3 punts) i instruccions per delegar el vot."
+ },
+ {
+  "id": "w3",
+  "title": "Acta d'una reunió",
+  "words": 170,
+  "minutes": 40,
+  "exercise": "Àrea 3 · exercici 1",
+  "brief": "Redacta l'acta de la reunió del claustre on s'ha decidit organitzar una setmana cultural: assistents, ordre del dia, acords presos i hora de cloenda."
+ },
+ {
+  "id": "w4",
+  "title": "Opinió: limitar l'arribada de turistes",
+  "words": 250,
+  "minutes": 60,
+  "exercise": "Àrea 3 · exercici 2",
+  "brief": "El Consell d'Eivissa estudia limitar el nombre de vehicles i places turístiques a l'estiu. Escriu un article d'opinió per al diari local: posiciona't amb arguments i exemples i respon un contraargument."
+ },
+ {
+  "id": "w5",
+  "title": "Opinió a partir d'una notícia: mòbils a l'aula",
+  "words": 250,
+  "minutes": 60,
+  "exercise": "Àrea 3 · exercici 2",
+  "brief": "Notícia: «El Govern prohibeix l'ús del mòbil a les aules de Primària i ESO». Escriu un article d'opinió que valori la mesura, amb un títol, una introducció, dos arguments i una conclusió."
+ },
+ {
+  "id": "w6",
+  "title": "Carta al director: habitatge",
+  "words": 250,
+  "minutes": 60,
+  "exercise": "Àrea 3 · exercici 2",
+  "brief": "Escriu una carta al director d'un diari sobre la dificultat dels joves per trobar habitatge a les Illes. Exposa el problema, les causes i proposa solucions."
+ }
+]

@@ -1,0 +1,362 @@
+[
+ {
+  "id": "b1",
+  "prompt": "Si veus la Marta, ___ que la trucaré.",
+  "answer": "digue-li",
+  "distractors": [
+   "digue-la",
+   "diga-li"
+  ],
+  "explanation": "«Dir» porta complement indirecte: a ella → li."
+ },
+ {
+  "id": "b2",
+  "prompt": "Aquests llibres, ___ vaig deixar a la biblioteca.",
+  "answer": "els",
+  "distractors": [
+   "les",
+   "los"
+  ],
+  "explanation": "Complement directe masculí plural: els."
+ },
+ {
+  "id": "b3",
+  "prompt": "Del viatge, encara no ___ hem parlat.",
+  "answer": "n'",
+  "distractors": [
+   "en",
+   "hi"
+  ],
+  "explanation": "«Parlar de» → en; davant vocal s'apostrofa: n'hem."
+ },
+ {
+  "id": "b4",
+  "prompt": "Al cinema, fa anys que no ___ vaig.",
+  "answer": "hi",
+  "distractors": [
+   "en",
+   "li"
+  ],
+  "explanation": "Complement de lloc (al cinema) → hi."
+ },
+ {
+  "id": "b5",
+  "prompt": "___ quan arribis.",
+  "answer": "Truca'm",
+  "distractors": [
+   "Truca-me",
+   "Truca-em"
+  ],
+  "explanation": "Darrere de vocal, «em» es redueix: truca'm."
+ },
+ {
+  "id": "b6",
+  "prompt": "Em vaig adonar ___ l'error massa tard.",
+  "answer": "de",
+  "distractors": [
+   "a",
+   "en"
+  ],
+  "explanation": "El verb és «adonar-se de»."
+ },
+ {
+  "id": "b7",
+  "prompt": "Estic content ___ hagis vingut.",
+  "answer": "que",
+  "distractors": [
+   "de que",
+   "en que"
+  ],
+  "explanation": "Davant la conjunció «que», la preposició cau: content que."
+ },
+ {
+  "id": "b8",
+  "prompt": "Vaig quedar ___ la Laura a les set.",
+  "answer": "amb",
+  "distractors": [
+   "en",
+   "a"
+  ],
+  "explanation": "«Quedar amb algú»."
+ },
+ {
+  "id": "b9",
+  "prompt": "Penso ___ tu sovint.",
+  "answer": "en",
+  "distractors": [
+   "a",
+   "de"
+  ],
+  "explanation": "«Pensar en algú» (pensar a + infinitiu = recordar de fer)."
+ },
+ {
+  "id": "b10",
+  "prompt": "Volia sortir; ___, s'ha posat a ploure.",
+  "answer": "tanmateix",
+  "distractors": [
+   "sin embargo",
+   "en canvi de"
+  ],
+  "explanation": "«Sin embargo» és castellà: tanmateix, no obstant això."
+ },
+ {
+  "id": "b11",
+  "prompt": "Hem de ___ el projecte abans de l'estiu.",
+  "answer": "dur a terme",
+  "distractors": [
+   "llevar a cap",
+   "portar a cap"
+  ],
+  "explanation": "«Llevar a cabo» es diu «dur a terme»."
+ },
+ {
+  "id": "b12",
+  "prompt": "Ja hem ___ el treball.",
+  "answer": "acabat",
+  "distractors": [
+   "terminat",
+   "finit"
+  ],
+  "explanation": "«Terminar» és castellanisme: acabar, enllestir."
+ },
+ {
+  "id": "b13",
+  "prompt": "Hem millorat ___ ortografia.",
+  "answer": "quant a l'",
+  "distractors": [
+   "a nivell d'",
+   "en quant a l'"
+  ],
+  "explanation": "«A nivell de» és incorrecte si no hi ha nivells reals: quant a, pel que fa a."
+ },
+ {
+  "id": "b14",
+  "prompt": "Hi havia ___ gent a la platja.",
+  "answer": "molta",
+  "distractors": [
+   "molt",
+   "molts"
+  ],
+  "explanation": "«Gent» és femení singular: molta gent."
+ },
+ {
+  "id": "b15",
+  "prompt": "Demà tinc ___ de català.",
+  "answer": "l'examen",
+  "distractors": [
+   "l'exàmen",
+   "l'esamen"
+  ],
+  "explanation": "«Examen» no porta accent (plana acabada en -en)."
+ },
+ {
+  "id": "b16",
+  "prompt": "Hem de ___ la reunió a les nou.",
+  "answer": "començar",
+  "distractors": [
+   "comensar",
+   "comenzar"
+  ],
+  "explanation": "Davant a/o/u, so de s amb ç: començar."
+ },
+ {
+  "id": "b17",
+  "prompt": "Quan ___ a Eivissa, avisa'm.",
+  "answer": "vinguis",
+  "distractors": [
+   "vindràs",
+   "vens"
+  ],
+  "explanation": "Després de «quan» amb valor de futur: subjuntiu (vinguis)."
+ },
+ {
+  "id": "b18",
+  "prompt": "Tant de bo ___ bon temps diumenge.",
+  "answer": "faci",
+  "distractors": [
+   "fa",
+   "farà"
+  ],
+  "explanation": "«Tant de bo» demana subjuntiu."
+ },
+ {
+  "id": "b19",
+  "prompt": "Es va posar ___ riure.",
+  "answer": "a",
+  "distractors": [
+   "de",
+   "en"
+  ],
+  "explanation": "«Posar-se a + infinitiu»."
+ },
+ {
+  "id": "b20",
+  "prompt": "Fes-ho ___ puguis.",
+  "answer": "tan aviat com",
+  "distractors": [
+   "tant aviat com",
+   "tan aviat que"
+  ],
+  "explanation": "Comparació d'igualtat amb adverbi: tan... com."
+ },
+ {
+  "id": "b21",
+  "prompt": "Molta gent va ___ a la conferència.",
+  "answer": "assistir",
+  "distractors": [
+   "atendre",
+   "acudir-hi a"
+  ],
+  "explanation": "Ser present en un acte: assistir. «Atendre» és posar atenció o ocupar-se d'algú."
+ },
+ {
+  "id": "b22",
+  "prompt": "El soroll ___ molesta.",
+  "answer": "em",
+  "distractors": [
+   "me",
+   "m'"
+  ],
+  "explanation": "Davant consonant, forma reforçada: em molesta."
+ },
+ {
+  "id": "b23",
+  "prompt": "Com acabes una carta formal?",
+  "answer": "Atentament,",
+  "distractors": [
+   "Una abraçada,",
+   "Fins aviat!"
+  ],
+  "explanation": "Registre formal: Atentament, / Cordialment,"
+ },
+ {
+  "id": "b24",
+  "prompt": "«Fer el préssec» vol dir:",
+  "answer": "fer el ximple",
+  "distractors": [
+   "menjar fruita",
+   "treballar molt"
+  ],
+  "explanation": "Fer el préssec = fer el beneit, fer el ximple."
+ },
+ {
+  "id": "b25",
+  "prompt": "«Tenir la mosca al nas» vol dir:",
+  "answer": "estar molest o enfadat",
+  "distractors": [
+   "estar refredat",
+   "tenir pressa"
+  ],
+  "explanation": "Estar emprenyat, mosquejat."
+ },
+ {
+  "id": "b26",
+  "prompt": "«Anar de bòlit» vol dir:",
+  "answer": "anar molt atrafegat",
+  "distractors": [
+   "anar de festa",
+   "perdre's"
+  ],
+  "explanation": "Anar de bòlit = no donar l'abast."
+ },
+ {
+  "id": "b27",
+  "prompt": "«Fer-se l'orni» vol dir:",
+  "answer": "fer veure que no s'entén res",
+  "distractors": [
+   "enfadar-se",
+   "fer-se el valent"
+  ],
+  "explanation": "Fer el desentès."
+ },
+ {
+  "id": "b28",
+  "prompt": "___ plovia, vam sortir a caminar.",
+  "answer": "Tot i que",
+  "distractors": [
+   "Per tant",
+   "Ja que"
+  ],
+  "explanation": "Connector concessiu: tot i que, malgrat que."
+ },
+ {
+  "id": "b29",
+  "prompt": "No va venir ___ estava malalt.",
+  "answer": "perquè",
+  "distractors": [
+   "per tal que",
+   "malgrat que"
+  ],
+  "explanation": "Causa: perquè. «Per tal que» és finalitat."
+ },
+ {
+  "id": "b30",
+  "prompt": "L'empresa ___ treballo és a Vila.",
+  "answer": "on",
+  "distractors": [
+   "que",
+   "la qual"
+  ],
+  "explanation": "Relatiu de lloc: on (o «en què»)."
+ },
+ {
+  "id": "b31",
+  "prompt": "A l'acte hi havia ___ persones.",
+  "answer": "dues-centes",
+  "distractors": [
+   "dos-centes",
+   "dos cents"
+  ],
+  "explanation": "Les centenes concorden: persones (f.) → dues-centes."
+ },
+ {
+  "id": "b32",
+  "prompt": "___ senyal de trànsit estava tapat.",
+  "answer": "El",
+  "distractors": [
+   "La",
+   "Lo"
+  ],
+  "explanation": "«Senyal» és masculí."
+ },
+ {
+  "id": "b33",
+  "prompt": "Demà em fan ___ anàlisi de sang.",
+  "answer": "una",
+  "distractors": [
+   "un",
+   "uns"
+  ],
+  "explanation": "«Anàlisi» és femení."
+ },
+ {
+  "id": "b34",
+  "prompt": "Hem d'arribar ___ un acord.",
+  "answer": "a",
+  "distractors": [
+   "en",
+   "de"
+  ],
+  "explanation": "«Arribar a un acord»."
+ },
+ {
+  "id": "b35",
+  "prompt": "Ho vaig saber ___ que vaig arribar.",
+  "answer": "des",
+  "distractors": [
+   "desde",
+   "dès"
+  ],
+  "explanation": "Castellanisme «desde»: des que, des de."
+ },
+ {
+  "id": "b36",
+  "prompt": "___ omplir la sol·licitud abans del dia 20.",
+  "answer": "Cal",
+  "distractors": [
+   "Hi ha que",
+   "Tenim que"
+  ],
+  "explanation": "Obligació impersonal: cal + infinitiu (personal: haver de)."
+ }
+]

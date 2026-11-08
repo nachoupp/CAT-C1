@@ -1,0 +1,112 @@
+[
+ {
+  "form": "desde",
+  "correct": false,
+  "fix": "des de / des que"
+ },
+ {
+  "form": "bústia",
+  "correct": true,
+  "fix": ""
+ },
+ {
+  "form": "tenir que",
+  "correct": false,
+  "fix": "haver de / cal"
+ },
+ {
+  "form": "assolir",
+  "correct": true,
+  "fix": ""
+ },
+ {
+  "form": "a nivell de",
+  "correct": false,
+  "fix": "quant a / pel que fa a"
+ },
+ {
+  "form": "dur a terme",
+  "correct": true,
+  "fix": ""
+ },
+ {
+  "form": "sin embargo",
+  "correct": false,
+  "fix": "tanmateix / no obstant això"
+ },
+ {
+  "form": "tanmateix",
+  "correct": true,
+  "fix": ""
+ },
+ {
+  "form": "buzó",
+  "correct": false,
+  "fix": "bústia"
+ },
+ {
+  "form": "aconseguir",
+  "correct": true,
+  "fix": ""
+ },
+ {
+  "form": "llevar a cap",
+  "correct": false,
+  "fix": "dur a terme"
+ },
+ {
+  "form": "abarcar",
+  "correct": false,
+  "fix": "abastar"
+ },
+ {
+  "form": "abastar",
+  "correct": true,
+  "fix": ""
+ },
+ {
+  "form": "apretar",
+  "correct": false,
+  "fix": "prémer / estrènyer"
+ },
+ {
+  "form": "prémer",
+  "correct": true,
+  "fix": ""
+ },
+ {
+  "form": "ademés",
+  "correct": false,
+  "fix": "a més"
+ },
+ {
+  "form": "a més",
+  "correct": true,
+  "fix": ""
+ },
+ {
+  "form": "entonces",
+  "correct": false,
+  "fix": "aleshores / llavors"
+ },
+ {
+  "form": "aleshores",
+  "correct": true,
+  "fix": ""
+ },
+ {
+  "form": "termini",
+  "correct": true,
+  "fix": ""
+ },
+ {
+  "form": "plaç",
+  "correct": false,
+  "fix": "termini"
+ },
+ {
+  "form": "aviat",
+  "correct": true,
+  "fix": ""
+ }
+]

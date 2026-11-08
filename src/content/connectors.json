@@ -1,0 +1,77 @@
+[
+ {
+  "term": "En primer lloc",
+  "use": "Ordenar · obrir l'argumentació",
+  "example": "En primer lloc, cal dir que el problema ve de lluny."
+ },
+ {
+  "term": "Així mateix",
+  "use": "Afegir una idea",
+  "example": "Així mateix, caldria ampliar l'horari de la biblioteca."
+ },
+ {
+  "term": "A més a més",
+  "use": "Afegir",
+  "example": "A més a més, el preu és assequible."
+ },
+ {
+  "term": "Tanmateix",
+  "use": "Contrast",
+  "example": "La proposta és bona; tanmateix, és cara."
+ },
+ {
+  "term": "No obstant això",
+  "use": "Contrast",
+  "example": "Hi ha millores; no obstant això, falta molt per fer."
+ },
+ {
+  "term": "Tot i que",
+  "use": "Concessió + verb",
+  "example": "Tot i que plovia, vam sortir."
+ },
+ {
+  "term": "Malgrat + nom",
+  "use": "Concessió + nom",
+  "example": "Malgrat la pluja, vam sortir."
+ },
+ {
+  "term": "Atès que",
+  "use": "Causa formal",
+  "example": "Atès que no hi ha quòrum, s'ajorna la sessió."
+ },
+ {
+  "term": "Per tant",
+  "use": "Conseqüència",
+  "example": "No hi ha pressupost; per tant, cal esperar."
+ },
+ {
+  "term": "En conseqüència",
+  "use": "Conseqüència formal",
+  "example": "En conseqüència, sol·licito una resposta."
+ },
+ {
+  "term": "És a dir",
+  "use": "Reformular",
+  "example": "Cal estalviar aigua, és a dir, consumir-ne menys."
+ },
+ {
+  "term": "Pel que fa a",
+  "use": "Introduir tema",
+  "example": "Pel que fa a l'horari, proposo canviar-lo."
+ },
+ {
+  "term": "Ara bé",
+  "use": "Matisar",
+  "example": "És una bona idea. Ara bé, s'ha d'estudiar."
+ },
+ {
+  "term": "En definitiva",
+  "use": "Concloure",
+  "example": "En definitiva, el català ens uneix."
+ },
+ {
+  "term": "Per acabar",
+  "use": "Tancar el text",
+  "example": "Per acabar, agraeixo la vostra atenció."
+ }
+]

@@ -1,0 +1,74 @@
+[
+ {
+  "date": "2026-12-09",
+  "title": "Obre la inscripció GOIB (convocatòria de març)",
+  "detail": "Seu electrònica CAIB o oficina de registre · 24,29 €",
+  "kind": "registration"
+ },
+ {
+  "date": "2026-12-22",
+  "title": "Darrer dia d'inscripció GOIB març",
+  "detail": "No es pot fer fora de termini",
+  "kind": "registration"
+ },
+ {
+  "date": "2027-01-19",
+  "title": "Llistes provisionals d'admesos",
+  "detail": "Comprova que hi surts",
+  "kind": "admin"
+ },
+ {
+  "date": "2027-02-12",
+  "title": "Assignació de centre i torn",
+  "detail": "Mira on et toca a Eivissa",
+  "kind": "admin"
+ },
+ {
+  "date": "2027-03-06",
+  "title": "Examen escrit C1 · GOIB",
+  "detail": "Matí · Eivissa · simulacre real",
+  "kind": "exam"
+ },
+ {
+  "date": "2027-03-13",
+  "title": "Inscripció EOI Eivissa, modalitat lliure",
+  "detail": "Data aproximada: confirmar al BOIB",
+  "kind": "registration"
+ },
+ {
+  "date": "2027-03-16",
+  "title": "Examen oral C1 · GOIB",
+  "detail": "16 o 18 de març, horabaixa",
+  "kind": "exam"
+ },
+ {
+  "date": "2027-05-27",
+  "title": "Examen C1 EOI Eivissa (aprox.)",
+  "detail": "Pendent del calendari oficial",
+  "kind": "exam"
+ },
+ {
+  "date": "2027-05-31",
+  "title": "Resultats definitius GOIB març",
+  "detail": "",
+  "kind": "admin"
+ },
+ {
+  "date": "2027-06-16",
+  "title": "Obre la inscripció GOIB (octubre)",
+  "detail": "Fins al 30 de juny",
+  "kind": "registration"
+ },
+ {
+  "date": "2027-10-02",
+  "title": "Examen escrit C1 · GOIB",
+  "detail": "Matí · Eivissa · objectiu principal",
+  "kind": "exam"
+ },
+ {
+  "date": "2027-10-16",
+  "title": "Examen oral C1 · GOIB",
+  "detail": "16 (matí) o 19 d'octubre (horabaixa)",
+  "kind": "exam"
+ }
+]

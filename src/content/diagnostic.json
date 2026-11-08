@@ -1,0 +1,162 @@
+[
+ {
+  "prompt": "___ he dit mil vegades: no hi vull anar.",
+  "options": [
+   "T'ho",
+   "Te l'",
+   "Te ho"
+  ]
+ },
+ {
+  "prompt": "Has vist la Maria? Sí, ___ vista aquest matí.",
+  "options": [
+   "la he",
+   "l'he",
+   "li he"
+  ]
+ },
+ {
+  "prompt": "Pensa ___ portar el paraigua, que plourà.",
+  "options": [
+   "en",
+   "a",
+   "de"
+  ]
+ },
+ {
+  "prompt": "Quina és correcta?",
+  "options": [
+   "Tenim que acabar.",
+   "Hem d'acabar.",
+   "Tenim d'acabar."
+  ]
+ },
+ {
+  "prompt": "On deixes les cartes?",
+  "options": [
+   "Al buzó",
+   "A la bústia",
+   "Al bussó"
+  ]
+ },
+ {
+  "prompt": "Cal que ho ___ abans de divendres.",
+  "options": [
+   "fassis",
+   "fesis",
+   "facis"
+  ]
+ },
+ {
+  "prompt": "___ que vaig arribar, no ha parat de ploure.",
+  "options": [
+   "Desde",
+   "Des",
+   "Dès"
+  ]
+ },
+ {
+  "prompt": "La companya ___ et vaig parlar arriba demà.",
+  "options": [
+   "que",
+   "de qui",
+   "de la que"
+  ]
+ },
+ {
+  "prompt": "Vas anar a la reunió? Sí, ___ vaig anar.",
+  "options": [
+   "hi",
+   "en",
+   "la"
+  ]
+ },
+ {
+  "prompt": "Vols pa? Sí, ___ vull una mica.",
+  "options": [
+   "en",
+   "el",
+   "hi"
+  ]
+ },
+ {
+  "prompt": "Demà comencen les classes a ___.",
+  "options": [
+   "l'universitat",
+   "la universitat",
+   "le universitat"
+  ]
+ },
+ {
+  "prompt": "Aquest regal és ___ tu.",
+  "options": [
+   "per",
+   "per a",
+   "pera"
+  ]
+ },
+ {
+  "prompt": "«Ploure sobre mullat» vol dir:",
+  "options": [
+   "tenir sort",
+   "empitjorar una cosa dolenta",
+   "fer una feina inútil"
+  ]
+ },
+ {
+  "prompt": "Carta formal a l'Ajuntament:",
+  "options": [
+   "Hola, bon dia:",
+   "Benvolgut senyor,",
+   "Ei, què tal?"
+  ]
+ },
+ {
+  "prompt": "Les dades no són concloents; ___, convé repetir l'estudi.",
+  "options": [
+   "per tant",
+   "tanmateix",
+   "no obstant això"
+  ]
+ },
+ {
+  "prompt": "El contrari d'«estalviar»:",
+  "options": [
+   "desar",
+   "aprofitar",
+   "malbaratar"
+  ]
+ },
+ {
+  "prompt": "Si ___ temps, t'ajudaria.",
+  "options": [
+   "tindria",
+   "tingués",
+   "tinc"
+  ]
+ },
+ {
+  "prompt": "Aquest hivern ___ moltes tempestes.",
+  "options": [
+   "han hagut",
+   "ha hagut",
+   "hi ha hagut"
+  ]
+ },
+ {
+  "prompt": "___ omplir el formulari abans del dia 15.",
+  "options": [
+   "Hi ha que",
+   "Cal",
+   "S'ha que"
+  ]
+ },
+ {
+  "prompt": "Dona'm el llibre → Dona___ ara mateix.",
+  "options": [
+   "-me'l",
+   "'m-lo",
+   "-me-lo"
+  ]
+ }
+]

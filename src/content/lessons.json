@@ -1,0 +1,128 @@
+[
+ {
+  "id": "p1",
+  "area": "Gramàtica",
+  "title": "Pronoms febles: directe o indirecte?",
+  "html": "<p>El <b>complement directe</b> rep l'acció: <b>el, la, els, les</b>. L'<b>indirecte</b> és qui la rep (a qui?): <b>li</b> (singular) i <b>els</b> (plural).</p><p>He vist <u>la Maria</u> → <b>l'</b>he vista. He escrit <u>a la Maria</u> → <b>li</b> he escrit.</p><p>Truc: <i>dir, escriure, telefonar, agradar</i> porten indirecte (li): «Li agrada», «Digue-li».</p>",
+  "example": "Li he dit que l'esperaré a la porta."
+ },
+ {
+  "id": "p2",
+  "area": "Gramàtica",
+  "title": "En i hi, sense por",
+  "html": "<p><b>En</b> substitueix complements amb <b>de</b> i quantitats: «Parlem del viatge» → <b>en</b> parlem. «Vols pa?» → Sí, <b>en</b> vull.</p><p><b>Hi</b> substitueix llocs i complements amb <b>a, en, amb</b>: «Vaig al cinema» → <b>hi</b> vaig. «Penso en tu» → <b>hi</b> penso.</p><p>Davant vocal: <b>n'</b>hem parlat; darrere: parla<b>'n</b>, ves-<b>hi</b>.</p>",
+  "example": "No en sé res, però hi pensaré."
+ },
+ {
+  "id": "p3",
+  "area": "Gramàtica",
+  "title": "Combinacions de pronoms",
+  "html": "<p>Quan van junts, l'indirecte va primer: <b>me'l</b>, <b>te la</b>, <b>se'ls</b>.</p><p><b>Li + el/la/els/les</b> → forma general <b>l'hi, la hi, els hi, les hi</b> («El llibre, l'hi he donat»). En registre formal també: li'l, li la.</p><p><b>Li + ho</b> → <b>li ho</b>: «Li ho he explicat».</p><p>Darrere del verb: dona-<b>me'l</b>, explica-<b>li-ho</b>.</p>",
+  "example": "Dona-me'l ara mateix, que li ho he promès."
+ },
+ {
+  "id": "p4",
+  "area": "Gramàtica",
+  "title": "Per o per a?",
+  "html": "<p>Davant d'un <b>nom</b>: <b>per a</b> indica destinació o finalitat («un regal <b>per a</b> tu»); <b>per</b> indica causa, mitjà, lloc o temps («<b>per</b> la pluja», «<b>per</b> correu», «<b>per</b> Nadal»).</p><p>Davant d'un <b>infinitiu</b>, <b>per</b> sempre és correcte: «He vingut <b>per</b> parlar-te».</p>",
+  "example": "Aquest informe és per a la directora; l'he enviat per correu."
+ },
+ {
+  "id": "p5",
+  "area": "Gramàtica",
+  "title": "La preposició que cau",
+  "html": "<p>Moltes preposicions <b>desapareixen davant de «que»</b> i de l'infinitiu: «Estic content <b>de</b> la notícia» però «Estic content <b>que</b> vinguis».</p><p>Incorrecte: <s>de que</s>, <s>en que</s> conjuncions. Correcte: «Confio <b>que</b> ho entendràs».</p><p>Amb relatiu sí que es manté, i porta accent: «El tema <b>de què</b> parlàvem».</p>",
+  "example": "Confio que ho entendràs i estic segura que aprovaràs."
+ },
+ {
+  "id": "p6",
+  "area": "Lèxic",
+  "title": "12 barbarismes que resten punts",
+  "html": "<p><s>desde</s> → des de · <s>tenir que</s> → haver de / cal · <s>a nivell de</s> → quant a · <s>sin embargo</s> → tanmateix · <s>bueno</s> → bé · <s>vale</s> → d'acord · <s>apretar</s> → prémer · <s>buzón</s> → bústia · <s>plaç</s> → termini · <s>llevar a cap</s> → dur a terme · <s>ademés</s> → a més · <s>entonces</s> → aleshores.</p>",
+  "example": "Hem de dur a terme el projecte dins del termini."
+ },
+ {
+  "id": "p7",
+  "area": "Lèxic",
+  "title": "Gènere: les trampes",
+  "html": "<p>Diferents del castellà: <b>el senyal, el dubte, el costum, el corrent, el front, el pendent, l'avantatge</b> (masculins).</p><p><b>la dent, l'anàlisi, la síndrome, la resta</b> (femenins).</p><p>Pista: si dubtes, busca'l al DIEC abans de l'examen.</p>",
+  "example": "El dubte que tinc és sobre l'anàlisi de sang."
+ },
+ {
+  "id": "p8",
+  "area": "Ortografia",
+  "title": "Accents: la regla en 30 segons",
+  "html": "<p>Porten accent les <b>agudes</b> acabades en vocal, <b>-as -es -is -os -us</b>, <b>-en -in</b> (cafè, francès, també); les <b>planes</b> que <b>no</b> acaben així (fàcil, càrrec); i <b>totes les esdrúixoles</b> (música).</p><p>Diacrítics (des del 2017 només 15): bé, déu, és, mà, més, món, pèl, què, sé, sí, sòl, són, té, ús, vós. <b>Ja no</b>: soc, dona, adeu, net.</p>",
+  "example": "És fàcil: també, càrrec i música porten accent."
+ },
+ {
+  "id": "p9",
+  "area": "Ortografia",
+  "title": "L'apòstrof",
+  "html": "<p>L'article <b>el, la</b> s'apostrofa davant vocal o h: <b>l'</b>home, <b>l'</b>illa.</p><p>Excepcions femenines: davant <b>i/u àtones</b> no: <b>la</b> universitat, <b>la</b> història, <b>la</b> idea. Tampoc davant <b>ui</b>: la iaia.</p><p><b>De</b> també: <b>d'</b>Eivissa, <b>d'</b>hora.</p>",
+  "example": "La universitat d'Eivissa obre l'escola d'estiu."
+ },
+ {
+  "id": "p10",
+  "area": "Gramàtica",
+  "title": "Quan cal subjuntiu",
+  "html": "<p>Després de <b>cal que, tant de bo, abans que, perquè</b> (finalitat), <b>quan</b> (futur), <b>potser</b> (dubte): «Quan <b>vinguis</b>, avisa'm», «Cal que ho <b>facis</b>».</p><p>Formes clau: faci, sigui, tingui, pugui, vulgui, sàpiga, vingui.</p>",
+  "example": "Cal que vinguis abans que tanquin, perquè puguis parlar amb ella."
+ },
+ {
+  "id": "p11",
+  "area": "Gramàtica",
+  "title": "Relatius: que, què, qui, on",
+  "html": "<p><b>que</b> sense preposició: «El llibre <b>que</b> llegeixo».</p><p>Amb preposició: <b>què</b> per a coses («el tema <b>de què</b> parlàvem»), <b>qui</b> per a persones («la noia <b>amb qui</b> treballo»), <b>on</b> per a llocs. Formal: <b>el qual, la qual</b>.</p>",
+  "example": "La companya amb qui treballo viu a la ciutat on vaig néixer."
+ },
+ {
+  "id": "p12",
+  "area": "Redacció",
+  "title": "La carta formal",
+  "html": "<p><b>Encapçalament:</b> Benvolgut senyor, / Benvolguda senyora, / Senyors,</p><p><b>Obertura:</b> Us escric per… · Em adreço a vostès per…</p><p><b>Petició:</b> Per tot això, sol·licito… · Us agrairia que…</p><p><b>Comiat:</b> Atentament, / Cordialment, + nom i data.</p><p>Tracte: <b>vostè</b> o <b>vós</b>, però el mateix en tot el text.</p>",
+  "example": "Benvolguda senyora, us escric per sol·licitar informació sobre el termini d'inscripció. Atentament."
+ },
+ {
+  "id": "p13",
+  "area": "Redacció",
+  "title": "Estructura que aprova",
+  "html": "<p><b>1.</b> Introducció: situa el tema i la teva tesi (2-3 frases).<br><b>2.</b> Desenvolupament: 2 paràgrafs, un argument i un exemple cadascun.<br><b>3.</b> Contraargument: «Ara bé, hi ha qui pensa…».<br><b>4.</b> Conclusió: reprèn la tesi i tanca.</p><p>Compta les paraules: 170 (ex. 1) i 250 (ex. 2). Quedar-se curt penalitza.</p>",
+  "example": "En definitiva, crec que cal trobar un equilibri entre turisme i qualitat de vida."
+ },
+ {
+  "id": "p14",
+  "area": "Redacció",
+  "title": "Com et corregeixen",
+  "html": "<p>El GOIB valora cinc aspectes: <b>adequació</b> (registre i tipus de text), <b>coherència</b> (idees ordenades, sense repeticions), <b>cohesió</b> (connectors i puntuació), <b>repertori</b> (lèxic ric i precís) i <b>correcció</b> (ortografia i gramàtica).</p><p>Cal un 60 % de l'àrea. Un text curt i correcte puntua més que un text llarg ple d'errors.</p>",
+  "example": ""
+ },
+ {
+  "id": "p15",
+  "area": "Oral",
+  "title": "Guanya temps a l'oral",
+  "html": "<p>Frases per pensar sense quedar-te en blanc: «És una qüestió interessant…», «Deixa'm pensar-ho un moment», «Com deia abans…», «Dit d'una altra manera…».</p><p>Per opinar: «Al meu parer», «Des del meu punt de vista», «Estic d'acord en part, però…».</p>",
+  "example": "És una qüestió interessant. Al meu parer, cal trobar-hi un equilibri."
+ },
+ {
+  "id": "p16",
+  "area": "Oral",
+  "title": "La lectura en veu alta",
+  "html": "<p>Val 20 punts. Llegeix-la un cop mentalment abans de començar. Vigila:</p><p>• les <b>vocals neutres</b> (a/e àtones) i les <b>o/u</b> àtones;<br>• la <b>essa sonora</b> (casa, zero) i la <b>sorda</b> (cassa, cel);<br>• les pauses a les comes i els punts.</p><p>Millor a poc a poc i clar que ràpid i amb errors.</p>",
+  "example": "La casa del costat té una cassola de zinc."
+ },
+ {
+  "id": "p17",
+  "area": "Varietat",
+  "title": "Les formes balears a l'examen",
+  "html": "<p>Al GOIB pots fer servir formes balears normatives, com <b>jo cant, jo dorm</b> o <b>que jo canti</b>, però sigues <b>coherent</b> en tot el text.</p><p>L'<b>article salat</b> (es, sa) és col·loquial: evita'l a l'escrit formal i en l'exposició oral.</p>",
+  "example": ""
+ },
+ {
+  "id": "p18",
+  "area": "Estratègia",
+  "title": "Àrea 2: com no perdre punts",
+  "html": "<p>30 preguntes en 40 minuts: poc més d'un minut cadascuna.</p><p><b>1.</b> Fes primer les que saps segur. <b>2.</b> Marca els dubtes i torna-hi al final. <b>3.</b> No deixis cap resposta en blanc si no resta punts. <b>4.</b> Desconfia de la forma que «sona» com el castellà.</p>",
+  "example": ""
+ }
+]
