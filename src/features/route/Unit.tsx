@@ -2,12 +2,14 @@ import { useEffect, useMemo, useState } from "react";
 import { Page, Section, Card, Btn, List, Row, Pill, Icon, Note, Bar, Check, type IconTone } from "../../components/ui";
 import { ItemQuiz, ResultsList, type ItemResult } from "../../components/ItemQuiz";
 import { LiveEditor } from "../../components/LiveEditor";
-import { UNITS, STEPS, type Unit, type UnitContent } from "../../content/units";
+import { UNITS, STEPS, unitPool, type Unit, type UnitContent, type PracticeItem } from "../../content/units";
 import { LESSONS } from "../../content";
+import { RULES_BY_UNIT } from "../../content/rules";
+import { RulesBar } from "../../components/ItemQuiz";
 import { useStore, setState, award } from "../../lib/store";
 import type { StepKey } from "../../lib/types";
 import { isoDate } from "../../lib/dates";
-import { countWords, fmtClock } from "../../lib/text";
+import { countWords, fmtClock, shuffle } from "../../lib/text";
 import { canSpeak, speak } from "../../lib/speech";
 import { askJSON, AiError } from "../../lib/ai";
 import { addError } from "../../lib/notebook";
@@ -40,7 +42,11 @@ export function UnitHome({ id }: { id: string }) {
             right={x.key === "examen" && p?.examScore !== undefined ? <Pill tone={p.examScore >= 60 ? "good" : "warn"}>{p.examScore}</Pill> : undefined} />
         ))}
       </List>
-      <Note>La unitat queda superada quan completes els 5 passos i treus almenys un 60 a l'examen de la unitat.</Note>
+      <Note>La unitat queda superada quan completes els 5 passos i treus almenys un 60 a l'examen de la unitat. Té {u.content.examples?.length ?? 0} exemples i {unitPool(u.content).length} exercicis: cada vegada que practiques en surten de diferents.</Note>
+      <div className="mt-3 grid grid-cols-2 gap-2">
+        <Btn variant="soft" onClick={() => go(`unit-${u.id}-practica`)}>Practica més</Btn>
+        <Btn variant="soft" onClick={() => go(`unit-${u.id}-descobreix`)}>Exemples</Btn>
+      </div>
       <Section title="Píndoles de la unitat">
         <List>{u.content.lessons.map((lid) => { const l = LESSONS.find((x) => x.id === lid); return l ? <Row key={lid} title={l.title} detail={l.area} to={`lesson-${lid}`} /> : null; })}</List>
       </Section>
@@ -82,7 +88,7 @@ function Done({ u, text }: { u: Unit; text: string }) {
 
 /* 1 · Descobreix: test previ → píndola → text model anotat */
 function Discover({ u, c }: { u: Unit; c: UnitContent }) {
-  const [phase, setPhase] = useState<"pre" | "learn" | "model" | "done">("pre");
+  const [phase, setPhase] = useState<"pre" | "learn" | "examples" | "model" | "done">("pre");
   const [pre, setPre] = useState<ItemResult[]>([]);
   const [open, setOpen] = useState<number | null>(null);
   const parts = useMemo(() => splitWithNotes(c.model.text, c.model.notes.map((n) => n.quote)), [c]);
@@ -90,7 +96,7 @@ function Discover({ u, c }: { u: Unit; c: UnitContent }) {
     return (
       <>
         <Card className="mb-4 bg-sist/10 p-4 text-[15px]">Comencem amb 5 preguntes ràpides. No passa res si falles: posar-te a prova abans d'estudiar ajuda a recordar millor.</Card>
-        <ItemQuiz items={c.pretest} title="Test previ" onFinish={(r) => { setPre(r); setPhase("learn"); }} />
+        <ItemQuiz items={c.pretest} rules={RULES_BY_UNIT[u.id]} title="Test previ" onFinish={(r) => { setPre(r); setPhase("learn"); }} />
       </>
     );
   }
@@ -98,6 +104,7 @@ function Discover({ u, c }: { u: Unit; c: UnitContent }) {
     return (
       <>
         <Card className="mb-4 p-4"><b className="tabular">{pre.filter((r) => r.ok).length}/5</b> al test previ. Ara, la teoria clau en 2 minuts.</Card>
+        <RulesExplorer rules={RULES_BY_UNIT[u.id] ?? []} />
         {c.lessons.map((lid) => {
           const l = LESSONS.find((x) => x.id === lid);
           return l ? (
@@ -106,6 +113,14 @@ function Discover({ u, c }: { u: Unit; c: UnitContent }) {
             </Section>
           ) : null;
         })}
+        <div className="mt-5"><Btn block onClick={() => setPhase("examples")}>Veure exemples</Btn></div>
+      </>
+    );
+  }
+  if (phase === "examples") {
+    return (
+      <>
+        <Examples u={u} c={c} />
         <div className="mt-5"><Btn block onClick={() => setPhase("model")}>Veure el text model</Btn></div>
       </>
     );
@@ -133,6 +148,48 @@ function Discover({ u, c }: { u: Unit; c: UnitContent }) {
   );
 }
 
+function RulesExplorer({ rules }: { rules: Parameters<typeof RulesBar>[0]["rules"] }) {
+  const [open, setOpen] = useState<string | null>(rules[0]?.id ?? null);
+  if (!rules.length) return null;
+  return (
+    <Section title="Les regles, una a una">
+      <p className="mx-1 mb-1 text-[14px] text-muted">Toca cada regla. Les tindràs sempre a la vista quan facis els exercicis.</p>
+      <RulesBar rules={rules} open={open} setOpen={setOpen} />
+    </Section>
+  );
+}
+
+function Examples({ u, c }: { u: Unit; c: UnitContent }) {
+  const [more, setMore] = useState<{ ca: string; note: string }[]>([]);
+  const [busy, setBusy] = useState(false);
+  const all = [...(c.examples ?? []), ...more];
+  const gen = async () => {
+    setBusy(true);
+    try {
+      const r = await askJSON<{ ca: string; note: string }[]>(`Escriu 6 frases d'exemple noves, variades i naturals, en català estàndard (formes balears permeses), per il·lustrar aquest tema de nivell B2-C1: «${u.grammar}». Context: ${u.title}. Cada frase ha d'anar amb una explicació molt breu (màxim 12 paraules) del fenomen gramatical. No repeteixis aquestes: ${all.map((x) => x.ca).join(" | ")}.
+Respon NOMÉS amb JSON: [{"ca":"frase","note":"explicació"}]`);
+      const ok = (Array.isArray(r) ? r : []).filter((x) => x && typeof x.ca === "string" && typeof x.note === "string").slice(0, 6);
+      if (!ok.length) throw new AiError("invalid_json", "No s'han pogut generar exemples. Torna-ho a provar.");
+      setMore((m) => [...m, ...ok]);
+    } catch (e) { toast(e instanceof AiError ? e.message : "No s'han pogut generar exemples."); }
+    finally { setBusy(false); }
+  };
+  return (
+    <>
+      <Card className="mb-3 bg-sist/10 p-4 text-[15px]">Llegeix cada exemple en veu alta. Fixa't en la part que explica la nota i intenta dir una frase teva amb la mateixa estructura.</Card>
+      <List>
+        {all.map((x, i) => (
+          <div key={i} className="flex items-start gap-3 px-4 py-3">
+            <div className="min-w-0 flex-1"><div className="text-[16.5px] font-medium">{x.ca}</div><div className="text-[13.5px] text-muted">{x.note}</div></div>
+            {canSpeak() && <button aria-label={`Escolta: ${x.ca}`} className="grid size-8 flex-none place-items-center rounded-full bg-accent/10 text-accent" onClick={() => speak(x.ca)}>▶</button>}
+          </div>
+        ))}
+      </List>
+      <div className="mt-3"><Btn variant="soft" block disabled={busy} onClick={gen}>{busy ? "Creant exemples…" : "Més exemples amb IA"}</Btn></div>
+    </>
+  );
+}
+
 function splitWithNotes(text: string, quotes: string[]): { text: string; note: number | null }[] {
   const marks: { start: number; end: number; note: number }[] = [];
   quotes.forEach((q, i) => {
@@ -147,21 +204,63 @@ function splitWithNotes(text: string, quotes: string[]): { text: string; note: n
   return out;
 }
 
-/* 2 · Practica: 20 exercicis amb correcció en directe; els errors passen al quadern */
+/* 2 · Practica: 20 exercicis sortejats del banc de la unitat (cada vegada, diferents) */
+function validItem(x: unknown): PracticeItem | null {
+  if (!x || typeof x !== "object") return null;
+  const o = x as Record<string, unknown>;
+  if (typeof o.q !== "string" || typeof o.e !== "string") return null;
+  if (o.type === "choice" && Array.isArray(o.options) && typeof o.answer === "string" && o.options.includes(o.answer) && o.options.length >= 2)
+    return { type: "choice", q: o.q, options: shuffle(o.options.map(String)).slice(0, 4), answer: o.answer, e: o.e };
+  if ((o.type === "gap" || o.type === "fix") && Array.isArray(o.answers) && o.answers.length)
+    return { type: o.type, q: o.q, answers: o.answers.map(String), e: o.e };
+  return null;
+}
+
 function PracticeStep({ u, c }: { u: Unit; c: UnitContent }) {
+  const [round, setRound] = useState(0);
+  const [aiItems, setAiItems] = useState<PracticeItem[] | null>(null);
+  const [busy, setBusy] = useState(false);
+  const items = useMemo(() => aiItems ?? shuffle(unitPool(c)).slice(0, 20), [c, round, aiItems]);
   const [res, setRes] = useState<ItemResult[] | null>(null);
+  const firstTime = !useStore((s) => s.units[u.id]?.steps.practica);
+
+  const again = () => { setAiItems(null); setRes(null); setRound(round + 1); window.scrollTo({ top: 0 }); };
+  const genAi = async () => {
+    setBusy(true);
+    try {
+      const raw = await askJSON<unknown[]>(`Crea 10 exercicis nous per practicar aquest tema del català (nivell B2-C1, certificat del GOIB): «${u.grammar}». Context temàtic: ${u.title}.
+Barreja tipus: 6 de tria múltiple (3 opcions, només una correcta) i 4 de completar un buit (___) amb una o dues paraules. Normativa de l'IEC, formes balears acceptades. Explicació breu en català.
+Respon NOMÉS amb JSON: [{"type":"choice","q":"frase amb ___","options":["a","b","c"],"answer":"a","e":"explicació"},{"type":"gap","q":"frase amb ___","answers":["resposta","variant acceptada"],"e":"explicació"}]`);
+      const ok = (Array.isArray(raw) ? raw : []).map(validItem).filter((x): x is PracticeItem => !!x);
+      if (ok.length < 4) throw new AiError("invalid_json", "La IA no ha generat prou exercicis vàlids. Torna-ho a provar.");
+      setAiItems(ok); setRes(null); window.scrollTo({ top: 0 });
+    } catch (e) { toast(e instanceof AiError ? e.message : "No s'han pogut generar exercicis."); }
+    finally { setBusy(false); }
+  };
+
   if (!res) {
-    return <ItemQuiz items={c.practice} title="Exercici" onFinish={(r) => {
-      const today = isoDate();
-      setState((s) => r.filter((x) => !x.ok).reduce((acc, x) => addError(acc, { wrong: x.given, right: x.item.type === "choice" ? x.item.answer : x.item.answers[0], note: x.item.e, source: "test", link: u.id }, today), s));
-      const score = Math.round((r.filter((x) => x.ok).length / r.length) * 100);
-      complete(u, "practica", score); setRes(r);
-    }} />;
+    return (
+      <>
+        {aiItems && <Card className="mb-3 bg-accent/10 p-3 text-[14px]">Exercicis nous generats per IA. Si en veus algun de dubtós, consulta'l al DIEC.</Card>}
+        <ItemQuiz key={`${round}-${aiItems ? "ia" : "b"}`} items={items} rules={RULES_BY_UNIT[u.id]} title="Exercici" onFinish={(r) => {
+          const today = isoDate();
+          setState((s) => r.filter((x) => !x.ok).reduce((acc, x) => addError(acc, { wrong: x.given, right: x.item.type === "choice" ? x.item.answer : x.item.answers[0], note: x.item.e, source: "test", link: u.id }, today), s));
+          const score = Math.round((r.filter((x) => x.ok).length / r.length) * 100);
+          if (firstTime) complete(u, "practica", score); else award("quiz", "practica");
+          setRes(r);
+        }} />
+      </>
+    );
   }
   const ok = res.filter((x) => x.ok).length;
   return (
     <>
       <Card className="space-y-2 p-5 text-center"><div className="text-[44px] font-bold tabular">{ok}/{res.length}</div><Pill tone={ok / res.length >= 0.6 ? "good" : "warn"}>{ok / res.length >= 0.6 ? "Bona base per escriure" : "Repassa les fallades abans d'escriure"}</Pill><div className="text-[14px] text-muted">Les fallades s'han desat al quadern d'errors.</div></Card>
+      <div className="mt-3 grid grid-cols-2 gap-2">
+        <Btn variant="soft" onClick={again}>20 exercicis més</Btn>
+        <Btn variant="soft" disabled={busy} onClick={genAi}>{busy ? "Creant…" : "10 nous amb IA"}</Btn>
+      </div>
+      {firstTime ? null : <Note>Banc de la unitat: {unitPool(c).length} exercicis. Cada ronda en sorteja 20 de diferents.</Note>}
       <Done u={u} text="Pas 2 completat · +20 XP" />
       <Section title="Correcció"><ResultsList results={res} /></Section>
     </>
@@ -178,6 +277,7 @@ function GuidedWrite({ u, c }: { u: Unit; c: UnitContent }) {
   return (
     <>
       <Card className="space-y-2 p-4"><p>{c.skeleton.brief}</p><ul className="list-disc space-y-0.5 pl-5 text-[14.5px] text-muted">{c.skeleton.tips.map((t) => <li key={t}>{t}</li>)}</ul></Card>
+      <RulesSticky rules={RULES_BY_UNIT[u.id] ?? []} />
       <Card className="mt-3 p-4"><LiveEditor id="guided" value={draft} onChange={set} rows={16} /></Card>
       <div className="mt-2 text-[13.5px] text-muted">{gaps > 0 ? `Et queden ${gaps} buits (___) per omplir.` : "Has omplert tots els buits."}</div>
       {!done ? (
@@ -287,6 +387,7 @@ function UnitExam({ u, c }: { u: Unit; c: UnitContent }) {
         <p>{c.exam.brief}</p>
         <div className="text-[13.5px] text-muted">S'avaluarà sobretot: {c.exam.focus.join(" · ")}.</div>
       </Card>
+      <RulesSticky rules={RULES_BY_UNIT[u.id] ?? []} />
       <Card className="mt-3 space-y-3 p-4">
         <div className="flex items-center justify-between"><span className="font-medium">Primera versió</span>
           <button className={`text-[14px] font-semibold tabular ${left !== null && left < 300 ? "text-bad" : "text-accent"}`} onClick={() => setLeft(left === null ? c.exam.minutes * 60 : null)}>{left === null ? `Rellotge ${c.exam.minutes}:00` : fmtClock(left)}</button>
@@ -318,6 +419,12 @@ function UnitExam({ u, c }: { u: Unit; c: UnitContent }) {
       {best !== undefined && best >= 60 && <Done u={u} text={`Unitat ${u.n} superada!`} />}
     </>
   );
+}
+
+function RulesSticky({ rules }: { rules: Parameters<typeof RulesBar>[0]["rules"] }) {
+  const [open, setOpen] = useState<string | null>(null);
+  if (!rules.length) return null;
+  return <RulesBar rules={rules} open={open} setOpen={setOpen} />;
 }
 
 export function CorrectionCard({ c }: { c: Correction }) {

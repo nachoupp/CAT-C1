@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import { Page, Card, Btn, Pill, Note, Section } from "../../components/ui";
 import { ItemQuiz, ResultsList, type ItemResult } from "../../components/ItemQuiz";
-import { CHECKPOINTS, UNITS, type PracticeItem } from "../../content/units";
+import { CHECKPOINTS, UNITS, unitPool, type PracticeItem } from "../../content/units";
+import { RULES_BY_UNIT } from "../../content/rules";
 import { setState, award } from "../../lib/store";
 import { shuffle } from "../../lib/text";
 import { go } from "../../lib/router";
@@ -10,8 +11,8 @@ export default function Checkpoint({ id }: { id: string }) {
   const cp = CHECKPOINTS.find((c) => c.id === id);
   const items = useMemo<PracticeItem[]>(() => {
     if (!cp) return [];
-    const pool = cp.units.flatMap((n) => { const c = UNITS[n - 1]?.content; return c ? [...c.practice, ...c.pretest] : []; });
-    return shuffle(pool).slice(0, 15);
+    const pool = cp.units.flatMap((n) => { const c = UNITS[n - 1]?.content; return c ? [...unitPool(c), ...c.pretest] : []; });
+    return shuffle(pool).slice(0, cp.units.length > 3 ? 20 : 15);
   }, [cp]);
   const [res, setRes] = useState<ItemResult[] | null>(null);
   const back = { to: "ruta", label: "Ruta" };
@@ -19,7 +20,7 @@ export default function Checkpoint({ id }: { id: string }) {
   if (!res) {
     return (
       <Page title={cp.title} subtitle={`Unitats ${cp.units.join(", ")} barrejades · sense correcció fins al final`} back={back}>
-        <ItemQuiz items={items} live={false} title="Pregunta" onFinish={(r) => {
+        <ItemQuiz items={items} live={false} rules={cp.units.flatMap((n) => RULES_BY_UNIT[`u${n}`] ?? [])} title="Pregunta" onFinish={(r) => {
           const score = Math.round((r.filter((x) => x.ok).length / r.length) * 100);
           setState((s) => ({ ...s, checkpoints: { ...s.checkpoints, [cp.id]: { passed: (s.checkpoints[cp.id]?.passed ?? false) || score >= 60, score: Math.max(score, s.checkpoints[cp.id]?.score ?? 0), at: Date.now() } } }));
           if (score >= 60) award("checkpoint", "control");

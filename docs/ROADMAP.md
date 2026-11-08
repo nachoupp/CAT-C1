@@ -10,8 +10,12 @@ Metodologia completa: document «Método Parla C1 · Metodología y hoja de ruta
   píndoles correctores en directe (detector propi + LanguageTool), carpeta d'exàmens (Examen Parla 1 complet
   i exàmens oficials GOIB amb àudio, full de respostes i clau), sense comptes enrere a la pantalla principal.
 
+- **v5.1**: fase 1 completa (unitats 1-6) amb 12+ exemples i 35+ exercicis per unitat (cada ronda en sorteja 20),
+  «Practica més», exercicis i exemples nous amb IA, professor interactiu: regles sempre a la vista, la regla
+  de cada pregunta es destaca en respondre i s'explica per què les altres opcions són incorrectes.
+
 ## Proper
-1. Unitats 4-6 (fase 1 completa) i Control 2.
+1. Unitats 7-9 (fase 2) i Control 3.
 2. Examen Parla 2 i 3.
 3. Sincronització entre dispositius amb compte.
 4. Banc Àrea 2 ampliat i etiquetat per tema.

@@ -3,7 +3,7 @@ import { detect, applyHit, isCorrect, RULES } from "./errors";
 import { level, weekStreak, weekStart, medals, XP } from "./game";
 import { addError, reviewError, alive, dueErrors } from "./notebook";
 import { initialState, migrate } from "./store";
-import { UNITS, CHECKPOINTS, STEPS } from "../content/units";
+import { UNITS, CHECKPOINTS, STEPS, unitPool } from "../content/units";
 import { MOCKS } from "../content/mocks";
 import { markStep, nextStep, unitUnlocked } from "../features/route/progress";
 
@@ -71,12 +71,15 @@ describe("quadern d'errors", () => {
 });
 
 describe("ruta", () => {
-  it("les unitats 1-3 tenen contingut complet i coherent", () => {
-    for (const u of UNITS.slice(0, 3)) {
+  it("les unitats 1-6 tenen contingut complet, molts exemples i molts exercicis", () => {
+    for (const u of UNITS.slice(0, 6)) {
       const c = u.content!;
       expect(c.pretest).toHaveLength(5);
-      expect(c.practice).toHaveLength(20);
-      for (const it of [...c.pretest, ...c.practice]) {
+      expect(c.practice.length).toBeGreaterThanOrEqual(20);
+      expect(unitPool(c).length).toBeGreaterThanOrEqual(35);
+      expect(c.examples!.length).toBeGreaterThanOrEqual(12);
+      expect(new Set(unitPool(c).map((x) => x.q + "|" + (x.type === "choice" ? x.answer : x.answers[0]))).size).toBe(unitPool(c).length);
+      for (const it of [...c.pretest, ...unitPool(c)]) {
         if (it.type === "choice") expect(it.options).toContain(it.answer);
         else expect(it.answers.length).toBeGreaterThan(0);
       }
@@ -117,5 +120,27 @@ describe("exàmens i migració", () => {
     expect(s.notebook).toEqual([]);
     expect(s.settings.tts).toBe(false);
     expect(s.settings.goalExam).toBe("2027-10-02");
+  });
+});
+
+import { RULES_BY_UNIT, ruleFor, whyNot } from "../content/rules";
+describe("professor interactiu", () => {
+  it("cada unitat disponible té regles", () => {
+    for (const u of UNITS.slice(0, 6)) expect(RULES_BY_UNIT[u.id]?.length).toBeGreaterThanOrEqual(4);
+  });
+  it("explica per què una opció és incorrecta", () => {
+    const r = RULES_BY_UNIT.u2;
+    expect(whyNot("en", "hi", r)).toContain("de");
+    expect(whyNot("anglés", "anglès", RULES_BY_UNIT.u5)).toContain("accent");
+    expect(whyNot("plassa", "plaça", RULES_BY_UNIT.u5)).toContain("essa");
+    expect(ruleFor(r, "hi", "Lloc → hi.")?.id).toBe("hi");
+  });
+  it("la majoria de distractors de les unitats tenen explicació automàtica", () => {
+    let total = 0, ok = 0;
+    for (const u of UNITS.slice(0, 6)) for (const it of [...u.content!.pretest, ...unitPool(u.content!)]) {
+      if (it.type !== "choice") continue;
+      for (const o of it.options) if (o !== it.answer) { total++; if (whyNot(o, it.answer, RULES_BY_UNIT[u.id])) ok++; }
+    }
+    expect(ok / total).toBeGreaterThan(0.5);
   });
 });

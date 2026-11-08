@@ -3,6 +3,7 @@ import { Page, Section, Card, Btn, List, Row, Pill, Icon, Note, Segmented, ExtLi
 import { ItemQuiz, ResultsList, type ItemResult } from "../../components/ItemQuiz";
 import { LiveEditor } from "../../components/LiveEditor";
 import { MOCKS, STRATEGY, type MockExam } from "../../content/mocks";
+import { ALL_RULES } from "../../content/rules";
 import { BANK, EXAMS, LINKS } from "../../content";
 import type { ChoiceItem } from "../../content/units";
 import { useStore, setState, award } from "../../lib/store";
@@ -188,7 +189,7 @@ function SystemArea({ live, onDone }: { live: boolean; onDone: (o: AreaOutcome) 
   return (
     <>
       <Card className="mb-4 p-4 text-[14.5px] text-muted">30 preguntes. Cal encertar-ne 18 (60 %).</Card>
-      <ItemQuiz items={items} live={live} title="Pregunta" onFinish={(r) => {
+      <ItemQuiz items={items} live={live} rules={live ? ALL_RULES.filter((r) => r.forms?.length) : []} title="Pregunta" onFinish={(r) => {
         const today = isoDate();
         setState((s) => r.filter((x) => !x.ok).reduce((acc, x) => addError(acc, { wrong: x.given, right: (x.item as ChoiceItem).answer, note: x.item.e, source: "examen" }, today), s));
         onDone({ score: Math.round((r.filter((x) => x.ok).length / r.length) * 100), wrong: r.filter((x) => !x.ok) });

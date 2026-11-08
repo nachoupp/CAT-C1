@@ -1,7 +1,10 @@
 /**
  * Ruta Parla C1: 18 unitats. Cada unitat té 5 passos (descobreix, practica, escriu, parla, examen).
- * Les unitats 1-3 tenen el contingut complet; la resta mostra el pla i es van omplint.
+ * Les unitats 1-6 (fase 1) tenen el contingut complet; la resta mostra el pla i es van omplint.
  */
+
+import { EXTRA } from "./units-extra";
+import { U4, U5, U6 } from "./units-b";
 
 export type StepKey = "descobreix" | "practica" | "escriu" | "parla" | "examen";
 
@@ -11,6 +14,8 @@ export type PracticeItem = ChoiceItem | TypedItem;
 
 export interface UnitContent {
   lessons: string[];
+  examples?: { ca: string; note: string }[];
+  extra?: PracticeItem[];
   pretest: ChoiceItem[];
   model: { title: string; genre: string; text: string; notes: { quote: string; note: string }[] };
   practice: PracticeItem[];
@@ -317,13 +322,18 @@ Atentament,
   }
 };
 
+const withExtra = (c: UnitContent, id: string): UnitContent => ({ ...c, examples: [...(c.examples ?? []), ...(EXTRA[id]?.examples ?? [])], extra: [...(c.extra ?? []), ...(EXTRA[id]?.extra ?? [])] });
+
+/** Banc complet d'exercicis d'una unitat (bàsics + addicionals). */
+export const unitPool = (c: UnitContent): PracticeItem[] => [...c.practice, ...(c.extra ?? [])];
+
 export const UNITS: Unit[] = [
-  { id: "u1", n: 1, phase: 1, title: "Qui soc: trajectòria", grammar: "Pronoms febles I (el, la, li, els, ho)", genre: "Biografia breu", oralTask: "Presentar-te i explicar el teu recorregut", content: U1 },
-  { id: "u2", n: 2, phase: 1, title: "Viure a l'illa: l'habitatge", grammar: "En i hi", genre: "Carta formal de queixa", oralTask: "Descriure un problema i proposar solucions", content: U2 },
-  { id: "u3", n: 3, phase: 1, title: "Feina i formació", grammar: "Relatius (que, què, qui, on, el qual)", genre: "Carta de presentació", oralTask: "Entrevista de feina", content: U3 },
-  { id: "u4", n: 4, phase: 1, title: "Medi ambient", grammar: "Per / per a, comparatius", genre: "Explicar un gràfic", oralTask: "Causes i conseqüències" },
-  { id: "u5", n: 5, phase: 1, title: "Salut i serveis", grammar: "Accents, s/z, apòstrof", genre: "Instància i sol·licitud", oralTask: "Demanar informació a l'Administració" },
-  { id: "u6", n: 6, phase: 1, title: "Mitjans de comunicació", grammar: "Barbarismes i registre", genre: "Notícia", oralTask: "Resumir una notícia" },
+  { id: "u1", n: 1, phase: 1, title: "Qui soc: trajectòria", grammar: "Pronoms febles I (el, la, li, els, ho)", genre: "Biografia breu", oralTask: "Presentar-te i explicar el teu recorregut", content: withExtra(U1, "u1") },
+  { id: "u2", n: 2, phase: 1, title: "Viure a l'illa: l'habitatge", grammar: "En i hi", genre: "Carta formal de queixa", oralTask: "Descriure un problema i proposar solucions", content: withExtra(U2, "u2") },
+  { id: "u3", n: 3, phase: 1, title: "Feina i formació", grammar: "Relatius (que, què, qui, on, el qual)", genre: "Carta de presentació", oralTask: "Entrevista de feina", content: withExtra(U3, "u3") },
+  { id: "u4", n: 4, phase: 1, title: "Medi ambient", grammar: "Per / per a, comparatius", genre: "Explicar un gràfic", oralTask: "Causes i conseqüències", content: U4 },
+  { id: "u5", n: 5, phase: 1, title: "Salut i serveis", grammar: "Accents, s/z, apòstrof", genre: "Instància i sol·licitud", oralTask: "Demanar informació a l'Administració", content: U5 },
+  { id: "u6", n: 6, phase: 1, title: "Mitjans de comunicació", grammar: "Barbarismes i registre", genre: "Notícia", oralTask: "Resumir una notícia", content: U6 },
   { id: "u7", n: 7, phase: 2, title: "Tecnologia", grammar: "Subjuntiu i condicionals", genre: "Article d'opinió (250)", oralTask: "Debat" },
   { id: "u8", n: 8, phase: 2, title: "Cultura i art", grammar: "Combinació de pronoms", genre: "Ressenya", oralTask: "Recomanar i valorar" },
   { id: "u9", n: 9, phase: 2, title: "Educació", grammar: "Connectors i cohesió", genre: "Carta al director", oralTask: "Argumentar i rebatre" },
