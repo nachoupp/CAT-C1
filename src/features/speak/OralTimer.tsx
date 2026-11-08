@@ -3,7 +3,7 @@ import { Page, Section, Card, Btn, Segmented } from "../../components/ui";
 import { ORAL, ofTheDay } from "../../content";
 import { isoDate } from "../../lib/dates";
 import { fmtClock } from "../../lib/text";
-import { canSpeak, speak } from "../../lib/speech";
+import { AudioPlayer } from "../../components/AudioPlayer";
 import { award } from "../../lib/store";
 import { toast } from "../../lib/toast";
 
@@ -28,7 +28,7 @@ export default function OralTimer() {
       <Section title="1 · Lectura en veu alta · 1 min">
         <Card className="space-y-3 p-4">
           <p className="text-[18px] leading-relaxed">{text}</p>
-          {canSpeak() && <Btn variant="soft" onClick={() => speak(text)}>Escolta el model</Btn>}
+          <AudioPlayer text={text} label="Model de lectura" />
         </Card>
       </Section>
       <Section title="2 · Intervenció individual">

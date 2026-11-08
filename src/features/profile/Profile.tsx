@@ -5,6 +5,9 @@ import { level, totalXp, medals, weekStreak, weekStart, activeDays, WEEK_GOAL, L
 import { readiness } from "../../lib/readiness";
 import { addDays, isoDate } from "../../lib/dates";
 import { toast } from "../../lib/toast";
+import { AccountCard } from "../account/Account";
+import { VOICES, playText } from "../../lib/audio";
+import { Segmented } from "../../components/ui";
 
 export default function Profile() {
   const s = useStore((x) => x);
@@ -16,7 +19,8 @@ export default function Profile() {
   const r = readiness(s);
   return (
     <Page title="Perfil" subtitle={`Nivell ${lv.name} · ${totalXp(s)} XP · ratxa de ${st.weeks} ${st.weeks === 1 ? "setmana" : "setmanes"}`}>
-      <Card className="p-4">
+      <AccountCard />
+      <Card className="mt-3 p-4">
         <div className="flex items-end justify-between gap-1.5">
           {LEVELS.map((l, i) => (
             <div key={l.name} className="flex flex-1 flex-col items-center gap-1">
@@ -59,6 +63,14 @@ export default function Profile() {
         </div>
       </Section>
 
+      <Section title="Veu">
+        <Card className="space-y-3 p-4">
+          <Segmented value={s.settings.voice ?? "joana"} onChange={(v) => setState((x) => ({ ...x, settings: { ...x.settings, voice: v } }))} options={VOICES.map((v) => ({ value: v.id, label: v.label }))} />
+          <Btn variant="soft" onClick={() => void playText("Bon dia! Aquesta és la veu que sentiràs als exemples, a les lectures i a les converses.")}>Prova la veu</Btn>
+          <p className="text-[13px] text-muted">Veus neuronals en català quan el servidor les té activades; si no, la veu del dispositiu.</p>
+        </Card>
+      </Section>
+
       <Section title="Organització">
         <List>
           <Row left={<Icon tone="accent">⚑</Icon>} title="Calendari d'exàmens" detail="Inscripcions, exàmens i avisos al teu calendari" to="calendari" />
@@ -84,7 +96,7 @@ function Backup() {
   return (
     <Section title="Les teves dades">
       <Card className="space-y-3 p-4 text-[14px]">
-        <p className="text-muted">El progrés es desa en aquest dispositiu. Per continuar en un altre, copia el codi aquí i enganxa'l allà.</p>
+        <p className="text-muted">Sense compte, el progrés es desa en aquest dispositiu. També pots passar-lo a un altre amb aquest codi.</p>
         <div className="flex flex-wrap gap-2"><Btn variant="soft" onClick={copy}>Copia el codi</Btn><Btn variant="soft" onClick={() => setOpen(true)}>Enganxa un codi</Btn></div>
         {open && (
           <div className="space-y-2">

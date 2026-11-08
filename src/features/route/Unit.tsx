@@ -10,7 +10,8 @@ import { useStore, setState, award } from "../../lib/store";
 import type { StepKey } from "../../lib/types";
 import { isoDate } from "../../lib/dates";
 import { countWords, fmtClock, shuffle } from "../../lib/text";
-import { canSpeak, speak } from "../../lib/speech";
+import { playText } from "../../lib/audio";
+import { AudioPlayer } from "../../components/AudioPlayer";
 import { askJSON, AiError } from "../../lib/ai";
 import { addError } from "../../lib/notebook";
 import { go } from "../../lib/router";
@@ -131,6 +132,7 @@ function Discover({ u, c }: { u: Unit; c: UnitContent }) {
       <Card className="p-4">
         <div className="text-[13px] text-muted">{c.model.genre}</div>
         <div className="mt-1 text-[19px] font-bold">{c.model.title}</div>
+        <div className="mt-3"><AudioPlayer text={c.model.text} label="Escolta el text model" /></div>
         <div className="mt-3 whitespace-pre-wrap text-[16.5px] leading-[1.7]">
           {parts.map((p, i) => p.note === null ? <span key={i}>{p.text}</span> : (
             <mark key={i} className="note" role="button" tabIndex={0} aria-pressed={open === p.note} onClick={() => setOpen(p.note)} onKeyDown={(e) => { if (e.key === "Enter") setOpen(p.note); }}>{p.text}</mark>
@@ -181,7 +183,7 @@ Respon NOMÉS amb JSON: [{"ca":"frase","note":"explicació"}]`);
         {all.map((x, i) => (
           <div key={i} className="flex items-start gap-3 px-4 py-3">
             <div className="min-w-0 flex-1"><div className="text-[16.5px] font-medium">{x.ca}</div><div className="text-[13.5px] text-muted">{x.note}</div></div>
-            {canSpeak() && <button aria-label={`Escolta: ${x.ca}`} className="grid size-8 flex-none place-items-center rounded-full bg-accent/10 text-accent" onClick={() => speak(x.ca)}>▶</button>}
+            <button aria-label={`Escolta: ${x.ca}`} className="grid size-8 flex-none place-items-center rounded-full bg-accent/10 text-accent" onClick={() => void playText(x.ca)}>▶</button>
           </div>
         ))}
       </List>
@@ -312,7 +314,7 @@ function OralStep({ u, c }: { u: Unit; c: UnitContent }) {
         <Card className="space-y-3 p-4">
           <p className="text-[17.5px] leading-relaxed">{c.oral.reading}</p>
           <p className="text-[14px] text-muted">Escolta'l, després llegeix-lo en veu alta imitant el ritme i l'entonació. Repeteix-ho dues vegades.</p>
-          {canSpeak() && <Btn variant="soft" onClick={() => { if (!speak(c.oral.reading)) toast("Instal·la una veu catalana al dispositiu per sentir-ho millor"); }}>Escolta el model</Btn>}
+          <AudioPlayer text={c.oral.reading} label="Model de lectura" />
         </Card>
       </Section>
       <Section title="2 · Exposició 4/3/2">

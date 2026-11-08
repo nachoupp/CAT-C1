@@ -3,7 +3,9 @@
 //   GEMINI_API_KEY    (Google AI Studio)  · opcional GEMINI_MODEL   (per defecte gemini-2.5-flash)
 //   ANTHROPIC_API_KEY (Claude API)        · opcional ANTHROPIC_MODEL (per defecte claude-haiku-5-5)
 // Opcional: ALLOWED_ORIGIN = https://el-teu-domini.vercel.app (bloqueja altres webs)
+// Si hi ha SUPABASE_URL i SUPABASE_ANON_KEY, només hi poden accedir usuaris amb sessió (AI_PUBLIC=1 ho desactiva).
 import { askModel } from "./_model.js";
+import { requireUser } from "./_auth.js";
 
 const hits = new Map(); // límit simple: 30 peticions / 10 min per IP (per instància)
 export default async function handler(req, res) {
@@ -17,6 +19,7 @@ export default async function handler(req, res) {
   const now = Date.now(), h = (hits.get(ip) || []).filter(t => now - t < 600000);
   if (h.length >= 30) return res.status(429).json({ error: "rate_limited" });
   h.push(now); hits.set(ip, h);
+  if (!(await requireUser(req, process.env)).ok) return res.status(401).json({ error: "login" });
   try {
     const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
     const text = await askModel(body, process.env);

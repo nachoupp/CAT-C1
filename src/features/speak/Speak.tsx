@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Page, Section, List, Row, Icon, Card, Btn, Note } from "../../components/ui";
 import { ROLEPLAYS } from "../../content";
 import { askAI, askJSON, AiError, type Turn } from "../../lib/ai";
-import { canSpeak, speak, stopSpeaking, listen, recognizerCtor } from "../../lib/speech";
+import { listen, recognizerCtor } from "../../lib/speech";
+import { playText, stopAll } from "../../lib/audio";
 import { useStore, setState, award } from "../../lib/store";
 import type { Roleplay } from "../../lib/types";
 import { UNITS } from "../../content/units";
@@ -17,7 +18,7 @@ export function UnitSpeak({ unitId }: { unitId: string }) {
   const u = UNITS.find((x) => x.id === unitId);
   if (!u?.content) return <Speak />;
   const role: Roleplay = { id: `unit-${u.id}`, title: `Conversa · Unitat ${u.n}`, subtitle: u.oralTask, brief: u.content.oral.bot };
-  return <Chat role={role} onExit={() => { stopSpeaking(); history.back(); }} />;
+  return <Chat role={role} onExit={() => { stopAll(); history.back(); }} />;
 }
 
 export default function Speak() {
@@ -32,7 +33,7 @@ export default function Speak() {
       </Page>
     );
   }
-  return <Chat role={role} onExit={() => { stopSpeaking(); setRole(null); }} />;
+  return <Chat role={role} onExit={() => { stopAll(); setRole(null); }} />;
 }
 
 function Chat({ role, onExit }: { role: Roleplay; onExit: () => void }) {
@@ -51,7 +52,7 @@ function Chat({ role, onExit }: { role: Roleplay; onExit: () => void }) {
     try {
       const t = await askAI(next);
       setTurns([...next, { role: "assistant", content: t }]);
-      if (tts && canSpeak()) speak(t);
+      if (tts) void playText(t);
     } catch (e) {
       toast(e instanceof AiError ? e.message : "No s'ha pogut continuar la conversa.");
       if (next.length <= 1) onExit();
@@ -93,7 +94,7 @@ Conversa:\n${tr}`);
     <Page title={role.title} subtitle={role.subtitle} back={{ to: "parla", label: "Situacions", onClick: onExit }}>
       <div className="flex flex-col gap-2">
         {turns.slice(1).map((t, i) => (
-          <div key={i} className={`max-w-[85%] whitespace-pre-wrap rounded-[18px] px-3.5 py-2.5 leading-snug ${t.role === "user" ? "self-end bg-accent text-white" : "self-start bg-card"}`}>{t.content}</div>
+          <div key={i} className={`max-w-[85%] whitespace-pre-wrap rounded-[18px] px-3.5 py-2.5 leading-snug ${t.role === "user" ? "self-end bg-accent text-white" : "self-start bg-card"}`}>{t.content}{t.role === "assistant" && <button onClick={() => void playText(t.content)} aria-label="Torna a escoltar" className="ml-2 align-middle text-accent">▶</button>}</div>
         ))}
         {busy && <div className="self-start rounded-[18px] bg-card px-3.5 py-2.5 text-muted">…</div>}
       </div>

@@ -30,7 +30,8 @@ export interface AppState {
   lessons: Record<string, string>;
   drafts: Record<string, string>;
   games: { match?: number; barb?: number };
-  settings: { tts: boolean; nextExam: string; goalExam: string };
+  settings: { tts: boolean; nextExam: string; goalExam: string; voice?: string; rate?: number };
+  updatedAt?: number;
 }
 
 export interface Milestone { date: string; title: string; detail: string; kind: "registration" | "exam" | "admin" }

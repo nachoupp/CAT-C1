@@ -14,6 +14,10 @@ Metodologia completa: document «Método Parla C1 · Metodología y hoja de ruta
   «Practica més», exercicis i exemples nous amb IA, professor interactiu: regles sempre a la vista, la regla
   de cada pregunta es destaca en respondre i s'explica per què les altres opcions són incorrectes.
 
+- **v5.2**: comptes amb Supabase (registre per correu, recuperació de contrasenya, progrés sincronitzat i fusionat
+  entre dispositius), IA i veu protegides amb sessió, veu neuronal catalana (/api/tts: Azure o ElevenLabs),
+  reproductor d'àudio propi (velocitat, ±5 s, repetició, límit d'audicions als simulacres).
+
 ## Proper
 1. Unitats 7-9 (fase 2) i Control 3.
 2. Examen Parla 2 i 3.

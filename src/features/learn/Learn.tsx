@@ -4,7 +4,7 @@ import { LESSONS, LINKS } from "../../content";
 import { useStore, setState } from "../../lib/store";
 import { isoDate } from "../../lib/dates";
 import { askAI, AiError } from "../../lib/ai";
-import { canSpeak, speak } from "../../lib/speech";
+import { AudioPlayer } from "../../components/AudioPlayer";
 import { go } from "../../lib/router";
 import { toast } from "../../lib/toast";
 
@@ -80,7 +80,7 @@ export function LessonView({ id }: { id: string }) {
         <Section title="Exemple">
           <Card className="space-y-3 p-4">
             <div className="text-[19px] font-bold tracking-tight">{l.example}</div>
-            {canSpeak() && <Btn variant="soft" onClick={() => { if (!speak(l.example)) toast("Instal·la una veu catalana al dispositiu per escoltar-ho millor"); }}>Escolta-ho</Btn>}
+            <AudioPlayer text={l.example} />
           </Card>
         </Section>
       )}

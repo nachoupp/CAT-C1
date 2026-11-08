@@ -16,4 +16,4 @@ jobs:
       - run: npm test
       - run: npm run build
       - name: Comprova la funció d'IA
-        run: node --check api/ia.js && node --check api/_model.js
+        run: node --check api/ia.js && node --check api/_model.js && node --check api/tts.js && node --check api/_auth.js

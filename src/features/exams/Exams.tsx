@@ -9,7 +9,8 @@ import type { ChoiceItem } from "../../content/units";
 import { useStore, setState, award } from "../../lib/store";
 import { isoDate } from "../../lib/dates";
 import { countWords, fmtClock, shuffle } from "../../lib/text";
-import { canSpeak, speak, stopSpeaking } from "../../lib/speech";
+import { stopAll } from "../../lib/audio";
+import { AudioPlayer } from "../../components/AudioPlayer";
 import { askJSON, AiError } from "../../lib/ai";
 import { addError } from "../../lib/notebook";
 import { go } from "../../lib/router";
@@ -158,11 +159,10 @@ function Comprehension({ m, live, onDone }: { m: MockExam; live: boolean; onDone
   const parts: Part[] = [...m.listening.map((l) => ({ kind: "l" as const, ...l })), ...m.reading.map((r) => ({ kind: "r" as const, ...r }))];
   const [i, setI] = useState(0);
   const [acc, setAcc] = useState<ItemResult[]>([]);
-  const [plays, setPlays] = useState(0);
   const p = parts[i];
   const next = (r: ItemResult[]) => {
     const all = [...acc, ...r];
-    stopSpeaking(); setPlays(0);
+    stopAll();
     if (i + 1 >= parts.length) onDone({ score: Math.round((all.filter((x) => x.ok).length / all.length) * 100), wrong: all.filter((x) => !x.ok) });
     else { setAcc(all); setI(i + 1); window.scrollTo({ top: 0 }); }
   };
@@ -172,9 +172,8 @@ function Comprehension({ m, live, onDone }: { m: MockExam; live: boolean; onDone
       {p.kind === "l" ? (
         <Card className="mb-4 space-y-2 p-4">
           <p className="text-[14.5px] text-muted">Llegeix les preguntes i escolta l'àudio. Tens dues audicions.</p>
-          {canSpeak() ? (
-            <Btn variant="soft" disabled={plays >= 2} onClick={() => { speak(p.script); setPlays(plays + 1); }}>{plays >= 2 ? "Audicions esgotades" : `Escolta (${2 - plays} restants)`}</Btn>
-          ) : <details><summary className="cursor-pointer text-accent">El dispositiu no pot llegir en veu alta: mostra la transcripció</summary><p className="mt-2">{p.script}</p></details>}
+          <AudioPlayer key={i} text={p.script} maxPlays={2} />
+          <details><summary className="cursor-pointer text-[13.5px] text-accent">Transcripció (només per revisar al final)</summary><p className="mt-2 text-[15px]">{p.script}</p></details>
         </Card>
       ) : (
         <Card className="mb-4 whitespace-pre-wrap p-4 text-[16px] leading-relaxed">{p.text}</Card>
@@ -240,7 +239,7 @@ function OralArea({ m, onDone }: { m: MockExam; onDone: (o: AreaOutcome) => void
   return (
     <>
       <Section title="Exercici 1 · Lectura en veu alta (20 punts)">
-        <Card className="space-y-3 p-4"><p className="text-[17px] leading-relaxed">{m.oral.reading}</p>{canSpeak() && <Btn variant="soft" onClick={() => speak(m.oral.reading)}>Escolta el model després de llegir</Btn>}</Card>
+        <Card className="space-y-3 p-4"><p className="text-[17px] leading-relaxed">{m.oral.reading}</p><AudioPlayer text={m.oral.reading} label="Model (escolta'l després de llegir)" /></Card>
       </Section>
       <Section title="Exercici 2 · Interacció (30 punts)">
         <Card className="space-y-3 p-4"><p>{m.oral.interaction}</p><Btn variant="soft" onClick={() => go("parla")}>Fes-la amb l'interlocutor virtual</Btn></Card>
@@ -295,8 +294,8 @@ export function OfficialExam({ id }: { id: string }) {
         <div className="flex flex-wrap gap-x-4 gap-y-1"><ExtLink href={e.pdf}>Obre l'enunciat (PDF)</ExtLink><ExtLink href={LINKS.goibExams}>Web oficial</ExtLink></div>
         <div className="space-y-2">
           <div className="text-[14px] font-medium">Àrea 1 · Àudios</div>
-          <audio controls preload="none" src={e.audio1} className="w-full" />
-          <audio controls preload="none" src={e.audio2} className="w-full" />
+          <AudioPlayer src={e.audio1} label="Exercici 1" />
+          <AudioPlayer src={e.audio2} label="Exercici 2" />
         </div>
       </Card>
       <AreaTimer minutes={80} />

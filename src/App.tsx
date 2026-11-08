@@ -19,6 +19,7 @@ import { PaperList, Diagnostic } from "./features/write/Paper";
 import Speak, { UnitSpeak } from "./features/speak/Speak";
 import OralTimer from "./features/speak/OralTimer";
 import type { StepKey } from "./lib/types";
+import Account, { NewPassword } from "./features/account/Account";
 
 const TABS = [
   { id: "ruta", label: "Ruta", icon: <path d="M6 20c0-4 4-4 4-8s-4-4-4-8M18 4c0 4-4 4-4 8s4 4 4 8M6 4h.01M18 20h.01" /> },
@@ -35,7 +36,7 @@ function tabOf(route: string): string {
   if (/^(exam|official)-/.test(route)) return "examens";
   if (route.startsWith("lesson-")) return "quadern";
   if (route.startsWith("parla")) return "practica";
-  if (["calendari", "audios"].includes(route)) return "perfil";
+  if (["calendari", "audios", "compte", "nova-contrasenya"].includes(route)) return "perfil";
   if (["test", "test-ia", "simulacre", "joc-frases", "joc-barbarismes", "connectors", "escriu", "fitxes", "fitxa0", "parla", "oral"].includes(route)) return "practica";
   return TABS.some((t) => t.id === route) ? route : "ruta";
 }
@@ -55,6 +56,8 @@ function screen(route: string): ReactNode {
     case "quadern": return <Notebook />;
     case "repas": return <Review />;
     case "perfil": return <Profile />;
+    case "compte": return <Account />;
+    case "nova-contrasenya": return <NewPassword />;
     case "calendari": return <CalendarView />;
     case "test": return <Quiz />;
     case "test-ia": return <Quiz ai />;

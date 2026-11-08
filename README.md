@@ -34,6 +34,9 @@ npm run build      # typecheck + build de producció a dist/
 ```
 Per provar la IA en local: `npx vercel dev` amb una clau a `.env` (vegeu `.env.example`).
 
+## Configuració completa
+Guia pas a pas (Supabase, IA i veu): [`docs/SETUP.md`](docs/SETUP.md).
+
 ## Publicar a Vercel
 1. Vercel → **Add New → Project** → importa `nachoupp/CAT-C1` (Vercel detecta Vite).
 2. **Settings → Environment Variables**, afegeix-ne UNA:

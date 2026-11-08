@@ -47,8 +47,9 @@ const listeners = new Set<() => void>();
 
 export function getState(): AppState { return state; }
 
-export function setState(fn: (s: AppState) => AppState): void {
-  state = fn(state);
+export function setState(fn: (s: AppState) => AppState, opts: { silent?: boolean } = {}): void {
+  const next = fn(state);
+  state = opts.silent ? next : { ...next, updatedAt: Date.now() };
   try { localStorage.setItem(KEY, JSON.stringify(state)); } catch { /* sense persistència */ }
   listeners.forEach((l) => l());
 }

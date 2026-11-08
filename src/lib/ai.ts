@@ -1,3 +1,5 @@
+import { accessToken } from "./supabase";
+
 /** Client de la funció /api/ia (Gemini o Claude al servidor; la clau no surt mai del servidor). */
 export interface Turn { role: "user" | "assistant"; content: string }
 
@@ -13,11 +15,13 @@ export async function askAI(input: string | Turn[], opts: { image?: Blob; json?:
   if (opts.image) body.image = { mime: opts.image.type || "image/jpeg", data: await toBase64(opts.image) };
   let res: Response;
   try {
-    res = await fetch(ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body), signal: opts.signal });
+    const token = await accessToken();
+    res = await fetch(ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) }, body: JSON.stringify(body), signal: opts.signal });
   } catch {
     throw new AiError("no_endpoint", "No hi ha connexió amb el servei d'IA.");
   }
   if (res.status === 404) throw new AiError("no_endpoint", "La IA no està configurada en aquest servidor. Mira el README.");
+  if (res.status === 401) throw new AiError("upstream", "Entra al teu compte (Perfil) per fer servir la IA.");
   if (res.status === 429) throw new AiError("rate_limited", "Massa peticions seguides. Espera uns minuts.");
   if (!res.ok) throw new AiError("upstream", "El servei d'IA ha fallat. Torna-ho a provar.");
   const data = (await res.json()) as { text?: string };
