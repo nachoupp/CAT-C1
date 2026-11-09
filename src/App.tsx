@@ -19,6 +19,8 @@ import { PaperList, Diagnostic } from "./features/write/Paper";
 import Speak, { UnitSpeak } from "./features/speak/Speak";
 import OralTimer from "./features/speak/OralTimer";
 import OralCoachPage from "./features/speak/OralCoach";
+import Scan from "./features/write/Scan";
+import { ListeningRun, Dictation } from "./features/practice/Listen";
 import type { StepKey } from "./lib/types";
 import Account, { NewPassword } from "./features/account/Account";
 
@@ -36,9 +38,9 @@ function tabOf(route: string): string {
   if (/^(unit|checkpoint)-/.test(route) || route === "repas") return route === "repas" ? "quadern" : "ruta";
   if (/^(exam|official)-/.test(route)) return "examens";
   if (route.startsWith("lesson-")) return "quadern";
-  if (route.startsWith("parla")) return "practica";
-  if (["calendari", "audios", "compte", "nova-contrasenya"].includes(route)) return "perfil";
-  if (["test", "test-ia", "simulacre", "joc-frases", "joc-barbarismes", "connectors", "escriu", "fitxes", "fitxa0", "parla", "oral", "escolta"].includes(route)) return "practica";
+  if (route.startsWith("parla") || route.startsWith("audio-") || route === "dictat" || route === "audios") return "practica";
+  if (["calendari", "compte", "nova-contrasenya"].includes(route)) return "perfil";
+  if (["test", "test-ia", "simulacre", "joc-frases", "joc-barbarismes", "connectors", "escriu", "fitxes", "fitxa0", "parla", "oral", "escolta", "escaneja"].includes(route)) return "practica";
   return TABS.some((t) => t.id === route) ? route : "ruta";
 }
 
@@ -51,6 +53,7 @@ function screen(route: string): ReactNode {
   if ((m = route.match(/^official-(\w+)$/))) return <OfficialExam id={m[1]} />;
   if ((m = route.match(/^parla-unit-(u\d+)$/))) return <UnitSpeak unitId={m[1]} />;
   if (route.startsWith("lesson-")) return <LessonView id={route.slice(7)} />;
+  if (route.startsWith("audio-")) return <ListeningRun id={route.slice(6)} />;
   switch (route) {
     case "practica": return <Practice />;
     case "examens": return <Exams />;
@@ -67,12 +70,14 @@ function screen(route: string): ReactNode {
     case "joc-barbarismes": return <BarbGame />;
     case "connectors": return <Flashcards />;
     case "audios": return <Audios />;
+    case "dictat": return <Dictation />;
     case "escriu": return <Write />;
     case "fitxes": return <PaperList />;
     case "fitxa0": return <Diagnostic />;
     case "parla": return <Speak />;
     case "oral": return <OralTimer />;
     case "escolta": return <OralCoachPage />;
+    case "escaneja": return <Scan />;
     default: return <Route />;
   }
 }

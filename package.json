@@ -1,9 +1,9 @@
 {
   "name": "parla-c1",
   "private": true,
-  "version": "5.2.0",
+  "version": "6.0.0",
   "type": "module",
-  "description": "Entrenador expert per al certificat C1 de catal\u00e0 (GOIB)",
+  "description": "Entrenador expert per al certificat C1 de català (GOIB)",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

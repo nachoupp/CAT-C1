@@ -6,6 +6,7 @@ import { readiness } from "../../lib/readiness";
 import { addDays, isoDate } from "../../lib/dates";
 import { toast } from "../../lib/toast";
 import { AccountCard } from "../account/Account";
+import { ServicesCard } from "./Services";
 import { VOICES, playText, serverVoices, type VoiceInfo } from "../../lib/audio";
 import { Segmented } from "../../components/ui";
 
@@ -20,6 +21,9 @@ export default function Profile() {
   return (
     <Page title="Perfil" subtitle={`Nivell ${lv.name} · ${totalXp(s)} XP · ratxa de ${st.weeks} ${st.weeks === 1 ? "setmana" : "setmanes"}`}>
       <AccountCard />
+      <Section title="Serveis">
+        <ServicesCard />
+      </Section>
       <Card className="mt-3 p-4">
         <div className="flex items-end justify-between gap-1.5">
           {LEVELS.map((l, i) => (
@@ -72,6 +76,7 @@ export default function Profile() {
         </List>
       </Section>
       <Backup />
+      <p className="mt-8 text-center text-[12px] text-muted">Parla C1 · versió {typeof __VERSION__ !== "undefined" ? __VERSION__ : "dev"} · {typeof __BUILD__ !== "undefined" ? __BUILD__ : ""}</p>
     </Page>
   );
 }

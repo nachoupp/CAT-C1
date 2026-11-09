@@ -1,3 +1,4 @@
+import { compressImage } from "./image";
 import { accessToken } from "./supabase";
 
 /** Client de la funció /api/ia (Gemini o Claude al servidor; la clau no surt mai del servidor). */
@@ -12,7 +13,7 @@ const ENDPOINT = (import.meta.env.VITE_AI_ENDPOINT as string | undefined) ?? "/a
 export async function askAI(input: string | Turn[], opts: { image?: Blob; json?: boolean; signal?: AbortSignal } = {}): Promise<string> {
   const messages: Turn[] = typeof input === "string" ? [{ role: "user", content: input }] : input;
   const body: Record<string, unknown> = { messages, json: !!opts.json };
-  if (opts.image) body.image = { mime: opts.image.type || "image/jpeg", data: await toBase64(opts.image) };
+  if (opts.image) { const img = await compressImage(opts.image); body.image = { mime: img.type || "image/jpeg", data: await toBase64(img) }; }
   let res: Response;
   try {
     const token = await accessToken();

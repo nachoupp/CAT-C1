@@ -1,10 +1,14 @@
 import type { ReactNode, ButtonHTMLAttributes } from "react";
+import { useWake } from "../lib/wakelock";
 import { go } from "../lib/router";
 
 export function Page({ title, subtitle, back, children }: { title: string; subtitle?: ReactNode; back?: { to: string; label: string; onClick?: () => void }; children: ReactNode }) {
   return (
     <main className="mx-auto max-w-[680px] px-4 pt-5 pb-28">
-      {back && <button onClick={back.onClick ?? (() => go(back.to))} className="text-accent font-medium">‹ {back.label}</button>}
+      <div className="flex min-h-[28px] items-center justify-between gap-2">
+        {back ? <button onClick={back.onClick ?? (() => go(back.to))} className="text-accent font-medium">‹ {back.label}</button> : <span />}
+        <WakeToggle />
+      </div>
       <h1 className="mt-2 text-[32px] font-bold tracking-tight text-balance">{title}</h1>
       {subtitle && <p className="mt-0.5 mb-5 text-[15px] text-muted">{subtitle}</p>}
       {!subtitle && <div className="mb-4" />}
@@ -118,4 +122,16 @@ export function Note({ children }: { children: ReactNode }) {
 
 export function ExtLink({ href, children }: { href: string; children: ReactNode }) {
   return <a href={href} target="_blank" rel="noopener" className="font-medium text-accent">{children}</a>;
+}
+
+/** Botó per mantenir la pantalla encesa mentre estudies (només si el navegador ho permet). */
+export function WakeToggle() {
+  const w = useWake();
+  if (!w.supported) return null;
+  return (
+    <button onClick={w.toggle} aria-pressed={w.on} title={w.on ? "La pantalla no s'apagarà" : "Mantén la pantalla encesa"}
+      className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-[13px] font-semibold transition ${w.on ? "bg-warn/20 text-warn" : "bg-card text-muted"}`}>
+      <span aria-hidden>{w.on ? "☀" : "☾"}</span>{w.on ? "Pantalla encesa" : "Pantalla"}
+    </button>
+  );
 }

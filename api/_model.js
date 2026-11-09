@@ -37,15 +37,21 @@ export async function askModel(body, env) {
       if (i === msgs.length - 1 && img) parts.push({ inline_data: { mime_type: img.mime || "image/jpeg", data: img.data } });
       return { role: m.role === "assistant" ? "model" : "user", parts };
     });
-    const model = env.GEMINI_MODEL || "gemini-2.5-flash";
-    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
-      method: "POST",
-      headers: { "x-goog-api-key": env.GEMINI_API_KEY, "content-type": "application/json" },
-      body: JSON.stringify({ contents, generationConfig: body.json ? { responseMimeType: "application/json" } : {} })
-    });
-    const d = await r.json();
-    if (!r.ok) throw Object.assign(new Error(d?.error?.message || "gemini"), { status: 502 });
-    return (d.candidates?.[0]?.content?.parts || []).map(p => p.text || "").join("");
+    // Si el model configurat ja no existeix (Google en retira de vells), es prova l'àlies estable.
+    const models = [env.GEMINI_MODEL || "gemini-2.5-flash", "gemini-flash-latest"];
+    let lastErr = "gemini";
+    for (const model of models) {
+      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+        method: "POST",
+        headers: { "x-goog-api-key": env.GEMINI_API_KEY, "content-type": "application/json" },
+        body: JSON.stringify({ contents, generationConfig: body.json ? { responseMimeType: "application/json" } : {} })
+      });
+      const d = await r.json().catch(() => ({}));
+      if (r.ok) return (d.candidates?.[0]?.content?.parts || []).map(p => p.text || "").join("");
+      lastErr = d?.error?.message || `gemini ${r.status}`;
+      if (r.status !== 404) break;
+    }
+    throw Object.assign(new Error(lastErr), { status: 502 });
   }
 
   throw Object.assign(new Error("Falta GEMINI_API_KEY o ANTHROPIC_API_KEY"), { status: 404 });

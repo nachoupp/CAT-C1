@@ -8,7 +8,7 @@ export type StepKey = "descobreix" | "practica" | "escriu" | "parla" | "examen";
 export interface UnitProgress { steps: Partial<Record<StepKey, { at: number; score?: number }>>; passed: boolean; examScore?: number; rewritten?: boolean }
 export interface NotebookEntry {
   id: string; wrong: string; right: string; note: string; link?: string;
-  source: "escriptura" | "oral" | "test" | "examen" | "ia"; count: number; added: string; card: import("./srs").Card;
+  source: "escriptura" | "oral" | "test" | "examen" | "ia" | "dictat"; count: number; added: string; card: import("./srs").Card;
 }
 export interface MockResult { at: number; examId: string; areas: Partial<Record<AreaKey, number>> }
 export interface XpEvent { at: number; kind: string; xp: number }

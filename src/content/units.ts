@@ -4,6 +4,7 @@
  */
 
 import { MORE } from "./units-more";
+import { U7, U8, U9 } from "./units-c";
 import { EXTRA } from "./units-extra";
 import { U4, U5, U6 } from "./units-b";
 
@@ -336,9 +337,9 @@ export const UNITS: Unit[] = [
   { id: "u4", n: 4, phase: 1, title: "Medi ambient", grammar: "Per / per a, comparatius", genre: "Explicar un gràfic", oralTask: "Causes i conseqüències", content: withMore(U4, "u4") },
   { id: "u5", n: 5, phase: 1, title: "Salut i serveis", grammar: "Accents, s/z, apòstrof", genre: "Instància i sol·licitud", oralTask: "Demanar informació a l'Administració", content: withMore(U5, "u5") },
   { id: "u6", n: 6, phase: 1, title: "Mitjans de comunicació", grammar: "Barbarismes i registre", genre: "Notícia", oralTask: "Resumir una notícia", content: withMore(U6, "u6") },
-  { id: "u7", n: 7, phase: 2, title: "Tecnologia", grammar: "Subjuntiu i condicionals", genre: "Article d'opinió (250)", oralTask: "Debat" },
-  { id: "u8", n: 8, phase: 2, title: "Cultura i art", grammar: "Combinació de pronoms", genre: "Ressenya", oralTask: "Recomanar i valorar" },
-  { id: "u9", n: 9, phase: 2, title: "Educació", grammar: "Connectors i cohesió", genre: "Carta al director", oralTask: "Argumentar i rebatre" },
+  { id: "u7", n: 7, phase: 2, title: "Tecnologia", grammar: "Subjuntiu i condicionals", genre: "Article d'opinió (250)", oralTask: "Debat", content: U7 },
+  { id: "u8", n: 8, phase: 2, title: "Cultura i art", grammar: "Combinació de pronoms", genre: "Ressenya", oralTask: "Recomanar i valorar", content: U8 },
+  { id: "u9", n: 9, phase: 2, title: "Educació", grammar: "Connectors i cohesió", genre: "Carta al director", oralTask: "Argumentar i rebatre", content: U9 },
   { id: "u10", n: 10, phase: 3, title: "Burocràcia", grammar: "Tractament (vostè, vós) i fórmules", genre: "Convocatòria i acta", oralTask: "Reunió de veïns" },
   { id: "u11", n: 11, phase: 3, title: "Economia i consum", grammar: "Com / com a, derivació", genre: "Reclamació", oralTask: "Negociar un acord" },
   { id: "u12", n: 12, phase: 3, title: "Disseny i publicitat", grammar: "Locucions amb fer, tenir, anar", genre: "Text publicitari", oralTask: "Analitzar un eslògan amb doble sentit" },

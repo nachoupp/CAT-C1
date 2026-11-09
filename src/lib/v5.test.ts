@@ -192,3 +192,30 @@ describe("ampliació d'exercicis", () => {
     expect(isCorrectItem("Estic preocupat per l'operació.", find("la operació") as never)).toBe(true);
   });
 });
+
+import { LISTENINGS, DICTATIONS } from "../content/listening";
+import { diffWords, dictationScore } from "./dictation";
+describe("lot v6", () => {
+  it("unitats 7-9 completes amb regles", () => {
+    for (const u of ALL_UNITS.slice(6, 9)) {
+      expect(u.content).toBeDefined();
+      expect(poolOf(u.content!).length).toBeGreaterThanOrEqual(40);
+      expect(u.content!.examples!.length).toBeGreaterThanOrEqual(12);
+      for (const n of u.content!.model.notes) expect(u.content!.model.text).toContain(n.quote);
+      for (const it of [...poolOf(u.content!), ...u.content!.pretest]) if (it.type === "choice") expect(it.options).toContain(it.answer);
+      expect(RULES_BY_UNIT[u.id]?.length).toBeGreaterThanOrEqual(4);
+    }
+  });
+  it("simulacres i escoltes coherents", () => {
+    expect(MOCKS.map((m) => m.id)).toEqual(["parla1", "parla2"]);
+    for (const m of MOCKS) for (const sec of [...m.listening, ...m.reading]) for (const it of sec.items) expect(it.options).toContain(it.answer);
+    for (const l of LISTENINGS) for (const it of l.items) expect(it.options).toContain(it.answer);
+    expect(DICTATIONS.length).toBeGreaterThanOrEqual(20);
+  });
+  it("dictat: detecta paraules mal escrites i que falten", () => {
+    const d = diffWords("L'any passat vaig començar a estudiar.", "l'any pasat vaig comencar estudiar");
+    expect(d.filter((t) => t.status === "wrong").map((t) => t.word)).toEqual(["passat", "començar"]);
+    expect(d.find((t) => t.status === "missing")?.word).toBe("a");
+    expect(dictationScore(diffWords("Hola, què tal?", "hola què tal"))).toBe(100);
+  });
+});
