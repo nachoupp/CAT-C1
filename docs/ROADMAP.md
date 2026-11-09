@@ -19,6 +19,7 @@ Metodologia completa: document «Método Parla C1 · Metodología y hoja de ruta
   reproductor d'àudio propi (velocitat, ±5 s, repetició, límit d'audicions als simulacres).
 - **v5.3**: veu del Projecte Aina (Matxa, accent balear) com a proveïdor preferent, amb reserva automàtica a Azure/ElevenLabs.
 - **v5.4**: "Grava't i et corregeixo": gravació al navegador, transcripció Scribe v2 (ElevenLabs), mètriques de fluïdesa (paraules/minut, crosses, pauses, varietat, connectors), correcció amb els 5 criteris de l'oral, errors al quadern i reformulacions per escoltar i repetir. També dins el pas "Parla" de cada unitat.
+- **v5.5**: unitats 1–6 ampliades a 60+ exercicis cadascuna (frase correcta, pronoms, estil indirecte, registre, lèxic, ortografia); la correcció accepta la paraula o la frase sencera.
 
 ## Proper
 1. Unitats 7-9 (fase 2) i Control 3.

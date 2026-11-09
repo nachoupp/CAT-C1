@@ -3,6 +3,7 @@
  * Les unitats 1-6 (fase 1) tenen el contingut complet; la resta mostra el pla i es van omplint.
  */
 
+import { MORE } from "./units-more";
 import { EXTRA } from "./units-extra";
 import { U4, U5, U6 } from "./units-b";
 
@@ -326,14 +327,15 @@ const withExtra = (c: UnitContent, id: string): UnitContent => ({ ...c, examples
 
 /** Banc complet d'exercicis d'una unitat (bàsics + addicionals). */
 export const unitPool = (c: UnitContent): PracticeItem[] => [...c.practice, ...(c.extra ?? [])];
+const withMore = (c: UnitContent, id: string): UnitContent => ({ ...c, extra: [...(c.extra ?? []), ...(MORE[id] ?? [])] });
 
 export const UNITS: Unit[] = [
-  { id: "u1", n: 1, phase: 1, title: "Qui soc: trajectòria", grammar: "Pronoms febles I (el, la, li, els, ho)", genre: "Biografia breu", oralTask: "Presentar-te i explicar el teu recorregut", content: withExtra(U1, "u1") },
-  { id: "u2", n: 2, phase: 1, title: "Viure a l'illa: l'habitatge", grammar: "En i hi", genre: "Carta formal de queixa", oralTask: "Descriure un problema i proposar solucions", content: withExtra(U2, "u2") },
-  { id: "u3", n: 3, phase: 1, title: "Feina i formació", grammar: "Relatius (que, què, qui, on, el qual)", genre: "Carta de presentació", oralTask: "Entrevista de feina", content: withExtra(U3, "u3") },
-  { id: "u4", n: 4, phase: 1, title: "Medi ambient", grammar: "Per / per a, comparatius", genre: "Explicar un gràfic", oralTask: "Causes i conseqüències", content: U4 },
-  { id: "u5", n: 5, phase: 1, title: "Salut i serveis", grammar: "Accents, s/z, apòstrof", genre: "Instància i sol·licitud", oralTask: "Demanar informació a l'Administració", content: U5 },
-  { id: "u6", n: 6, phase: 1, title: "Mitjans de comunicació", grammar: "Barbarismes i registre", genre: "Notícia", oralTask: "Resumir una notícia", content: U6 },
+  { id: "u1", n: 1, phase: 1, title: "Qui soc: trajectòria", grammar: "Pronoms febles I (el, la, li, els, ho)", genre: "Biografia breu", oralTask: "Presentar-te i explicar el teu recorregut", content: withMore(withExtra(U1, "u1"), "u1") },
+  { id: "u2", n: 2, phase: 1, title: "Viure a l'illa: l'habitatge", grammar: "En i hi", genre: "Carta formal de queixa", oralTask: "Descriure un problema i proposar solucions", content: withMore(withExtra(U2, "u2"), "u2") },
+  { id: "u3", n: 3, phase: 1, title: "Feina i formació", grammar: "Relatius (que, què, qui, on, el qual)", genre: "Carta de presentació", oralTask: "Entrevista de feina", content: withMore(withExtra(U3, "u3"), "u3") },
+  { id: "u4", n: 4, phase: 1, title: "Medi ambient", grammar: "Per / per a, comparatius", genre: "Explicar un gràfic", oralTask: "Causes i conseqüències", content: withMore(U4, "u4") },
+  { id: "u5", n: 5, phase: 1, title: "Salut i serveis", grammar: "Accents, s/z, apòstrof", genre: "Instància i sol·licitud", oralTask: "Demanar informació a l'Administració", content: withMore(U5, "u5") },
+  { id: "u6", n: 6, phase: 1, title: "Mitjans de comunicació", grammar: "Barbarismes i registre", genre: "Notícia", oralTask: "Resumir una notícia", content: withMore(U6, "u6") },
   { id: "u7", n: 7, phase: 2, title: "Tecnologia", grammar: "Subjuntiu i condicionals", genre: "Article d'opinió (250)", oralTask: "Debat" },
   { id: "u8", n: 8, phase: 2, title: "Cultura i art", grammar: "Combinació de pronoms", genre: "Ressenya", oralTask: "Recomanar i valorar" },
   { id: "u9", n: 9, phase: 2, title: "Educació", grammar: "Connectors i cohesió", genre: "Carta al director", oralTask: "Argumentar i rebatre" },

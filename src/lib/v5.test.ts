@@ -174,3 +174,21 @@ describe("correcció d'exercicis escrits", () => {
     }
   });
 });
+
+describe("ampliació d'exercicis", () => {
+  it("les unitats 1–6 tenen almenys 60 exercicis i les opcions inclouen la resposta", () => {
+    for (const u of ALL_UNITS.slice(0, 6)) {
+      const pool = poolOf(u.content!);
+      expect(pool.length).toBeGreaterThanOrEqual(60);
+      for (const it of pool) if (it.type === "choice") expect(it.options).toContain(it.answer);
+    }
+  });
+  it("accepta frases senceres corregides dels exercicis nous", () => {
+    const find = (q: string) => ALL_UNITS.flatMap((u) => (u.content ? poolOf(u.content) : [])).find((x) => x.q.includes(q))!;
+    expect(isCorrectItem("La decisió es prendrà segons l'informe.", find("en base a") as never)).toBe(true);
+    expect(isCorrectItem("La persona a qui vaig enviar el currículum no m'ha respost.", find("La persona que li vaig enviar") as never)).toBe(true);
+    expect(isCorrectItem("Hi ha molts pisos buits.", find("Hi han molts pisos") as never)).toBe(true);
+    expect(isCorrectItem("Ahir hi havia massa cotxes aparcats davant del portal.", find("hi havien massa") as never)).toBe(true);
+    expect(isCorrectItem("Estic preocupat per l'operació.", find("la operació") as never)).toBe(true);
+  });
+});

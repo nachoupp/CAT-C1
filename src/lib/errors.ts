@@ -131,14 +131,17 @@ export function isCorrectItem(given: string, item: { type: string; q: string; an
     const m = item.q.match(/«([^»]+)»/);
     if (!m) return false;
     const o = normAnswer(m[1]).split(" ");
-    const u = g.split(" ");
-    let p = 0;
-    while (p < o.length && p < u.length && o[p] === u[p]) p++;
-    let s = 0;
-    while (s < o.length - p && s < u.length - p && o[o.length - 1 - s] === u[u.length - 1 - s]) s++;
-    const oMid = o.slice(p, o.length - s).join(" ");
-    const uMid = u.slice(p, u.length - s).join(" ");
-    return oMid !== "" && item.answers.some((a) => normAnswer(a) === uMid);
+    // Accepta la frase original amb qualsevol tros (no buit) substituït per una resposta vàlida.
+    return item.answers.some((ans) => {
+      const r = normAnswer(ans);
+      for (let i = 0; i < o.length; i++) {
+        for (let j = i + 1; j <= o.length; j++) {
+          if (o.slice(i, j).join(" ") === r) continue;
+          if ([...o.slice(0, i), r, ...o.slice(j)].join(" ") === g) return true;
+        }
+      }
+      return false;
+    });
   }
   return false;
 }
