@@ -17,3 +17,10 @@ jobs:
       - run: npm run build
       - name: Comprova la funció d'IA
         run: node --check api/ia.js && node --check api/_model.js && node --check api/tts.js && node --check api/_auth.js && node --check api/stt.js && node --check api/status.js
+      - name: Versió d'un sol fitxer (visor)
+        run: node scripts/inline.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: parla-c1-viewer
+          path: dist-viewer/parla-c1.html
+          retention-days: 30
