@@ -42,7 +42,8 @@ function load(): AppState {
   return initialState();
 }
 
-let state: AppState = typeof localStorage === "undefined" ? initialState() : load();
+// load() ja protegeix l'accés: en alguns visors (iframes aïllats) llegir localStorage llança una excepció.
+let state: AppState = load();
 const listeners = new Set<() => void>();
 
 export function getState(): AppState { return state; }
