@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card, Btn, Bar, Pill } from "./ui";
-import { isCorrect } from "../lib/errors";
+import { isCorrectItem } from "../lib/errors";
 import type { PracticeItem } from "../content/units";
 import { ruleFor, whyNot, type TeachRule } from "../content/rules";
 import { askJSON, AiError } from "../lib/ai";
@@ -22,7 +22,7 @@ export function ItemQuiz({ items, live = true, title, onFinish, rules = [] }: { 
 
   const submit = (value: string) => {
     if (!value.trim()) return;
-    const ok = it.type === "choice" ? value === it.answer : isCorrect(value, it.answers);
+    const ok = it.type === "choice" ? value === it.answer : isCorrectItem(value, it);
     const r = [...results, { item: it, given: value, ok }];
     setResults(r); setGiven(value);
     if (live) { setChecked(true); const m = ruleFor(rules, correctText(it), it.e); if (m) setRuleOpen(m.id); } else advance(r);
@@ -54,7 +54,7 @@ export function ItemQuiz({ items, live = true, title, onFinish, rules = [] }: { 
         ) : (
           <form onSubmit={(e) => { e.preventDefault(); submit(given); }} className="space-y-2">
             <input id={`item-${k}`} aria-label="La teva resposta" autoComplete="off" autoCapitalize="none" spellCheck={false} disabled={checked}
-              value={given} onChange={(e) => setGiven(e.target.value)} placeholder="Escriu la resposta…"
+              value={given} onChange={(e) => setGiven(e.target.value)} placeholder="Escriu la paraula o la frase sencera…"
               className={`w-full rounded-xl px-4 py-3.5 text-[17px] ${checked ? (last?.ok ? "bg-good/15 text-good" : "bg-bad/10 text-bad") : "bg-bg"}`} />
             {!checked && <Btn type="submit" block disabled={!given.trim()}>Comprova</Btn>}
           </form>

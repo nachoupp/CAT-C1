@@ -144,3 +144,33 @@ describe("professor interactiu", () => {
     expect(ok / total).toBeGreaterThan(0.5);
   });
 });
+
+import { isCorrectItem } from "./errors";
+import { UNITS as ALL_UNITS, unitPool as poolOf } from "../content/units";
+describe("correcció d'exercicis escrits", () => {
+  it("accepta la paraula o la frase sencera", () => {
+    const fix = { type: "fix", q: "Corregeix la paraula incorrecta: «Lo que vull és aprovar.»", answers: ["el", "allò"] };
+    expect(isCorrectItem("el", fix)).toBe(true);
+    expect(isCorrectItem("El que vull és aprovar.", fix)).toBe(true);
+    expect(isCorrectItem("Allò que vull és aprovar", fix)).toBe(true);
+    expect(isCorrectItem("Lo que vull és aprovar.", fix)).toBe(false);
+    expect(isCorrectItem("El que vull és suspendre.", fix)).toBe(false);
+    const multi = { type: "fix", q: "Corregeix l'expressió incorrecta: «Tinc que parlar-li avui.»", answers: ["he de"] };
+    expect(isCorrectItem("He de parlar-li avui.", multi)).toBe(true);
+    const gap = { type: "gap", q: "Passarem ___ (per + el) centre.", answers: ["pel"] };
+    expect(isCorrectItem("pel", gap)).toBe(true);
+    expect(isCorrectItem("Passarem pel centre.", gap)).toBe(true);
+    expect(isCorrectItem("Passarem per el centre.", gap)).toBe(false);
+  });
+  it("cada exercici fix accepta la seva frase corregida", () => {
+    for (const u of ALL_UNITS) {
+      if (!u.content) continue;
+      for (const it of poolOf(u.content)) {
+        if (it.type !== "fix") continue;
+        const m = it.q.match(/«([^»]+)»/);
+        if (!m) continue;
+        expect(isCorrectItem(it.answers[0], it)).toBe(true);
+      }
+    }
+  });
+});

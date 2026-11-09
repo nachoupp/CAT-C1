@@ -100,7 +100,7 @@ Actualment treballo de mestre a Vila i faig servir el català cada dia. Encara c
     { type: "gap", q: "«Dona'm el llibre» → Dona-___ (em + el).", answers: ["me'l"], e: "Em + el darrere del verb → -me'l." },
     { type: "gap", q: "Ho has entès? Sí, ___ he entès.", answers: ["ho"], e: "El pronom neutre es manté: ho he entès." },
     { type: "fix", q: "Corregeix la paraula incorrecta: «La vaig dir que vingués.»", answers: ["li"], e: "Dir alguna cosa a algú: complement indirecte → li vaig dir." },
-    { type: "fix", q: "Corregeix la paraula incorrecta: «Lo que vull és aprovar.»", answers: ["el"], e: "«Lo» neutre no és normatiu: el que, allò que." },
+    { type: "fix", q: "Corregeix la paraula incorrecta: «Lo que vull és aprovar.»", answers: ["el", "allò"], e: "«Lo» neutre no és normatiu: el que, allò que." },
     { type: "fix", q: "Corregeix la paraula incorrecta: «Desde petita m'agrada llegir.»", answers: ["des de"], e: "«Desde» és castellà: des de (o des que davant de verb)." },
     { type: "fix", q: "Corregeix l'expressió incorrecta: «Tinc que parlar-li avui.»", answers: ["he de"], e: "Obligació personal: haver de (he de parlar-li)." },
     { type: "choice", q: "Quina expressió ordena una biografia en el temps?", options: ["Més endavant", "Sin embargo", "A nivell de"], answer: "Més endavant", e: "Més endavant, al cap d'uns anys, actualment… són marcadors temporals." },

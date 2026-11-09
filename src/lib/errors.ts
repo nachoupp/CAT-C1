@@ -114,3 +114,31 @@ export function isCorrect(given: string, answers: string[]): boolean {
   const g = normAnswer(given);
   return answers.some((a) => normAnswer(a) === g);
 }
+
+/**
+ * Corregeix un exercici escrit acceptant també la frase sencera:
+ * - gap: «Passarem ___ (per + el) centre.» → «pel» o «Passarem pel centre».
+ * - fix: «Lo que vull és aprovar.» → «el» o «El que vull és aprovar».
+ */
+export function isCorrectItem(given: string, item: { type: string; q: string; answers: string[] }): boolean {
+  if (isCorrect(given, item.answers)) return true;
+  const g = normAnswer(given);
+  if (item.type === "gap" && item.q.includes("___")) {
+    const base = item.q.replace(/\s*\([^)]*\)/g, "");
+    return item.answers.some((a) => normAnswer(base.replace(/_{3,}/, a)) === g);
+  }
+  if (item.type === "fix") {
+    const m = item.q.match(/«([^»]+)»/);
+    if (!m) return false;
+    const o = normAnswer(m[1]).split(" ");
+    const u = g.split(" ");
+    let p = 0;
+    while (p < o.length && p < u.length && o[p] === u[p]) p++;
+    let s = 0;
+    while (s < o.length - p && s < u.length - p && o[o.length - 1 - s] === u[u.length - 1 - s]) s++;
+    const oMid = o.slice(p, o.length - s).join(" ");
+    const uMid = u.slice(p, u.length - s).join(" ");
+    return oMid !== "" && item.answers.some((a) => normAnswer(a) === uMid);
+  }
+  return false;
+}
