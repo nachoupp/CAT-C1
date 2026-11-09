@@ -21,6 +21,7 @@ Metodologia completa: document «Método Parla C1 · Metodología y hoja de ruta
 - **v5.4**: "Grava't i et corregeixo": gravació al navegador, transcripció Scribe v2 (ElevenLabs), mètriques de fluïdesa (paraules/minut, crosses, pauses, varietat, connectors), correcció amb els 5 criteris de l'oral, errors al quadern i reformulacions per escoltar i repetir. També dins el pas "Parla" de cada unitat.
 - **v5.5**: unitats 1–6 ampliades a 60+ exercicis cadascuna (frase correcta, pronoms, estil indirecte, registre, lèxic, ortografia); la correcció accepta la paraula o la frase sencera.
 - **v6.0**: fase 2 de la ruta (unitats 7-9 amb regles i Control 3), Examen Parla 2, escoltes de pràctica i dictats amb veu natural, àudios oficials dins del reproductor, escàner amb OCR i correcció, botó de pantalla encesa, panell d'estat dels serveis, model Gemini amb reserva automàtica, versió visible a Perfil.
+- **v6.1**: Fase 0 · Fonaments (10 lliçons des de zero: nombres, ordinals i dates, colors, família, verbs bàsics, articles i possessius, accents per regla i per temes, lletres i sons) amb vocabulari amb àudio, pràctica i dictat; la sessió d'avui comença pels fonaments; 85 frases de dictat i 14 escoltes; diccionari català ⇄ castellà dins l'app.
 
 ## Proper
 1. Unitats 7-9 (fase 2) i Control 3.

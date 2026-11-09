@@ -21,6 +21,7 @@ import OralTimer from "./features/speak/OralTimer";
 import OralCoachPage from "./features/speak/OralCoach";
 import Scan from "./features/write/Scan";
 import { ListeningRun, Dictation } from "./features/practice/Listen";
+import { BasicLesson } from "./features/basics/Basics";
 import type { StepKey } from "./lib/types";
 import Account, { NewPassword } from "./features/account/Account";
 
@@ -38,6 +39,7 @@ function tabOf(route: string): string {
   if (/^(unit|checkpoint)-/.test(route) || route === "repas") return route === "repas" ? "quadern" : "ruta";
   if (/^(exam|official)-/.test(route)) return "examens";
   if (route.startsWith("lesson-")) return "quadern";
+  if (route.startsWith("fon-")) return "ruta";
   if (route.startsWith("parla") || route.startsWith("audio-") || route === "dictat" || route === "audios") return "practica";
   if (["calendari", "compte", "nova-contrasenya"].includes(route)) return "perfil";
   if (["test", "test-ia", "simulacre", "joc-frases", "joc-barbarismes", "connectors", "escriu", "fitxes", "fitxa0", "parla", "oral", "escolta", "escaneja"].includes(route)) return "practica";
@@ -54,6 +56,7 @@ function screen(route: string): ReactNode {
   if ((m = route.match(/^parla-unit-(u\d+)$/))) return <UnitSpeak unitId={m[1]} />;
   if (route.startsWith("lesson-")) return <LessonView id={route.slice(7)} />;
   if (route.startsWith("audio-")) return <ListeningRun id={route.slice(6)} />;
+  if (route.startsWith("fon-")) return <BasicLesson key={route} id={route.slice(4)} />;
   switch (route) {
     case "practica": return <Practice />;
     case "examens": return <Exams />;

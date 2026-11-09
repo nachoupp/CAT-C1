@@ -3,6 +3,7 @@ import { Page, Section, Card, Btn, List, Row, Pill, Note } from "../../component
 import { AudioPlayer } from "../../components/AudioPlayer";
 import { ItemQuiz } from "../../components/ItemQuiz";
 import { LISTENINGS, DICTATIONS } from "../../content/listening";
+import { BASICS } from "../../content/basics";
 import { useStore, setState, award } from "../../lib/store";
 import { addError } from "../../lib/notebook";
 import { isoDate } from "../../lib/dates";
@@ -57,58 +58,83 @@ export function ListeningRun({ id }: { id: string }) {
   );
 }
 
-/** Dictat: escolta una frase, escriu-la i compara paraula per paraula. */
-export function Dictation() {
-  const order = useMemo(() => [...DICTATIONS].sort(() => Math.random() - 0.5), []);
+/** Dictat reutilitzable: escolta una frase, escriu-la i compara paraula per paraula. */
+export function DictationRunner({ sentences, shuffle = true, onDone }: { sentences: string[]; shuffle?: boolean; onDone?: (avg: number) => void }) {
+  const order = useMemo(() => (shuffle ? [...sentences].sort(() => Math.random() - 0.5) : sentences), [sentences, shuffle]);
   const [k, setK] = useState(0);
   const [given, setGiven] = useState("");
   const [res, setRes] = useState<Tok[] | null>(null);
   const [total, setTotal] = useState({ n: 0, sum: 0 });
   const target = order[k % order.length];
+  const finished = !shuffle && k >= order.length;
 
   function check() {
     if (!given.trim()) return;
     const d = diffWords(target, given);
     setRes(d);
     const sc = dictationScore(d);
-    setTotal((t) => ({ n: t.n + 1, sum: t.sum + sc }));
-    const wrong = d.filter((t) => t.status === "wrong" && t.given);
+    const t = { n: total.n + 1, sum: total.sum + sc };
+    setTotal(t);
+    const wrong = d.filter((x) => x.status === "wrong" && x.given);
     if (wrong.length) {
       const today = isoDate();
-      setState((s) => wrong.reduce((acc, t) => addError(acc, { wrong: t.given!, right: t.word, note: "Dictat", source: "dictat" }, today), s));
+      setState((s) => wrong.reduce((acc, x) => addError(acc, { wrong: x.given!, right: x.word, note: "Dictat", source: "dictat" }, today), s));
     }
     if (sc === 100) award("quiz", "dictat");
+    if (!shuffle && k + 1 >= order.length) onDone?.(Math.round(t.sum / t.n));
   }
   function next() { setK((x) => x + 1); setGiven(""); setRes(null); }
 
+  if (finished) return (
+    <Card className="space-y-3 p-4 text-center">
+      <div className="text-[17px] font-semibold">Dictat acabat · mitjana {total.n ? Math.round(total.sum / total.n) : 0}%</div>
+      <Btn variant="soft" onClick={() => { setK(0); setTotal({ n: 0, sum: 0 }); setGiven(""); setRes(null); }}>Torna-hi</Btn>
+    </Card>
+  );
   return (
-    <Page title="Dictat" subtitle="Escolta la frase (tantes vegades com vulguis), escriu-la i comprova-la paraula per paraula." back={{ to: "audios", label: "Àudios" }}>
-      <Card className="space-y-3 p-4">
-        <div className="text-[13px] text-muted">Frase {k + 1}{total.n ? ` · mitjana ${Math.round(total.sum / total.n)}%` : ""}</div>
-        <AudioPlayer key={k} text={target} label="Dictat" />
-        <textarea value={given} onChange={(e) => setGiven(e.target.value)} disabled={!!res} rows={3} autoCapitalize="sentences" spellCheck={false}
-          placeholder="Escriu aquí el que sents…" className="w-full rounded-xl border border-line bg-bg p-3 text-[17px]" />
-        {!res ? <Btn block onClick={check} disabled={!given.trim()}>Comprova</Btn> : (
-          <>
-            <div className="rounded-xl bg-bg p-3 text-[17px] leading-relaxed">
-              {res.map((t, i) => (
-                <span key={i} className="mr-1.5 inline-block">
-                  {t.status === "ok" && <span className="text-good">{t.word}</span>}
-                  {t.status === "wrong" && <><s className="text-bad">{t.given}</s> <b className="text-good">{t.word}</b></>}
-                  {t.status === "missing" && <b className="rounded bg-warn/20 px-1 text-warn">{t.word}</b>}
-                  {t.status === "extra" && <s className="text-muted">{t.word}</s>}
-                </span>
-              ))}
-            </div>
-            <div className="flex items-center justify-between">
-              <Pill tone={dictationScore(res) === 100 ? "good" : "warn"}>{dictationScore(res)}%</Pill>
-              <span className="text-[12px] text-muted">verd: bé · vermell: mal escrit · taronja: falta</span>
-            </div>
-            <div className="text-[15px]"><b>Correcta:</b> {target}</div>
-            <Btn block onClick={next}>Següent frase</Btn>
-          </>
-        )}
-      </Card>
+    <Card className="space-y-3 p-4">
+      <div className="text-[13px] text-muted">Frase {k + 1}{!shuffle ? ` de ${order.length}` : ""}{total.n ? ` · mitjana ${Math.round(total.sum / total.n)}%` : ""}</div>
+      <AudioPlayer key={k} text={target} label="Dictat" />
+      <textarea value={given} onChange={(e) => setGiven(e.target.value)} disabled={!!res} rows={3} autoCapitalize="sentences" spellCheck={false}
+        placeholder="Escriu aquí el que sents…" className="w-full rounded-xl border border-line bg-bg p-3 text-[17px]" />
+      {!res ? <Btn block onClick={check} disabled={!given.trim()}>Comprova</Btn> : (
+        <>
+          <div className="rounded-xl bg-bg p-3 text-[17px] leading-relaxed">
+            {res.map((t, i) => (
+              <span key={i} className="mr-1.5 inline-block">
+                {t.status === "ok" && <span className="text-good">{t.word}</span>}
+                {t.status === "wrong" && <><s className="text-bad">{t.given}</s> <b className="text-good">{t.word}</b></>}
+                {t.status === "missing" && <b className="rounded bg-warn/20 px-1 text-warn">{t.word}</b>}
+                {t.status === "extra" && <s className="text-muted">{t.word}</s>}
+              </span>
+            ))}
+          </div>
+          <div className="flex items-center justify-between">
+            <Pill tone={dictationScore(res) === 100 ? "good" : "warn"}>{dictationScore(res)}%</Pill>
+            <span className="text-[12px] text-muted">verd: bé · vermell: mal escrit · taronja: falta</span>
+          </div>
+          <div className="text-[15px]"><b>Correcta:</b> {target}</div>
+          <Btn block onClick={next}>{!shuffle && k + 1 >= order.length ? "Acaba" : "Següent frase"}</Btn>
+        </>
+      )}
+    </Card>
+  );
+}
+
+/** Pàgina de dictats: frases d'examen o les de cada lliçó de Fonaments. */
+export function Dictation() {
+  const sets = useMemo(() => [{ id: "examen", label: "Frases d'examen", list: DICTATIONS }, ...BASICS.map((b) => ({ id: b.id, label: `${b.n}. ${b.title}`, list: b.dictation }))], []);
+  const all = useMemo(() => sets.flatMap((x) => x.list), [sets]);
+  const [set, setSet] = useState("tot");
+  const list = set === "tot" ? all : sets.find((x) => x.id === set)!.list;
+  return (
+    <Page title="Dictat" subtitle={`${all.length} frases amb veu natural. Escolta tantes vegades com vulguis, escriu i comprova paraula per paraula.`} back={{ to: "audios", label: "Àudios" }}>
+      <div className="mb-3 flex gap-2 overflow-x-auto pb-1">
+        {[{ id: "tot", label: "Totes barrejades" }, ...sets].map((x) => (
+          <button key={x.id} onClick={() => setSet(x.id)} className={`shrink-0 rounded-full px-3 py-1.5 text-[13.5px] font-semibold ${set === x.id ? "bg-accent text-white" : "bg-card text-muted"}`}>{x.label}</button>
+        ))}
+      </div>
+      <DictationRunner key={set} sentences={list} />
       <Note>Els errors de dictat es desen al quadern perquè els repassis. Fixa't sobretot en accents, apòstrofs, ela geminada i s/ss/c/ç/z.</Note>
     </Page>
   );

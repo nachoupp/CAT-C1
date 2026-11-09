@@ -219,3 +219,20 @@ describe("lot v6", () => {
     expect(dictationScore(diffWords("Hola, què tal?", "hola què tal"))).toBe(100);
   });
 });
+
+import { BASICS } from "../content/basics";
+describe("fonaments", () => {
+  it("10 lliçons coherents amb vocabulari, pràctica i dictat", () => {
+    expect(BASICS.length).toBe(10);
+    for (const b of BASICS) {
+      expect(b.vocab.length).toBeGreaterThanOrEqual(10);
+      expect(b.items.length).toBeGreaterThanOrEqual(12);
+      expect(b.dictation.length).toBeGreaterThanOrEqual(6);
+      for (const it of b.items) {
+        if (it.type === "choice") expect(it.options).toContain(it.answer);
+        else expect(isCorrectItem(it.answers[0], it)).toBe(true);
+      }
+    }
+    expect(LISTENINGS.length).toBeGreaterThanOrEqual(14);
+  });
+});

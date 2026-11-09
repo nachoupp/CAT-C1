@@ -6,6 +6,8 @@ import { addDays, isoDate } from "../../lib/dates";
 import { dueErrors } from "../../lib/notebook";
 import { go } from "../../lib/router";
 import { nextStep, stepDone, unitPassed, unitUnlocked, checkpointUnlocked } from "./progress";
+import { BasicsPhase, nextBasic } from "../basics/Basics";
+import { BASICS } from "../../content/basics";
 
 const DAYS = ["Dl", "Dt", "Dc", "Dj", "Dv", "Ds", "Dg"];
 
@@ -17,7 +19,8 @@ export default function Route() {
   const st = weekStreak(s, today);
   const monday = weekStart(today);
   const active = new Set(activeDays(s, monday));
-  const nx = nextStep(s);
+  const nb = nextBasic(s);
+  const nx = nb ? null : nextStep(s);
   const due = dueErrors(s, today).length;
 
   return (
@@ -53,6 +56,14 @@ export default function Route() {
         <div className="mt-3 text-[13.5px] text-muted">Objectiu: {WEEK_GOAL} sessions per setmana · {st.thisWeek}/{WEEK_GOAL} fetes · ratxa de {st.weeks} {st.weeks === 1 ? "setmana" : "setmanes"}</div>
       </Card>
 
+      {nb && (
+        <div className="mt-4 overflow-hidden rounded-2xl bg-gradient-to-br from-accent to-sist p-5 text-white">
+          <div className="text-[13px] font-semibold uppercase tracking-wider opacity-85">Sessió d'avui · Fonaments {nb.n} de {BASICS.length}</div>
+          <div className="mt-1 text-[24px] font-bold leading-tight">{nb.title}</div>
+          <div className="mt-0.5 opacity-90">{nb.goal}</div>
+          <button onClick={() => go(`fon-${nb.id}`)} className="mt-4 rounded-xl bg-white px-5 py-3 font-semibold text-accent">Comença · 20 min</button>
+        </div>
+      )}
       {nx && (
         <div className="mt-4 overflow-hidden rounded-2xl bg-gradient-to-br from-accent to-sist p-5 text-white">
           {"unit" in nx ? (
@@ -72,7 +83,7 @@ export default function Route() {
           )}
         </div>
       )}
-      {!nx && (
+      {!nx && !nb && (
         <Card className="mt-4 p-4">
           <div className="font-semibold">Has completat totes les unitats disponibles</div>
           <p className="text-[14.5px] text-muted">La unitat següent s'està preparant. Mentrestant, repassa el quadern d'errors o fes un simulacre.</p>
@@ -87,6 +98,8 @@ export default function Route() {
           <span className="text-xl text-muted">›</span>
         </button>
       )}
+
+      <BasicsPhase />
 
       {PHASES.map((ph) => (
         <section key={ph.n} className="mt-7">

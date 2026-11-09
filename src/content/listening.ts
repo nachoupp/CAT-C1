@@ -89,6 +89,67 @@ export const LISTENINGS: Listening[] = [
       c("Quin consell dona?", ["Desactivar les notificacions", "Llegir de nit", "Fer servir tauletes grans"], "Desactivar les notificacions", "També fer pauses per resumir.")
     ]
   }
+  ,
+  {
+    id: "l9", title: "Previsió del temps", kind: "Ràdio",
+    text: "Bon dia. Per avui, a les Pitiüses, el cel estarà ennuvolat durant el matí i no es descarten ruixats dèbils a l'interior d'Eivissa. A partir del migdia, el vent de tramuntana anirà netejant el cel i la tarda serà assolellada. Les temperatures baixaran lleugerament: les màximes no passaran dels disset graus i les mínimes rondaran els nou. La mar estarà maregassa al nord, amb onades de fins a dos metres, de manera que es recomana precaució a les embarcacions petites. Per al cap de setmana, temps estable i més calor.",
+    items: [
+      c("Com serà el matí?", ["Ennuvolat amb possibles ruixats", "Assolellat", "Amb neu"], "Ennuvolat amb possibles ruixats", "«…ennuvolat durant el matí i no es descarten ruixats»."),
+      c("Què passarà a la tarda?", ["El cel s'aclarirà", "Plourà més", "Hi haurà boira"], "El cel s'aclarirà", "La tramuntana netejarà el cel."),
+      c("Quina serà la temperatura màxima?", ["Uns disset graus", "Uns nou graus", "Uns vint-i-cinc graus"], "Uns disset graus", "Nou graus és la mínima."),
+      c("Què es recomana?", ["Precaució a les embarcacions petites", "No sortir de casa", "Anar a la platja"], "Precaució a les embarcacions petites", "Per les onades al nord.")
+    ]
+  },
+  {
+    id: "l10", title: "A la farmàcia", kind: "Diàleg",
+    text: "— Bon dia. Tenen alguna cosa per al mal de coll? — Sí, és clar. Té febre o tos? — Una mica de tos, sobretot a la nit, però febre no. — D'acord. Li puc donar aquestes pastilles per xuclar: en pot prendre una cada quatre hores, però no més de sis al dia. Si d'aquí a tres dies no millora, hauria d'anar al metge. — Molt bé. I per a la tos? — Prengui aquest xarop abans d'anar a dormir. Són dotze euros amb quaranta en total. — Puc pagar amb targeta? — I tant.",
+    items: [
+      c("Què li passa a la clienta?", ["Té mal de coll i una mica de tos", "Té febre alta", "Té mal d'esquena"], "Té mal de coll i una mica de tos", "No té febre."),
+      c("Cada quant pot prendre les pastilles?", ["Cada quatre hores", "Cada sis hores", "Una vegada al dia"], "Cada quatre hores", "I no més de sis al dia."),
+      c("Quan ha d'anar al metge?", ["Si en tres dies no millora", "Immediatament", "Si li puja la febre demà"], "Si en tres dies no millora", "És el consell de la farmacèutica."),
+      c("Quan s'ha de prendre el xarop?", ["Abans d'anar a dormir", "Després de dinar", "En llevar-se"], "Abans d'anar a dormir", "«…abans d'anar a dormir».")
+    ]
+  },
+  {
+    id: "l11", title: "Anunci: curs de cuina eivissenca", kind: "Anunci",
+    text: "Vols aprendre a fer el sofrit pagès, la borrida de ratjada o el flaó com ho feien les nostres àvies? L'Escola d'Hostaleria organitza un curs de cuina tradicional eivissenca els dimecres de vuit a deu del vespre, del quinze de gener al dinou de març. El curs té un preu de cent vint euros, ingredients inclosos, i les places són limitades a quinze persones. Els aturats i els majors de seixanta-cinc anys tenen un descompte del cinquanta per cent. Inscripcions al web de l'escola o per telèfon fins al deu de gener.",
+    items: [
+      c("Quin dia de la setmana és el curs?", ["Dimecres", "Dilluns", "Dissabte"], "Dimecres", "«…els dimecres de vuit a deu del vespre»."),
+      c("Què inclou el preu?", ["Els ingredients", "El sopar", "Un llibre de receptes"], "Els ingredients", "«…cent vint euros, ingredients inclosos»."),
+      c("Quantes places hi ha?", ["Quinze", "Cinquanta", "Vint"], "Quinze", "Places limitades a quinze persones."),
+      c("Qui té descompte?", ["Aturats i majors de 65 anys", "Estudiants", "Tothom que s'inscrigui aviat"], "Aturats i majors de 65 anys", "Un 50 % de descompte.")
+    ]
+  },
+  {
+    id: "l12", title: "Entrevista: una mestra jubilada", kind: "Entrevista",
+    text: "— Quants anys va fer de mestra? — Quaranta-dos, sempre a la mateixa escola de Sant Joan. Vaig començar quan encara hi havia una sola aula per a nens de totes les edats. — Què ha canviat més? — Sens dubte, la diversitat. Ara a una classe hi pot haver alumnes de deu països diferents, i això és una riquesa, però també un repte. — I què troba a faltar? — El contacte amb els nens, la seva curiositat. Encara hi vaig un dia a la setmana a llegir contes als més petits. — Quin consell donaria als mestres joves? — Que escoltin molt i que no perdin mai la paciència: cada nen té el seu ritme.",
+    items: [
+      c("Quants anys va treballar de mestra?", ["Quaranta-dos", "Vint-i-quatre", "Trenta-dos"], "Quaranta-dos", "«Quaranta-dos, sempre a la mateixa escola»."),
+      c("Què diu que ha canviat més?", ["La diversitat de l'alumnat", "Els horaris", "Els llibres"], "La diversitat de l'alumnat", "Alumnes de molts països."),
+      c("Què fa ara un dia a la setmana?", ["Llegeix contes als petits", "Fa classes de repàs", "Treballa a la biblioteca"], "Llegeix contes als petits", "«…a llegir contes als més petits»."),
+      c("Quin consell dona?", ["Escoltar molt i tenir paciència", "Ser molt exigent", "Fer servir més tecnologia"], "Escoltar molt i tenir paciència", "Cada nen té el seu ritme.")
+    ]
+  },
+  {
+    id: "l13", title: "Notícia: nou carril bici", kind: "Notícia",
+    text: "El Consell d'Eivissa ha inaugurat aquest dissabte el nou carril bici que uneix Vila amb Sant Jordi. El recorregut té set quilòmetres i passa pel costat de ses Salines, cosa que permetrà als ciclistes gaudir del paisatge sense compartir la carretera amb els cotxes. Les obres han costat un milió i mig d'euros i s'han finançat en part amb fons europeus. Les associacions de ciclistes celebren la iniciativa, però recorden que encara falten aparcaments per a bicicletes a la ciutat i demanen que el carril s'allargui fins a l'aeroport.",
+    items: [
+      c("Quins llocs uneix el carril?", ["Vila i Sant Jordi", "Vila i Santa Eulària", "Sant Antoni i l'aeroport"], "Vila i Sant Jordi", "Ho diu al principi."),
+      c("Quant fa el recorregut?", ["Set quilòmetres", "Setze quilòmetres", "Un quilòmetre i mig"], "Set quilòmetres", "«El recorregut té set quilòmetres»."),
+      c("Com s'han finançat les obres?", ["En part amb fons europeus", "Només amb diners del Consell", "Amb donacions"], "En part amb fons europeus", "«…en part amb fons europeus»."),
+      c("Què demanen els ciclistes?", ["Allargar-lo fins a l'aeroport i més aparcaments", "Tancar la carretera", "Fer-lo de pagament"], "Allargar-lo fins a l'aeroport i més aparcaments", "És el que reclamen.")
+    ]
+  },
+  {
+    id: "l14", title: "Missatge de la tutora", kind: "Missatge",
+    text: "Bona tarda, famílies. Us escric per recordar-vos que dijous que ve farem la sortida al Museu Puget. Els alumnes han de ser a l'escola a les vuit i mitja, perquè l'autobús surt a les nou en punt. Cal que portin l'esmorzar, aigua i roba còmoda. Tornarem cap a la una i mitja. Si algú té alguna al·lèrgia alimentària o necessita prendre algun medicament, digueu-m'ho abans de dimarts. Recordeu també que l'autorització signada és imprescindible: sense autorització, l'alumne s'haurà de quedar a l'escola amb un altre grup. Moltes gràcies.",
+    items: [
+      c("A quina hora han de ser a l'escola?", ["A les vuit i mitja", "A les nou en punt", "A la una i mitja"], "A les vuit i mitja", "L'autobús surt a les nou."),
+      c("Què han de portar els alumnes?", ["Esmorzar, aigua i roba còmoda", "Diners per a l'entrada", "Una llibreta"], "Esmorzar, aigua i roba còmoda", "Ho diu el missatge."),
+      c("Què cal comunicar abans de dimarts?", ["Al·lèrgies o medicaments", "Si l'alumne no hi va", "El telèfon dels pares"], "Al·lèrgies o medicaments", "«…digueu-m'ho abans de dimarts»."),
+      c("Què passa si no porten l'autorització?", ["Es queden a l'escola amb un altre grup", "No passa res", "Han de pagar més"], "Es queden a l'escola amb un altre grup", "L'autorització és imprescindible.")
+    ]
+  }
 ];
 
 /** Frases de dictat centrades en les trampes ortogràfiques de l'examen. */
