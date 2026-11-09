@@ -18,6 +18,7 @@ Metodologia completa: document «Método Parla C1 · Metodología y hoja de ruta
   entre dispositius), IA i veu protegides amb sessió, veu neuronal catalana (/api/tts: Azure o ElevenLabs),
   reproductor d'àudio propi (velocitat, ±5 s, repetició, límit d'audicions als simulacres).
 - **v5.3**: veu del Projecte Aina (Matxa, accent balear) com a proveïdor preferent, amb reserva automàtica a Azure/ElevenLabs.
+- **v5.4**: "Grava't i et corregeixo": gravació al navegador, transcripció Scribe v2 (ElevenLabs), mètriques de fluïdesa (paraules/minut, crosses, pauses, varietat, connectors), correcció amb els 5 criteris de l'oral, errors al quadern i reformulacions per escoltar i repetir. També dins el pas "Parla" de cada unitat.
 
 ## Proper
 1. Unitats 7-9 (fase 2) i Control 3.

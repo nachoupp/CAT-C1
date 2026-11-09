@@ -12,6 +12,7 @@ import { isoDate } from "../../lib/dates";
 import { countWords, fmtClock, shuffle } from "../../lib/text";
 import { playText } from "../../lib/audio";
 import { AudioPlayer } from "../../components/AudioPlayer";
+import { OralCoach } from "../speak/OralCoach";
 import { askJSON, AiError } from "../../lib/ai";
 import { addError } from "../../lib/notebook";
 import { go } from "../../lib/router";
@@ -320,14 +321,17 @@ function OralStep({ u, c }: { u: Unit; c: UnitContent }) {
       <Section title="2 · Exposició 4/3/2">
         <Card className="space-y-4 p-4">
           <div className="text-[20px] font-bold leading-snug">{c.oral.topic}</div>
-          <div className="text-[14px] text-muted">Digues el mateix tres vegades, cada cop amb menys temps: 3 minuts, 2 i 1,5. Grava't amb el mòbil per escoltar-te.</div>
+          <div className="text-[14px] text-muted">Digues el mateix tres vegades, cada cop amb menys temps: 3 minuts, 2 i 1,5. Després grava la versió final a l'apartat 3 i et corregeixo.</div>
           <div className="flex flex-wrap gap-1.5">{c.oral.phrases.map((p) => <span key={p} className="rounded-full bg-oral/10 px-2.5 py-1 text-[13px] text-oral">{p}</span>)}</div>
           <div className="flex items-center justify-center gap-2">{ROUNDS.map((r, i) => <span key={r} className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${i < round || (i === round && allDone) ? "bg-good/15 text-good" : i === round ? "bg-oral/15 text-oral" : "bg-line text-muted"}`}>Ronda {i + 1} · {fmtClock(r)}</span>)}</div>
           <div className="text-center text-[54px] font-bold tracking-tight tabular">{fmtClock(left)}</div>
           <Btn block variant={run ? "soft" : "primary"} disabled={allDone} onClick={() => setRun(!run)}>{run ? "Pausa" : left === ROUNDS[round] ? `Comença la ronda ${round + 1}` : "Continua"}</Btn>
         </Card>
       </Section>
-      <Section title="3 · Conversa (opcional)">
+      <Section title="3 · Grava't i et corregeixo">
+        <OralCoach topic={c.oral.topic} phrases={c.oral.phrases} minutes={2} />
+      </Section>
+      <Section title="4 · Conversa (opcional)">
         <List><Row left={<Icon tone="oral">IA</Icon>} title="Practica amb l'interlocutor" detail="Situació de la unitat, amb avaluació final" onClick={() => go(`parla-unit-${u.id}`)} /></List>
       </Section>
       {!finished ? (

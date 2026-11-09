@@ -20,6 +20,7 @@ export default function Practice() {
       <Section title="Producció lliure">
         <List>
           <Row left={<Icon tone="escr">✎</Icon>} title="Escriu lliure" detail="Consignes tipus examen o la teva, amb correcció en directe" to="escriu" />
+          <Row left={<Icon tone="oral">🎙</Icon>} title="Grava't i et corregeixo" detail="L'app t'escolta i et corregeix l'oral com a l'examen" to="escolta" />
           <Row left={<Icon tone="oral">◉</Icon>} title="Parla amb l'interlocutor" detail="4 situacions d'examen amb avaluació" to="parla" />
           <Row left={<Icon tone="comp">▶</Icon>} title="Lectura i exposició amb rellotge" detail="Sense IA" to="oral" />
           <Row left={<Icon tone="fg">▤</Icon>} title="Fitxes en paper" detail="Diagnòstic inicial i fitxes per fer a mà" to="fitxes" />

@@ -33,7 +33,9 @@ Pots posar-ne una o diverses; l'ordre de preferència és Aina → Azure → Ele
 - **Azure Speech (recomanat)**: portal.azure.com → crea un recurs *Speech* (pla gratuït F0 disponible) → copia una clau i la regió.
   - `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION` (p. ex. `westeurope`)
   - Veus: Joana, Enric i Alba (ca-ES, neuronals). Es trien a Perfil → Veu.
-- **ElevenLabs**: `ELEVENLABS_API_KEY` (+ opcional `ELEVENLABS_VOICE_ID`). Fa servir el model `eleven_v3`, que admet català. Més car.
+- **ElevenLabs** (pla gratuït sense targeta): `ELEVENLABS_API_KEY` (+ opcional `ELEVENLABS_VOICE_ID`). Fa servir `eleven_v4` (o `eleven_v3` de reserva), els models que admeten català.
+  - Quan creïs la clau, restringeix-la a: **Text to Speech** (Access) i **Speech to Text** (Access). La resta, *No access*.
+  - La mateixa clau activa la **correcció oral** ("Grava't i et corregeixo"): `/api/stt` transcriu amb Scribe v2 en català.
 
 ## 4. Desplega
 Vercel → Deployments → **Redeploy**. Comprova a Perfil que pots crear un compte, que la veu sona i que la correcció amb IA respon.

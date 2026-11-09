@@ -80,13 +80,20 @@ async function azure(env, text, voice, rate) {
   return { audio: Buffer.from(await r.arrayBuffer()), type: "audio/mpeg" };
 }
 
+// Models que admeten català: eleven_v4 i eleven_v3 (els multilingual/flash no).
 async function eleven(env, text) {
   const id = env.ELEVENLABS_VOICE_ID || "JBFqnCBsd6RMkjVDRZzb";
-  const r = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${id}?output_format=mp3_44100_64`, {
-    method: "POST",
-    headers: { "xi-api-key": env.ELEVENLABS_API_KEY, "Content-Type": "application/json" },
-    body: JSON.stringify({ text, model_id: "eleven_v3", language_code: "ca" })
-  });
-  if (!r.ok) throw new Error("elevenlabs " + r.status);
-  return { audio: Buffer.from(await r.arrayBuffer()), type: "audio/mpeg" };
+  const models = env.ELEVENLABS_MODEL ? [env.ELEVENLABS_MODEL] : ["eleven_v4", "eleven_v3"];
+  let last = 0;
+  for (const model_id of models) {
+    const r = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${id}?output_format=mp3_44100_64`, {
+      method: "POST",
+      headers: { "xi-api-key": env.ELEVENLABS_API_KEY, "Content-Type": "application/json" },
+      body: JSON.stringify({ text, model_id, language_code: "ca" })
+    });
+    if (r.ok) return { audio: Buffer.from(await r.arrayBuffer()), type: "audio/mpeg" };
+    last = r.status;
+    if (r.status === 401 || r.status === 429) break; // clau o quota: no té sentit provar un altre model
+  }
+  throw new Error("elevenlabs " + last);
 }

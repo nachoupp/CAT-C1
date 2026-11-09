@@ -18,6 +18,7 @@ import Write from "./features/write/Write";
 import { PaperList, Diagnostic } from "./features/write/Paper";
 import Speak, { UnitSpeak } from "./features/speak/Speak";
 import OralTimer from "./features/speak/OralTimer";
+import OralCoachPage from "./features/speak/OralCoach";
 import type { StepKey } from "./lib/types";
 import Account, { NewPassword } from "./features/account/Account";
 
@@ -37,7 +38,7 @@ function tabOf(route: string): string {
   if (route.startsWith("lesson-")) return "quadern";
   if (route.startsWith("parla")) return "practica";
   if (["calendari", "audios", "compte", "nova-contrasenya"].includes(route)) return "perfil";
-  if (["test", "test-ia", "simulacre", "joc-frases", "joc-barbarismes", "connectors", "escriu", "fitxes", "fitxa0", "parla", "oral"].includes(route)) return "practica";
+  if (["test", "test-ia", "simulacre", "joc-frases", "joc-barbarismes", "connectors", "escriu", "fitxes", "fitxa0", "parla", "oral", "escolta"].includes(route)) return "practica";
   return TABS.some((t) => t.id === route) ? route : "ruta";
 }
 
@@ -71,6 +72,7 @@ function screen(route: string): ReactNode {
     case "fitxa0": return <Diagnostic />;
     case "parla": return <Speak />;
     case "oral": return <OralTimer />;
+    case "escolta": return <OralCoachPage />;
     default: return <Route />;
   }
 }
