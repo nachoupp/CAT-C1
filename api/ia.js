@@ -1,6 +1,6 @@
 // Parla C1 · funció serverless de Vercel (/api/ia)
 // Variables d'entorn (Vercel → Settings → Environment Variables), posa'n UNA:
-//   GEMINI_API_KEY    (Google AI Studio)  · opcional GEMINI_MODEL   (per defecte gemini-2.5-flash)
+//   GEMINI_API_KEY    (Google AI Studio)  · opcional GEMINI_MODEL   (per defecte gemini-flash-latest)
 //   ANTHROPIC_API_KEY (Claude API)        · opcional ANTHROPIC_MODEL (per defecte claude-haiku-5-5)
 // Opcional: ALLOWED_ORIGIN = https://el-teu-domini.vercel.app (bloqueja altres webs)
 // Si hi ha SUPABASE_URL i SUPABASE_ANON_KEY, només hi poden accedir usuaris amb sessió (AI_PUBLIC=1 ho desactiva).

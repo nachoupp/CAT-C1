@@ -19,7 +19,7 @@ Temps total: uns 20 minuts. Cap pas és obligatori: l'app funciona sense res con
 
 ## 2. Profe IA (correcció, preguntes noves, conversa)
 Posa'n **una**:
-- `GEMINI_API_KEY` (Google AI Studio → Get API key). Té pla gratuït, però en el pla gratuït Google pot fer servir el contingut per millorar els seus productes; amb la facturació activada no. Opcional: `GEMINI_MODEL=gemini-2.5-flash`.
+- `GEMINI_API_KEY` (Google AI Studio → Get API key). Té pla gratuït, però en el pla gratuït Google pot fer servir el contingut per millorar els seus productes; amb la facturació activada no. Opcional: `GEMINI_MODEL=gemini-3.8-flash` (si no en poses cap, fa servir el model estable més recent).
 - `ANTHROPIC_API_KEY` (console.anthropic.com). De pagament per ús. Opcional: `ANTHROPIC_MODEL`.
 
 ## 3. Veu natural en català

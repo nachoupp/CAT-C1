@@ -37,10 +37,14 @@ export async function askModel(body, env) {
       if (i === msgs.length - 1 && img) parts.push({ inline_data: { mime_type: img.mime || "image/jpeg", data: img.data } });
       return { role: m.role === "assistant" ? "model" : "user", parts };
     });
-    // Si el model configurat ja no existeix (Google en retira de vells), es prova l'àlies estable.
-    const models = [env.GEMINI_MODEL || "gemini-2.5-flash", "gemini-flash-latest"];
+    // Google retira models vells: es prova el configurat, després l'àlies estable i el model que Google recomani a l'error.
+    const models = [env.GEMINI_MODEL || "gemini-flash-latest", "gemini-3.8-flash", "gemini-flash-latest"];
+    const tried = new Set();
     let lastErr = "gemini";
-    for (const model of models) {
+    while (models.length) {
+      const model = models.shift();
+      if (tried.has(model)) continue;
+      tried.add(model);
       // Sense "pensament" respon molt més de pressa; si el model no ho admet, es torna a provar sense.
       for (const fast of [true, false]) {
         const generationConfig = { ...(body.json ? { responseMimeType: "application/json" } : {}), ...(fast ? { thinkingConfig: { thinkingBudget: 0 } } : {}) };
@@ -54,7 +58,9 @@ export async function askModel(body, env) {
         lastErr = d?.error?.message || `gemini ${r.status}`;
         if (!(fast && r.status === 400)) break;
       }
-      if (!/not found|404/i.test(lastErr)) break;
+      const suggested = lastErr.match(/gemini-[0-9][\w.-]*/g)?.map((m) => m.replace(/[.-]+$/, "")).find((m) => !tried.has(m) && m !== model);
+      if (suggested) models.unshift(suggested);
+      if (!/not found|no longer available|not supported|deprecated|404|model/i.test(lastErr)) break;
     }
     throw Object.assign(new Error(lastErr), { status: 502 });
   }
