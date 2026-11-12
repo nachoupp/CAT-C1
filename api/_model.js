@@ -37,40 +37,43 @@ export async function askModel(body, env) {
       if (i === msgs.length - 1 && img) parts.push({ inline_data: { mime_type: img.mime || "image/jpeg", data: img.data } });
       return { role: m.role === "assistant" ? "model" : "user", parts };
     });
-    // Google retira models vells: es prova el configurat, després l'àlies estable i el model que Google recomani a l'error.
-    const models = [env.GEMINI_MODEL || "gemini-flash-latest", "gemini-3.8-flash", "gemini-flash-latest"];
-    const tried = new Set();
-    let lastErr = "gemini";
-    while (models.length) {
-      const model = models.shift();
-      if (tried.has(model)) continue;
-      tried.add(model);
-      // Sense "pensament" respon molt més de pressa; si el model no ho admet, es torna a provar sense.
-      for (const fast of [true, false]) {
-        const generationConfig = { ...(body.json ? { responseMimeType: "application/json" } : {}), ...(fast ? { thinkingConfig: { thinkingBudget: 0 } } : {}) };
-        const ctrl = new AbortController();
-        const timer = setTimeout(() => ctrl.abort(), 22000);
-        let r;
-        try {
-          r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
-            method: "POST", signal: ctrl.signal,
-            headers: { "x-goog-api-key": env.GEMINI_API_KEY, "content-type": "application/json" },
-            body: JSON.stringify({ contents, generationConfig })
-          });
-        } catch (err) {
-          lastErr = `${model}: ${err?.name === "AbortError" ? "Gemini no respon (22 s)" : err?.message || "xarxa"}`;
-          continue;
-        } finally { clearTimeout(timer); }
-        const d = await r.json().catch(() => ({}));
-        if (r.ok) return (d.candidates?.[0]?.content?.parts || []).filter(p => !p.thought).map(p => p.text || "").join("");
-        lastErr = `${model}: ${d?.error?.message || `gemini ${r.status}`}`;
-        if (!(fast && r.status === 400)) break;
+    // Gemini va saturat o amb quota esgotada a estones: es proven diversos models (cadascun té la seva quota) i, si cal, dues voltes.
+    const models = [...new Set([env.GEMINI_MODEL, "gemini-2.5-flash", "gemini-flash-lite-latest", "gemini-2.5-flash-lite", "gemini-flash-latest"].filter(Boolean))];
+    const t0 = Date.now();
+    const errs = [];
+    for (let round = 0; round < 2; round++) {
+      for (const model of models) {
+        if (Date.now() - t0 > 48000) break;
+        for (const fast of [true, false]) {
+          const generationConfig = { ...(body.json ? { responseMimeType: "application/json" } : {}), ...(fast ? { thinkingConfig: { thinkingBudget: 0 } } : {}) };
+          const ctrl = new AbortController();
+          const timer = setTimeout(() => ctrl.abort(), 14000);
+          let r, d;
+          try {
+            r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+              method: "POST", signal: ctrl.signal,
+              headers: { "x-goog-api-key": env.GEMINI_API_KEY, "content-type": "application/json" },
+              body: JSON.stringify({ contents, generationConfig })
+            });
+            d = await r.json().catch(() => ({}));
+          } catch (err) {
+            errs.push(`${model}: ${err?.name === "AbortError" ? "no respon" : err?.message || "xarxa"}`);
+            break;
+          } finally { clearTimeout(timer); }
+          if (r.ok) {
+            const out = (d.candidates?.[0]?.content?.parts || []).filter(p => !p.thought).map(p => p.text || "").join("");
+            if (out) return out;
+            errs.push(`${model}: resposta buida`);
+            break;
+          }
+          errs.push(`${model}: ${r.status} ${(d?.error?.message || "").slice(0, 70)}`);
+          if (!(fast && r.status === 400)) break; // 400 amb thinking → es reintenta sense
+        }
       }
-      const suggested = lastErr.match(/gemini-[0-9][\w.-]*/g)?.map((m) => m.replace(/[.-]+$/, "")).find((m) => !tried.has(m) && m !== model);
-      if (suggested) models.unshift(suggested);
-      if (!/not found|no longer available|not supported|deprecated|404|model/i.test(lastErr)) break;
+      if (round === 0) await new Promise((res) => setTimeout(res, 1500));
     }
-    throw Object.assign(new Error(lastErr), { status: 502 });
+    const quota = errs.some((e) => / 429 /.test(e));
+    throw Object.assign(new Error(`${quota ? "Quota de Gemini esgotada o " : ""}Gemini saturat. ${errs.slice(-3).join(" | ")}`), { status: 502 });
   }
 
   throw Object.assign(new Error("Falta GEMINI_API_KEY o ANTHROPIC_API_KEY"), { status: 404 });
