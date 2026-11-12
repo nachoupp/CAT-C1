@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { neuralUrl, stopAll } from "../lib/audio";
+import { neuralUrl, neuralMissing, stopAll } from "../lib/audio";
 import { speak as deviceSpeak, stopSpeaking, canSpeak } from "../lib/speech";
 import { useStore, setState } from "../lib/store";
 import { fmtClock } from "../lib/text";
@@ -14,7 +14,7 @@ export function AudioPlayer({ src, text, label, maxPlays }: { src?: string; text
   const rate = useStore((s) => s.settings.rate ?? 1);
   const ref = useRef<HTMLAudioElement>(null);
   const [url, setUrl] = useState<string | null>(src ?? null);
-  const [mode, setMode] = useState<"loading" | "file" | "device" | "none">(src ? "file" : "loading");
+  const [mode, setMode] = useState<"loading" | "file" | "device" | "none" | "retry">(src ? "file" : "loading");
   const [playing, setPlaying] = useState(false);
   const [t, setT] = useState(0);
   const [dur, setDur] = useState(0);
@@ -22,14 +22,20 @@ export function AudioPlayer({ src, text, label, maxPlays }: { src?: string; text
   const [loop, setLoop] = useState(false);
   const exhausted = maxPlays !== undefined && plays >= maxPlays && !playing;
 
+  const [tries, setTries] = useState(0);
   useEffect(() => {
     let alive = true;
     if (src) { setUrl(src); setMode("file"); return; }
     if (!text) return;
     setMode("loading");
-    void neuralUrl(text).then((u) => { if (!alive) return; if (u) { setUrl(u); setMode("file"); } else setMode(canSpeak() ? "device" : "none"); });
+    void neuralUrl(text).then((u) => {
+      if (!alive) return;
+      if (u) { setUrl(u); setMode("file"); }
+      else if (neuralMissing()) setMode(canSpeak() ? "device" : "none");
+      else setMode("retry"); // fallada puntual: no es canvia en silenci a una altra veu
+    });
     return () => { alive = false; };
-  }, [src, text]);
+  }, [src, text, tries]);
   useEffect(() => { if (ref.current) ref.current.playbackRate = rate; }, [rate, url]);
   useEffect(() => () => { ref.current?.pause(); stopSpeaking(); }, []);
 
@@ -52,6 +58,12 @@ export function AudioPlayer({ src, text, label, maxPlays }: { src?: string; text
   const seek = (d: number) => { const a = ref.current; if (a) a.currentTime = Math.max(0, Math.min(dur, a.currentTime + d)); };
   const setRate = (r: number) => setState((s) => ({ ...s, settings: { ...s.settings, rate: r } }));
 
+  if (mode === "retry") return (
+    <div className="flex items-center justify-between gap-3 rounded-xl bg-bg px-3 py-2.5 text-[13.5px]">
+      <span className="text-muted">{label ? `${label}: ` : ""}la veu no ha carregat.</span>
+      <button onClick={() => setTries((n) => n + 1)} className="rounded-full bg-accent px-3 py-1.5 text-[13px] font-semibold text-white">Reintenta</button>
+    </div>
+  );
   if (mode === "none") return <div className="rounded-xl bg-bg px-3 py-2.5 text-[13.5px] text-muted">Aquest dispositiu no pot reproduir veu.</div>;
   return (
     <div className="rounded-2xl bg-bg p-3">

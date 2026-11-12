@@ -5,6 +5,7 @@
 import { accessToken } from "./supabase";
 import { getState } from "./store";
 import { speak as deviceSpeak, stopSpeaking } from "./speech";
+import { toast } from "./toast";
 
 const cache = new Map<string, string>();
 let neuralOff = false;
@@ -33,22 +34,43 @@ export function serverVoices(): Promise<VoiceInfo> {
   return voicesP;
 }
 
-/** URL d'àudio neuronal per a un text, o null si el servidor no en té. */
+/** El servidor no té veu neuronal configurada (només llavors es fa servir la del dispositiu). */
+export const neuralMissing = (): boolean => neuralOff;
+
+// Cua: com a màxim 2 peticions alhora, perquè ElevenLabs rebutja les ràfegues (llistes amb molts àudios).
+let active = 0;
+const waiting: (() => void)[] = [];
+async function slot<T>(fn: () => Promise<T>): Promise<T> {
+  if (active >= 2) await new Promise<void>((r) => waiting.push(r));
+  active++;
+  try { return await fn(); } finally { active--; waiting.shift()?.(); }
+}
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+/** URL d'àudio neuronal per a un text, o null si falla (neuralMissing() diu si és que no hi ha servidor de veu). */
 export async function neuralUrl(text: string, rate = 1): Promise<string | null> {
   if (neuralOff) return null;
   const voice = getState().settings.voice ?? "";
   const key = `${voice}|${rate}|${text}`;
   const hit = cache.get(key);
   if (hit) return hit;
-  try {
-    const token = await accessToken();
-    const r = await fetch(`/api/tts?v=${voice}&r=${rate}&t=${encodeURIComponent(text)}`, { headers: token ? { Authorization: `Bearer ${token}` } : {} });
-    if (r.status === 404) { neuralOff = true; return null; }
-    if (!r.ok || !(r.headers.get("content-type") ?? "").includes("audio")) return null;
-    const url = URL.createObjectURL(await r.blob());
-    cache.set(key, url);
-    return url;
-  } catch { return null; }
+  return slot(async () => {
+    for (let i = 0; i < 3; i++) {
+      try {
+        const token = await accessToken();
+        const r = await fetch(`/api/tts?v=${voice}&r=${rate}&t=${encodeURIComponent(text)}`, { headers: token ? { Authorization: `Bearer ${token}` } : {} });
+        if (r.status === 404) { neuralOff = true; return null; }
+        if (r.ok && (r.headers.get("content-type") ?? "").includes("audio")) {
+          const url = URL.createObjectURL(await r.blob());
+          cache.set(key, url);
+          return url;
+        }
+        if (r.status === 401 || r.status === 400) return null;
+      } catch { /* xarxa: es reintenta */ }
+      await sleep(900 * (i + 1));
+    }
+    return null;
+  });
 }
 
 export function stopAll(): void {
@@ -65,5 +87,6 @@ export async function playText(text: string): Promise<"neural" | "device" | "non
     await current.play().catch(() => undefined);
     return "neural";
   }
+  if (!neuralOff) { toast("La veu no ha respost. Torna-ho a provar."); return "none"; }
   return deviceSpeak(text) ? "device" : "none";
 }
