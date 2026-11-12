@@ -41,15 +41,20 @@ export async function askModel(body, env) {
     const models = [env.GEMINI_MODEL || "gemini-2.5-flash", "gemini-flash-latest"];
     let lastErr = "gemini";
     for (const model of models) {
-      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
-        method: "POST",
-        headers: { "x-goog-api-key": env.GEMINI_API_KEY, "content-type": "application/json" },
-        body: JSON.stringify({ contents, generationConfig: body.json ? { responseMimeType: "application/json" } : {} })
-      });
-      const d = await r.json().catch(() => ({}));
-      if (r.ok) return (d.candidates?.[0]?.content?.parts || []).map(p => p.text || "").join("");
-      lastErr = d?.error?.message || `gemini ${r.status}`;
-      if (r.status !== 404) break;
+      // Sense "pensament" respon molt més de pressa; si el model no ho admet, es torna a provar sense.
+      for (const fast of [true, false]) {
+        const generationConfig = { ...(body.json ? { responseMimeType: "application/json" } : {}), ...(fast ? { thinkingConfig: { thinkingBudget: 0 } } : {}) };
+        const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+          method: "POST",
+          headers: { "x-goog-api-key": env.GEMINI_API_KEY, "content-type": "application/json" },
+          body: JSON.stringify({ contents, generationConfig })
+        });
+        const d = await r.json().catch(() => ({}));
+        if (r.ok) return (d.candidates?.[0]?.content?.parts || []).filter(p => !p.thought).map(p => p.text || "").join("");
+        lastErr = d?.error?.message || `gemini ${r.status}`;
+        if (!(fast && r.status === 400)) break;
+      }
+      if (!/not found|404/i.test(lastErr)) break;
     }
     throw Object.assign(new Error(lastErr), { status: 502 });
   }

@@ -43,27 +43,55 @@ export default function Quiz({ ai = false }: { ai?: boolean }) {
   const [ok, setOk] = useState(0);
   const [chosen, setChosen] = useState<string | null>(null);
 
+  const [attempt, setAttempt] = useState(0);
+  const [secs, setSecs] = useState(0);
+
   useEffect(() => {
     if (!ai) return;
     let alive = true;
+    const ctrl = new AbortController();
+    setErr(null); setSecs(0);
+    const tick = setInterval(() => setSecs((x) => x + 1), 1000);
     const topics = weakTopics();
     askJSON<GeneratedQ[]>(`Crea 10 preguntes noves de tria múltiple per a l'Àrea 2 (domini pràctic del sistema lingüístic) del certificat C1 de català del Govern de les Illes Balears.
 Temes a reforçar: ${topics.length ? topics.join(" | ") : "pronoms febles, preposicions, barbarismes, ortografia, lèxic i frases fetes, registre"}.
 Cada pregunta: una frase amb un buit (___) o una pregunta breu, 3 opcions i només una de correcta segons la normativa de l'IEC (formes balears acceptades), més una explicació breu en castellà.
-Respon NOMÉS amb un array JSON: [{"q":"...","ok":"opció correcta","no":["distractor","distractor"],"e":"explicació"}]`)
-      .then((arr) => {
-        const qs = (Array.isArray(arr) ? arr : []).map(fromGenerated).filter((x): x is QuizItem => !!x).slice(0, 10);
+Respon NOMÉS amb un array JSON: [{"q":"...","ok":"opció correcta","no":["distractor","distractor"],"e":"explicació"}]`, { signal: ctrl.signal, timeoutMs: 60000 })
+      .then((raw) => {
+        // Alguns models embolcallen l'array dins d'un objecte ({"preguntes": [...]}).
+        const arr = Array.isArray(raw) ? raw : (Object.values((raw ?? {}) as Record<string, unknown>).find(Array.isArray) as GeneratedQ[] | undefined) ?? [];
+        const qs = arr.map(fromGenerated).filter((x): x is QuizItem => !!x).slice(0, 10);
         if (!alive) return;
         if (qs.length < 3) setErr("La IA no ha generat prou preguntes vàlides. Torna-ho a provar.");
         else setItems(qs);
       })
-      .catch((e) => { if (alive) setErr(e instanceof AiError ? e.message : "No s'ha pogut generar el test."); });
-    return () => { alive = false; };
-  }, [ai]);
+      .catch((e) => { if (alive) setErr(e instanceof AiError ? e.message : "No s'ha pogut generar el test."); })
+      .finally(() => clearInterval(tick));
+    return () => { alive = false; ctrl.abort(); clearInterval(tick); };
+  }, [ai, attempt]);
 
   const back = { to: "practica", label: "Practica" };
-  if (err) return <Page title="Preguntes amb IA" back={back}><Card className="p-4">{err}</Card></Page>;
-  if (!items) return <Page title="Preguntes amb IA" back={back}><Card className="p-4 text-muted">Creant 10 preguntes sobre els teus punts febles… pot trigar uns segons.</Card></Page>;
+  if (err) return (
+    <Page title="Preguntes amb IA" back={back}>
+      <Card className="space-y-3 p-4">
+        <p className="text-[15px]">{err}</p>
+        <div className="grid grid-cols-2 gap-2">
+          <Btn variant="soft" onClick={() => go("test")}>Test sense IA</Btn>
+          <Btn onClick={() => setAttempt((x) => x + 1)}>Torna-ho a provar</Btn>
+        </div>
+      </Card>
+    </Page>
+  );
+  if (!items) return (
+    <Page title="Preguntes amb IA" back={back}>
+      <Card className="space-y-3 p-4">
+        <p className="text-muted">Creant 10 preguntes sobre els teus punts febles… {secs > 0 && <span className="tabular">({secs} s)</span>}</p>
+        <div className="h-1.5 overflow-hidden rounded-full bg-line"><div className="h-full rounded-full bg-accent transition-all" style={{ width: `${Math.min(95, secs * 4)}%` }} /></div>
+        {secs >= 15 && <p className="text-[13px] text-muted">Està trigant més del normal. Si arriba al minut, s'aturarà sol i podràs tornar-ho a provar.</p>}
+        <Btn variant="soft" onClick={() => go("practica")}>Cancel·la</Btn>
+      </Card>
+    </Page>
+  );
 
   if (k >= items.length) {
     const pct = ok / items.length;
