@@ -22,6 +22,9 @@
     },
     "api/stt.js": {
       "maxDuration": 60
+    },
+    "api/probe.js": {
+      "maxDuration": 60
     }
   }
 }

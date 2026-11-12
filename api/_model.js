@@ -48,14 +48,22 @@ export async function askModel(body, env) {
       // Sense "pensament" respon molt més de pressa; si el model no ho admet, es torna a provar sense.
       for (const fast of [true, false]) {
         const generationConfig = { ...(body.json ? { responseMimeType: "application/json" } : {}), ...(fast ? { thinkingConfig: { thinkingBudget: 0 } } : {}) };
-        const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
-          method: "POST",
-          headers: { "x-goog-api-key": env.GEMINI_API_KEY, "content-type": "application/json" },
-          body: JSON.stringify({ contents, generationConfig })
-        });
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), 22000);
+        let r;
+        try {
+          r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+            method: "POST", signal: ctrl.signal,
+            headers: { "x-goog-api-key": env.GEMINI_API_KEY, "content-type": "application/json" },
+            body: JSON.stringify({ contents, generationConfig })
+          });
+        } catch (err) {
+          lastErr = `${model}: ${err?.name === "AbortError" ? "Gemini no respon (22 s)" : err?.message || "xarxa"}`;
+          continue;
+        } finally { clearTimeout(timer); }
         const d = await r.json().catch(() => ({}));
         if (r.ok) return (d.candidates?.[0]?.content?.parts || []).filter(p => !p.thought).map(p => p.text || "").join("");
-        lastErr = d?.error?.message || `gemini ${r.status}`;
+        lastErr = `${model}: ${d?.error?.message || `gemini ${r.status}`}`;
         if (!(fast && r.status === 400)) break;
       }
       const suggested = lastErr.match(/gemini-[0-9][\w.-]*/g)?.map((m) => m.replace(/[.-]+$/, "")).find((m) => !tried.has(m) && m !== model);
