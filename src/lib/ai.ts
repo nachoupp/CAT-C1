@@ -39,7 +39,10 @@ export async function askAI(input: string | Turn[], opts: { image?: Blob; json?:
   if (res.status === 404) throw new AiError("no_endpoint", "La IA no està configurada en aquest servidor. Mira el README.");
   if (res.status === 401) throw new AiError("upstream", "Entra al teu compte (Perfil) per fer servir la IA.");
   if (res.status === 429) throw new AiError("rate_limited", "Massa peticions seguides. Espera uns minuts.");
-  if (!res.ok) throw new AiError("upstream", "El servei d'IA ha fallat. Torna-ho a provar.");
+  if (!res.ok) {
+    const detail = await res.json().then((d: { error?: string }) => d?.error).catch(() => undefined);
+    throw new AiError("upstream", `El servei d'IA ha fallat${detail ? `: ${String(detail).slice(0, 220)}` : ". Torna-ho a provar."}`);
+  }
   const data = (await res.json()) as { text?: string };
   return data.text ?? "";
 }
