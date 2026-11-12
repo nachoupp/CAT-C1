@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Page, Section, Card, Btn, List, Row, Pill, Note } from "../../components/ui";
 import { AudioPlayer } from "../../components/AudioPlayer";
 import { ItemQuiz } from "../../components/ItemQuiz";
+import { TapText } from "../../components/TapText";
 import { LISTENINGS, DICTATIONS } from "../../content/listening";
 import { BASICS } from "../../content/basics";
 import { useStore, setState, award } from "../../lib/store";
@@ -47,7 +48,7 @@ export function ListeningRun({ id }: { id: string }) {
           </Card>
           <Section title="Transcripció">
             <Card className="space-y-3 p-4">
-              <p className="text-[15.5px] leading-relaxed">{l.text}</p>
+              <p className="text-[15.5px] leading-relaxed"><TapText text={l.text} /></p>
               <AudioPlayer text={l.text} label="Torna-la a escoltar llegint" />
             </Card>
           </Section>

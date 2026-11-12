@@ -9,6 +9,7 @@ import { RulesBar } from "../../components/ItemQuiz";
 import { useStore, setState, award } from "../../lib/store";
 import type { StepKey } from "../../lib/types";
 import { isoDate } from "../../lib/dates";
+import { TapText } from "../../components/TapText";
 import { countWords, fmtClock, shuffle } from "../../lib/text";
 import { playText } from "../../lib/audio";
 import { AudioPlayer } from "../../components/AudioPlayer";
@@ -135,7 +136,7 @@ function Discover({ u, c }: { u: Unit; c: UnitContent }) {
         <div className="mt-1 text-[19px] font-bold">{c.model.title}</div>
         <div className="mt-3"><AudioPlayer text={c.model.text} label="Escolta el text model" /></div>
         <div className="mt-3 whitespace-pre-wrap text-[16.5px] leading-[1.7]">
-          {parts.map((p, i) => p.note === null ? <span key={i}>{p.text}</span> : (
+          {parts.map((p, i) => p.note === null ? <span key={i}><TapText text={p.text} /></span> : (
             <mark key={i} className="note" role="button" tabIndex={0} aria-pressed={open === p.note} onClick={() => setOpen(p.note)} onKeyDown={(e) => { if (e.key === "Enter") setOpen(p.note); }}>{p.text}</mark>
           ))}
         </div>
