@@ -5,6 +5,7 @@ import { useStore, setState } from "../../lib/store";
 import { isoDate } from "../../lib/dates";
 import { AudioPlayer } from "../../components/AudioPlayer";
 import { go } from "../../lib/router";
+import { TIPS } from "../../content/tips";
 
 export { Dictionary } from "./Dictionary";
 import { Dictionary } from "./Dictionary";
@@ -15,6 +16,17 @@ export default function Learn() {
   return (
     <Page title="Aprèn" subtitle={`Píndoles de 2 minuts · ${Object.keys(read).length} de ${LESSONS.length} llegides`}>
       <Dictionary />
+      <Section title="Trucs i mètodes d'estudi">
+        <Card className="divide-y divide-line">
+          {TIPS.map((t) => (
+            <details key={t.title} className="group px-4 py-3">
+              <summary className="cursor-pointer list-none text-[15.5px] font-semibold">{t.title}</summary>
+              <p className="mt-1.5 text-[14.5px]">{t.why}</p>
+              <ul className="mt-1.5 list-disc space-y-0.5 pl-5 text-[14px] text-muted">{t.how.map((h) => <li key={h}>{h}</li>)}</ul>
+            </details>
+          ))}
+        </Card>
+      </Section>
       {areas.map((a) => (
         <Section key={a} title={a}>
           <List>

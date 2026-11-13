@@ -21,6 +21,7 @@ export const BASICS: Basic[] = [
   {
     id: "f1", n: 1, title: "Els nombres", goal: "Comptar de 0 a un milió i escriure bé els guionets i el femení (dues, dues-centes).",
     cards: [
+      { title: "El truc D-U-C", html: "<p>Tres lletres per muntar qualsevol nombre, com fan els nens:</p><p><b>D-U</b> = <b>D</b>esena + <b>U</b>nitat: <b>trenta-dos</b> (30 + 2), <b>quaranta-cinc</b>. Només amb vint s'afegeix <b>-i-</b>: <b>vint-i-u</b>.</p><p><b>U-C</b> = <b>U</b>nitat + <b>C</b>entena: primer el multiplicador i després <b>-cents</b>: <b>dos-cents</b> (2 · cent), <b>tres-cents</b>, <b>set-cents</b>. Es llegeix en l'ordre en què s'escriu.</p><p>Junts, de gran a petit: <b>235 = dos-cents · trenta-cinc</b> (U-C + D-U). Els milers igual: <b>3.480 = tres mil · quatre-cents · vuitanta</b>.</p><p>Compte: <b>cent</b> (100) no porta «un», <b>mil</b> tampoc, però <b>dos mil</b>, <b>dos-cents</b>. Femení: <b>dues-centes</b>, <b>dues mil</b> persones.</p>" },
       { title: "De 0 a 20", html: "<p>zero · u (un, una) · <b>dos, dues</b> · tres · quatre · cinc · sis · set · vuit · nou · deu · onze · dotze · tretze · catorze · quinze · setze · disset · divuit · dinou · vint</p><p>A les Balears també es diu <b>desset, devuit, denou</b>: són correctes.</p>" },
       { title: "Desenes: el guionet", html: "<p>Desena + unitat amb guionet: <b>trenta-dos</b>, <b>quaranta-cinc</b>. Només amb vint hi ha <b>-i-</b>: <b>vint-i-u</b>, <b>vint-i-tres</b>.</p><p>trenta · quaranta · cinquanta · seixanta · setanta · vuitanta · <b>noranta</b></p>" },
       { title: "Centenars i milers", html: "<p>cent · cent u · <b>dos-cents</b> (masculí) / <b>dues-centes</b> (femení) · tres-cents · cinc-cents · mil (mai «un mil») · dos mil · un milió.</p><p>Concorden amb el nom: <b>dues-centes persones</b>, <b>dos-cents euros</b>.</p>" }
@@ -43,6 +44,9 @@ export const BASICS: Basic[] = [
       { type: "choice", q: "Com s'escriu 1.500?", options: ["mil cinc-cents", "un mil cinc-cents", "mil cincents"], answer: "mil cinc-cents", e: "Mai «un mil»; cinc-cents amb guionet." },
       { type: "choice", q: "Com es diu 0?", options: ["zero", "cero", "sero"], answer: "zero", e: "Zero." },
       { type: "choice", q: ok, options: ["Fa quinze anys.", "Fa quinçe anys.", "Fa quinse anys."], answer: "Fa quinze anys.", e: "Quinze, amb z." },
+      { type: "choice", q: "Com s'escriu 300 (truc U-C)?", options: ["tres-cents", "trescents", "cent tres"], answer: "tres-cents", e: "U-C: unitat + cents, amb guionet: tres-cents." },
+      { type: "choice", q: "Com es diu 457?", options: ["quatre-cents cinquanta-set", "quatre-cents i cinquanta-set", "quatre cents cinquanta set"], answer: "quatre-cents cinquanta-set", e: "U-C (quatre-cents) + D-U (cinquanta-set): sense -i- i amb guionets dins de cada bloc." },
+      { type: "gap", q: "El llibre té ___ (326) pàgines.", answers: ["tres-centes vint-i-sis"], e: "Pàgines és femení: tres-centes; D-U de vint: vint-i-sis." },
       { type: "gap", q: "Tinc ___ (2) germanes.", answers: ["dues"], e: "Germanes és femení: dues." },
       { type: "gap", q: "A la classe hi ha ___ (21) alumnes.", answers: ["vint-i-un"], e: "Davant de nom masculí: vint-i-un." },
       { type: "gap", q: "La sala té ___ (500) seients.", answers: ["cinc-cents"], e: "Cinc-cents, amb guionet." },
