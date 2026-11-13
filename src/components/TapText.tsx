@@ -2,12 +2,13 @@ import { useEffect, useState, type ReactNode } from "react";
 import { askJSON, AiError } from "../lib/ai";
 import { playText } from "../lib/audio";
 
-interface Gloss { lema?: string; categoria?: string; es?: string; definicio?: string; exemple?: string }
+interface Gloss { relacionades?: string[]; lema?: string; categoria?: string; es?: string; definicio?: string; exemple?: string }
 const cache = new Map<string, Gloss>();
 const WORD = /[\p{L}][\p{L}·'’-]*/gu;
 
 const prompt = (w: string, ctx: string) => `Ets un lexicògraf expert en català (IEC, amb atenció a les formes balears). Explica la paraula «${w}» tal com es fa servir en aquesta frase: «${ctx.slice(0, 220)}».
-Respon NOMÉS amb JSON: {"lema":"forma de diccionari (infinitiu si és verb)","categoria":"nom m. / verb / adj. / loc. ...","es":"traducció al castellà en aquest context","definicio":"definició molt breu en català","exemple":"una frase d'exemple curta"}`;
+Respon NOMÉS amb JSON: {"lema":"forma de diccionari (infinitiu si és verb)","categoria":"nom m. / verb / adj. / loc. ...","es":"traducció al castellà en aquest context","definicio":"definició molt breu en català","exemple":"una frase d'exemple curta","relacionades":["3-5 paraules, locucions o expressions de la mateixa família o camp, útils per ampliar vocabulari, cadascuna amb el seu significat breu en castellà entre parèntesis"]}
+Si la paraula forma part d'una locució (p. ex. «fer l'orni»), explica la locució sencera a "definicio" i "es".`;
 
 function sentenceAround(text: string, at: number): string {
   const s = Math.max(text.lastIndexOf(".", at - 1), text.lastIndexOf("?", at - 1), text.lastIndexOf("!", at - 1), text.lastIndexOf("\n", at - 1)) + 1;
@@ -64,6 +65,11 @@ function GlossSheet({ w, ctx, onClose }: { w: string; ctx: string; onClose: () =
         {err && <span className="block text-bad">{err}</span>}
         {g?.es && <span className="block"><b>{g.es}</b></span>}
         {g?.definicio && <span className="block">{g.definicio}</span>}
+        {(g?.relacionades ?? []).length > 0 && <span className="block text-[13.5px]"><b>Per ampliar:</b> {g!.relacionades!.join(" · ")}</span>}
+        <span className="flex gap-2 pt-1 text-[13px]">
+          <a className="font-semibold text-accent" target="_blank" rel="noreferrer" href={`https://dlc.iec.cat/Results?DecEntradaText=${encodeURIComponent((g?.lema ?? w).toLowerCase())}`}>Cerca al DIEC ↗</a>
+          <a className="font-semibold text-accent" target="_blank" rel="noreferrer" href="https://dcvb.iec.cat/inici.asp" onClick={() => void navigator.clipboard?.writeText(g?.lema ?? w).catch(() => undefined)}>DCVB ↗ (copia la paraula)</a>
+        </span>
         {g?.exemple && <span className="block border-l-2 border-accent/40 pl-3 text-muted">{g.exemple}</span>}
       </span>
     </span>
