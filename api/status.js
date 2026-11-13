@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   const e = process.env;
   const ai = e.ANTHROPIC_API_KEY ? "claude" : e.GEMINI_API_KEY ? "gemini" : null;
   const tts = e.AINA_TTS_URL ? "aina" : e.AZURE_SPEECH_KEY && e.AZURE_SPEECH_REGION ? "azure" : e.ELEVENLABS_API_KEY ? "elevenlabs" : null;
-  const auth = Boolean((e.SUPABASE_URL || e.VITE_SUPABASE_URL) && (e.SUPABASE_ANON_KEY || e.VITE_SUPABASE_ANON_KEY));
+  const auth = Boolean((e.SUPABASE_URL || e.VITE_SUPABASE_URL || e.NEXT_PUBLIC_SUPABASE_URL) && (e.SUPABASE_ANON_KEY || e.VITE_SUPABASE_ANON_KEY || e.NEXT_PUBLIC_SUPABASE_ANON_KEY || e.SUPABASE_PUBLISHABLE_KEY || e.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY));
   const out = { ai, tts, stt: Boolean(e.ELEVENLABS_API_KEY), auth, loginRequired: auth && e.AI_PUBLIC !== "1", model: ai === "gemini" ? (e.GEMINI_MODEL || "gemini-flash-latest") : ai === "claude" ? (e.ANTHROPIC_MODEL || "claude-haiku-5-5") : null };
   const probe = req.query?.probe ?? new URL(req.url || "/", "http://x").searchParams.get("probe");
   if (probe && ai) {
