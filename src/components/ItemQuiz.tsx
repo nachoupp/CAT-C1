@@ -103,36 +103,57 @@ export function RulesBar({ rules, open, setOpen, highlight }: { rules: TeachRule
   );
 }
 
-/** Per què no són correctes les altres opcions: explicació automàtica i, si cal, del professor IA. */
+const TIPUS: Record<string, string> = {
+  no_existeix: "No existeix en català",
+  altra_estructura: "Existeix, però va amb una altra estructura",
+  altre_temps: "Temps o forma verbal diferent",
+  altre_sentit: "Existeix, però vol dir una altra cosa",
+  registre: "Registre o ús no adequat",
+  castellanisme: "Calc del castellà",
+  ortografia: "Error d'ortografia o accent"
+};
+type WhyEntry = { tipus?: string; explicacio?: string; exemple?: string };
+const whyCache = new Map<string, Record<string, WhyEntry | string>>();
+const asEntry = (v: WhyEntry | string | undefined): WhyEntry | undefined => (typeof v === "string" ? { explicacio: v } : v);
+
+/** Per què no són correctes les altres opcions: explicació automàtica i, de seguida, la del professor IA (amb el tipus d'error i un exemple on sí que s'usa). */
 function WhyNot({ item, rules }: { item: Extract<PracticeItem, { type: "choice" }>; rules: TeachRule[] }) {
   const others = item.options.filter((o) => o !== item.answer);
   const auto = Object.fromEntries(others.map((o) => [o, whyNot(o, item.answer, rules)]));
-  const [ai, setAi] = useState<Record<string, string> | null>(null);
+  const key = `${item.q}|${item.answer}`;
+  const [ai, setAi] = useState<Record<string, WhyEntry | string> | null>(whyCache.get(key) ?? null);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
-  useEffect(() => { setAi(null); setErr(null); }, [item]);
   const ask = async () => {
     setBusy(true); setErr(null);
     try {
-      const r = await askJSON<Record<string, string>>(`Ets un professor de català (nivell C1, examen del GOIB) que explica amb paciència a una alumna hispanoparlant.
+      const r = await askJSON<Record<string, WhyEntry | string>>(`Ets un professor de català (nivell C1, examen del GOIB) que explica amb paciència a una alumna hispanoparlant. Ella no sap si una opció incorrecta és incorrecta perquè NO EXISTEIX, perquè s'usa en UNA ALTRA ESTRUCTURA gramatical o perquè està en UN ALTRE TEMPS VERBAL: aclareix-ho sempre.
 Exercici: «${item.q}». Opcions: ${item.options.map((o) => `«${o}»`).join(", ")}. Correcta: «${item.answer}».
-Explica, en català clar i breu (1-2 frases cadascuna), per què és correcta la bona i per què NO ho és cadascuna de les altres, amb la regla i un exemple curt.
-Respon NOMÉS amb JSON on cada clau és l'opció exacta: {${item.options.map((o) => JSON.stringify(o) + ':"..."').join(",")}}`);
-      setAi(r);
+Per a CADA opció (també la correcta) respon amb: "tipus" (un de: no_existeix, altra_estructura, altre_temps, altre_sentit, registre, castellanisme, ortografia; a la correcta posa "correcta"), "explicacio" (1-2 frases en català clar: per què encaixa o no en aquesta frase, nomenant l'estructura o el temps), "exemple" (només per a les incorrectes que existeixen: una frase curta on SÍ que s'usa bé; si no existeix, buit).
+Respon NOMÉS amb JSON on cada clau és l'opció exacta: {${item.options.map((o) => JSON.stringify(o) + ':{"tipus":"","explicacio":"","exemple":""}').join(",")}}`);
+      whyCache.set(key, r); setAi(r);
     } catch (e) { setErr(e instanceof AiError ? e.message : "No s'ha pogut consultar el professor."); }
     finally { setBusy(false); }
   };
+  useEffect(() => { if (!whyCache.has(key)) void ask(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [key]);
   return (
     <div className="mt-3 rounded-xl border border-line px-3.5 py-3 text-[14.5px]">
       <div className="mb-1.5 text-[12.5px] font-semibold uppercase tracking-wider text-muted">Per què no les altres?</div>
-      <ul className="space-y-1.5">
-        {others.map((o) => (
-          <li key={o}><span className="font-semibold text-bad">✗ {o}</span> — {ai?.[o] ?? auto[o]?.replace(`«${o}»: `, "") ?? "no és la forma adequada en aquesta frase. Consulta la regla destacada o demana-ho al professor."}</li>
-        ))}
-        {ai?.[item.answer] && <li><span className="font-semibold text-good">✓ {item.answer}</span> — {ai[item.answer]}</li>}
+      <ul className="space-y-2.5">
+        {others.map((o) => {
+          const e = asEntry(ai?.[o]);
+          return (
+            <li key={o}>
+              <span className="font-semibold text-bad">✗ {o}</span>
+              {e?.tipus && TIPUS[e.tipus] && <span className="ml-2 rounded-full bg-bad/10 px-2 py-0.5 text-[11.5px] font-semibold text-bad">{TIPUS[e.tipus]}</span>}
+              <div>{e?.explicacio ?? auto[o]?.replace(`«${o}»: `, "") ?? (busy ? "El professor ho està mirant…" : "No és la forma adequada en aquesta frase.")}</div>
+              {e?.exemple && <div className="mt-0.5 border-l-2 border-accent/40 pl-2.5 text-[13.5px] text-muted">Així sí: {e.exemple}</div>}
+            </li>
+          );
+        })}
+        {asEntry(ai?.[item.answer])?.explicacio && <li><span className="font-semibold text-good">✓ {item.answer}</span><div>{asEntry(ai?.[item.answer])!.explicacio}</div></li>}
       </ul>
-      {!ai && <button onClick={ask} disabled={busy} className="mt-2 text-[13.5px] font-semibold text-accent disabled:opacity-50">{busy ? "El professor està pensant…" : "Explica-m'ho com un professor"}</button>}
-      {err && <div className="mt-1 text-[13px] text-muted">{err}</div>}
+      {err && <div className="mt-1.5 text-[13px] text-muted">{err} <button onClick={ask} disabled={busy} className="font-semibold text-accent">Reintenta</button></div>}
     </div>
   );
 }
