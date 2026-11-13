@@ -90,3 +90,23 @@ export async function playText(text: string): Promise<"neural" | "device" | "non
   if (!neuralOff) { toast("La veu no ha respost. Torna-ho a provar."); return "none"; }
   return deviceSpeak(text) ? "device" : "none";
 }
+
+/** Diu un text i espera que acabi (per a converses). Si la veu neuronal falla, ho avisa en lloc de canviar de veu. */
+export async function speakAndWait(text: string): Promise<void> {
+  stopAll();
+  const url = await neuralUrl(text);
+  if (url) {
+    const a = new Audio(url);
+    current = a;
+    a.playbackRate = getState().settings.rate ?? 1;
+    await new Promise<void>((done) => {
+      a.onended = () => done();
+      a.onpause = () => done();
+      a.onerror = () => done();
+      a.play().catch(() => done());
+    });
+    return;
+  }
+  if (!neuralOff) { toast("La veu no ha respost. Pots llegir la resposta al text."); return; }
+  if (deviceSpeak(text)) await sleep(Math.max(2000, text.length * 70));
+}

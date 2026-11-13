@@ -19,6 +19,7 @@ import { PaperList, Diagnostic } from "./features/write/Paper";
 import Speak, { UnitSpeak } from "./features/speak/Speak";
 import OralTimer from "./features/speak/OralTimer";
 import OralCoachPage from "./features/speak/OralCoach";
+import Conversa from "./features/speak/Conversa";
 import Scan from "./features/write/Scan";
 import { ListeningRun, Dictation } from "./features/practice/Listen";
 import { BasicLesson } from "./features/basics/Basics";
@@ -42,7 +43,7 @@ function tabOf(route: string): string {
   if (route.startsWith("fon-")) return "ruta";
   if (route.startsWith("parla") || route.startsWith("audio-") || route === "dictat" || route === "audios") return "practica";
   if (["calendari", "compte", "nova-contrasenya"].includes(route)) return "perfil";
-  if (["test", "test-ia", "simulacre", "joc-frases", "joc-barbarismes", "connectors", "escriu", "fitxes", "fitxa0", "parla", "oral", "escolta", "escaneja"].includes(route)) return "practica";
+  if (["test", "test-ia", "simulacre", "joc-frases", "joc-barbarismes", "connectors", "escriu", "fitxes", "fitxa0", "parla", "oral", "escolta", "conversa", "escaneja"].includes(route)) return "practica";
   return TABS.some((t) => t.id === route) ? route : "ruta";
 }
 
@@ -80,6 +81,7 @@ function screen(route: string): ReactNode {
     case "parla": return <Speak />;
     case "oral": return <OralTimer />;
     case "escolta": return <OralCoachPage />;
+    case "conversa": return <Conversa />;
     case "escaneja": return <Scan />;
     default: return <Route />;
   }
@@ -93,7 +95,7 @@ export default function App() {
     <div className="min-h-dvh pt-[env(safe-area-inset-top)]">
       <div key={route}>{screen(route)}</div>
       {toast && (
-        <div role="status" className="fixed bottom-[calc(84px+env(safe-area-inset-bottom))] left-1/2 z-20 -translate-x-1/2 rounded-full bg-fg px-4 py-2.5 text-sm font-medium text-bg">{toast}</div>
+        <div role="status" className="fixed bottom-[calc(84px+env(safe-area-inset-bottom))] left-1/2 z-50 -translate-x-1/2 rounded-full bg-fg px-4 py-2.5 text-sm font-medium text-bg">{toast}</div>
       )}
       <nav aria-label="Seccions" className="fixed inset-x-0 bottom-0 z-10 border-t border-line bg-[var(--bar)] pb-[env(safe-area-inset-bottom)] backdrop-blur-xl backdrop-saturate-150 print:hidden">
         <div className="mx-auto grid max-w-[680px] grid-cols-5">
