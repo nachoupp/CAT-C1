@@ -71,7 +71,18 @@ export default function Account() {
       }
     } catch (err) {
       const m = err instanceof Error ? err.message : "";
-      setMsg(/invalid login/i.test(m) ? "El correu o la contrasenya no són correctes." : /already registered/i.test(m) ? "Aquest correu ja té compte. Entra-hi o recupera la contrasenya." : /password/i.test(m) ? "La contrasenya ha de tenir almenys 6 caràcters." : "No s'ha pogut completar. Revisa la connexió i torna-ho a provar.");
+      const code = (err as { code?: string; status?: number } | null)?.code ?? "";
+      const status = (err as { status?: number } | null)?.status;
+      setMsg(
+        /invalid login/i.test(m) ? "El correu o la contrasenya no són correctes."
+        : /already registered/i.test(m) ? "Aquest correu ja té compte. Entra-hi o recupera la contrasenya."
+        : /rate limit|too many|over_email|security purposes/i.test(m + code) || status === 429 ? "Massa correus en poc temps (el límit gratuït de Supabase és baix). Espera uns 10-60 minuts i torna-ho a provar, sense insistir."
+        : /not confirmed/i.test(m) ? "Aquest correu encara no està confirmat: obre l'enllaç del correu de confirmació."
+        : /redirect/i.test(m) ? "L'adreça de la web no està permesa a Supabase (Authentication → URL Configuration)."
+        : /password/i.test(m) ? "La contrasenya ha de tenir almenys 6 caràcters."
+        : /error sending|smtp|email/i.test(m) ? `Supabase no ha pogut enviar el correu: ${m}`
+        : `No s'ha pogut completar${m ? `: ${m}` : ". Revisa la connexió i torna-ho a provar."}`
+      );
     } finally { setBusy(false); }
   };
 
