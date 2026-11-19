@@ -10,6 +10,7 @@ export interface NotebookEntry {
   id: string; wrong: string; right: string; note: string; link?: string;
   source: "escriptura" | "oral" | "test" | "examen" | "ia" | "dictat"; count: number; added: string; card: import("./srs").Card;
 }
+export interface VocabEntry { id: string; word: string; es: string; note?: string; ex?: string; added: string; card: import("./srs").Card }
 export interface MockResult { at: number; examId: string; areas: Partial<Record<AreaKey, number>> }
 export interface XpEvent { at: number; kind: string; xp: number }
 
@@ -19,6 +20,7 @@ export interface AppState {
   units: Record<string, UnitProgress>;
   checkpoints: Record<string, { passed: boolean; score: number; at: number }>;
   notebook: NotebookEntry[];
+  vocab: VocabEntry[];
   mocks: MockResult[];
   officialKeys: Record<string, Record<string, string>>;
   log: Record<string, Record<string, true>>;

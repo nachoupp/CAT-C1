@@ -34,9 +34,14 @@ export function mergeStates(localRaw: AppState, remoteRaw: unknown): AppState {
     return { ...n, count: Math.max(o.count, n.count), card: n.card.seen >= o.card.seen ? n.card : o.card };
   });
 
+  const vocab = byKey(newer.vocab, older.vocab, (x) => x.id).map((x) => {
+    const o = older.vocab.find((y) => y.id === x.id), n = newer.vocab.find((y) => y.id === x.id);
+    return o && n ? { ...n, card: n.card.seen >= o.card.seen ? n.card : o.card } : x;
+  });
+
   return {
     ...newer,
-    log, units, checkpoints, cards, notebook,
+    log, units, checkpoints, cards, notebook, vocab,
     xp: byKey(newer.xp, older.xp, (x) => `${x.at}-${x.kind}`).sort((a, b) => a.at - b.at),
     quizzes: byKey(newer.quizzes, older.quizzes, (x) => x.at).sort((a, b) => a.at - b.at),
     writings: byKey(newer.writings, older.writings, (x) => x.at).sort((a, b) => a.at - b.at),

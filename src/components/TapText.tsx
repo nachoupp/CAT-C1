@@ -1,6 +1,10 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { askJSON, AiError } from "../lib/ai";
 import { playText } from "../lib/audio";
+import { useStore, setState } from "../lib/store";
+import { addWord, hasWord } from "../lib/vocab";
+import { isoDate } from "../lib/dates";
+import { toast } from "../lib/toast";
 
 interface Gloss { relacionades?: string[]; lema?: string; categoria?: string; es?: string; definicio?: string; exemple?: string }
 const cache = new Map<string, Gloss>();
@@ -65,6 +69,7 @@ function GlossSheet({ w, ctx, onClose }: { w: string; ctx: string; onClose: () =
         {err && <span className="block text-bad">{err}</span>}
         {g?.es && <span className="block"><b>{g.es}</b></span>}
         {g?.definicio && <span className="block">{g.definicio}</span>}
+        {g?.es && <SaveWord word={g.lema ?? w} es={g.es} note={g.categoria} ex={g.exemple} />}
         {(g?.relacionades ?? []).length > 0 && <span className="block text-[13.5px]"><b>Per ampliar:</b> {g!.relacionades!.join(" · ")}</span>}
         <span className="flex gap-2 pt-1 text-[13px]">
           <a className="font-semibold text-accent" target="_blank" rel="noreferrer" href={`https://dlc.iec.cat/Results?DecEntradaText=${encodeURIComponent((g?.lema ?? w).toLowerCase())}`}>Cerca al DIEC ↗</a>
@@ -73,5 +78,13 @@ function GlossSheet({ w, ctx, onClose }: { w: string; ctx: string; onClose: () =
         {g?.exemple && <span className="block border-l-2 border-accent/40 pl-3 text-muted">{g.exemple}</span>}
       </span>
     </span>
+  );
+}
+
+function SaveWord({ word, es, note, ex }: { word: string; es: string; note?: string; ex?: string }) {
+  const saved = useStore((s) => hasWord(s, word));
+  return (
+    <button disabled={saved} onClick={() => { setState((s) => addWord(s, { word, es, note, ex }, isoDate())); toast("Desada a «Les meves paraules»"); }}
+      className="rounded-full bg-good/15 px-3 py-1.5 text-[13px] font-semibold text-good disabled:opacity-60">{saved ? "✓ Desada a les meves paraules" : "＋ Desa la paraula"}</button>
   );
 }

@@ -12,6 +12,7 @@ export const initialState = (): AppState => ({
   units: {},
   checkpoints: {},
   notebook: [],
+  vocab: [],
   mocks: [],
   officialKeys: {},
   log: {},
