@@ -80,8 +80,9 @@ export function AudioPlayer({ src, text, label, maxPlays, onPrev, onNext, autoPl
           onTimeUpdate={(e) => setT(e.currentTarget.currentTime)} onLoadedMetadata={(e) => setDur(e.currentTarget.duration || 0)} />
       )}
       <div className="flex items-center gap-3">
+        <div className="flex flex-none items-center gap-0.5">
         {(onPrev || onNext) && (
-          <button onClick={onPrev} disabled={!onPrev} aria-label="Àudio anterior" className="grid size-9 flex-none place-items-center rounded-full bg-card disabled:opacity-30">
+          <button onClick={onPrev} disabled={!onPrev} aria-label="Àudio anterior" className="grid size-8 flex-none place-items-center rounded-full disabled:opacity-30">
             <svg viewBox="0 0 24 24" className="size-4 fill-current" aria-hidden><path d="M6 5h2v14H6zM20 5.5v13a.8.8 0 01-1.25.66L9.5 12.66a.8.8 0 010-1.32l9.25-6.5A.8.8 0 0120 5.5z" /></svg>
           </button>
         )}
@@ -92,10 +93,11 @@ export function AudioPlayer({ src, text, label, maxPlays, onPrev, onNext, autoPl
             : <svg viewBox="0 0 24 24" className="ml-0.5 size-5 fill-current" aria-hidden><path d="M8 5.5v13a1 1 0 001.5.86l10.5-6.5a1 1 0 000-1.72L9.5 4.64A1 1 0 008 5.5z" /></svg>}
         </button>
         {(onPrev || onNext) && (
-          <button onClick={onNext} disabled={!onNext} aria-label="Àudio següent" className="grid size-9 flex-none place-items-center rounded-full bg-card disabled:opacity-30">
+          <button onClick={onNext} disabled={!onNext} aria-label="Àudio següent" className="grid size-8 flex-none place-items-center rounded-full disabled:opacity-30">
             <svg viewBox="0 0 24 24" className="size-4 fill-current" aria-hidden><path d="M16 5h2v14h-2zM4 5.5v13a.8.8 0 001.25.66l9.25-6.5a.8.8 0 000-1.32L5.25 4.84A.8.8 0 004 5.5z" /></svg>
           </button>
         )}
+        </div>
         <div className="min-w-0 flex-1">
           {mode === "file" ? (
             <>
