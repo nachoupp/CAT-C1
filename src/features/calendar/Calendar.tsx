@@ -33,7 +33,7 @@ export default function CalendarView() {
       {years.map((y) => <Section key={y} title={y}><List>{upcoming.filter((m) => m.date.startsWith(y)).map(row)}</List></Section>)}
       {past.length > 0 && <Section title="Ja passat"><List>{past.map(row)}</List></Section>}
       <div className="mt-5"><Btn block onClick={download}>Afegeix-ho al meu calendari</Btn></div>
-      <Note>Descarrega un fitxer .ics amb avisos i obre'l amb Google Calendar o el calendari del mòbil. Les dates de l'EOI són aproximades fins que es publiquin al BOIB. <ExtLink href={LINKS.goibCalendar}>Calendari GOIB</ExtLink></Note>
+      <Note>Descarrega un fitxer .ics amb avisos i obre'l amb Google Calendar o el calendari del mòbil. Les dates de l'EOI (alumnat lliure) són les de 2026 com a referència fins que es publiquin al BOIB; les del GOIB són la previsió oficial. <ExtLink href={LINKS.goibCalendar}>Calendari GOIB</ExtLink></Note>
     </Page>
   );
 }

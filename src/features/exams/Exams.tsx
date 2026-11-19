@@ -19,6 +19,13 @@ import type { AreaKey } from "../../lib/types";
 import { rubricPrompt, normalize, type Correction } from "../write/rubric";
 import { CorrectionCard } from "../route/Unit";
 
+const EOI = {
+  sample: "https://www.caib.es/sites/eoibalears/ca/nivell_c1-83793/archivopub.do?ctrl=MCRST6305ZI450704&id=450704",
+  audios: [450789, 450790, 450791].map((n) => `https://www.caib.es/sites/eoibalears/ca/nivell_c1-83793/archivopub.do?ctrl=MCRST6305ZI${n}&id=${n}`),
+  page: "https://www.caib.es/sites/eoibalears/ca/nivell_c1-83793/",
+  format: "https://www.caib.es/sites/eoibalears/ca/format_prova_escrita_0_0_0/"
+};
+
 export default function Exams() {
   const mocks = useStore((s) => s.mocks);
   const keys = useStore((s) => s.officialKeys);
@@ -49,6 +56,19 @@ export default function Exams() {
           })}
         </List>
         <Note>L'enunciat oficial s'obre en PDF al web del Govern; dins l'app hi tens l'àudio, el rellotge, el full de respostes i la correcció.</Note>
+      </Section>
+      <Section title="Material oficial de l'EOI (alumnat lliure)">
+        <Card className="space-y-3 p-4">
+          <p className="text-[14px] text-muted">Prova de mostra del català C1 de les escoles oficials d'idiomes de les Balears, amb els tres àudios de la part oral.</p>
+          <ExtLink href={EOI.sample}>Obre la prova de mostra (PDF)</ExtLink>
+          {EOI.audios.map((a, i) => <AudioPlayer key={a} src={a} label={`Tasca ${i + 1} (àudio oficial)`} />)}
+          <div className="flex flex-wrap gap-x-4 gap-y-1 text-[14px]">
+            <ExtLink href={EOI.page}>Pàgina del nivell C1</ExtLink>
+            <ExtLink href={EOI.format}>Format de les proves</ExtLink>
+            <ExtLink href="https://eoi-eivissa.com/index.php?Itemid=346&catid=51&id=427&lang=ca&option=com_content&view=article">Matrícula lliure a l'EOI Eivissa</ExtLink>
+          </div>
+          <Btn variant="soft" onClick={() => go("calendari")}>Veure el calendari amb inscripcions i dates</Btn>
+        </Card>
       </Section>
     </Page>
   );
