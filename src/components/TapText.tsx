@@ -5,6 +5,7 @@ import { useStore, setState } from "../lib/store";
 import { addWord, hasWord } from "../lib/vocab";
 import { isoDate } from "../lib/dates";
 import { toast } from "../lib/toast";
+import { ReadAloud } from "./ReadAloud";
 
 interface Gloss { relacionades?: string[]; lema?: string; categoria?: string; es?: string; definicio?: string; exemple?: string }
 const cache = new Map<string, Gloss>();
@@ -77,6 +78,7 @@ export function GlossSheet({ w, ctx, onClose, anchor }: { w: string; ctx: string
           <a className="font-semibold text-accent" target="_blank" rel="noreferrer" href="https://dcvb.iec.cat/inici.asp" onClick={() => void navigator.clipboard?.writeText(g?.lema ?? w).catch(() => undefined)}>DCVB ↗ (copia la paraula)</a>
         </span>
         {g?.exemple && <span className="block border-l-2 border-accent/40 pl-3 text-muted">{g.exemple}</span>}
+        <span className="block"><ReadAloud compact text={g?.exemple ?? ctx ?? w} /></span>
       </span>
     </span>
   );

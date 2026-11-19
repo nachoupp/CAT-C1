@@ -10,6 +10,7 @@ import { useStore, setState, award } from "../../lib/store";
 import type { StepKey } from "../../lib/types";
 import { isoDate } from "../../lib/dates";
 import { TapText } from "../../components/TapText";
+import { ReadSentences } from "../../components/ReadAloud";
 import { countWords, fmtClock, shuffle } from "../../lib/text";
 import { playText } from "../../lib/audio";
 import { AudioPlayer } from "../../components/AudioPlayer";
@@ -141,6 +142,7 @@ function Discover({ u, c }: { u: Unit; c: UnitContent }) {
           ))}
         </div>
       </Card>
+      <div className="mt-3"><ReadSentences text={c.model.text} /></div>
       <Card className="mt-3 min-h-16 bg-accent/10 p-4 text-[15px]">
         {open === null ? "Toca les parts marcades per veure per què funcionen." : <><b>«{c.model.notes[open].quote}»</b> · {c.model.notes[open].note}</>}
       </Card>

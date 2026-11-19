@@ -4,6 +4,7 @@ import { Page, Section, Card, Btn, List, Row, Pill, Note } from "../../component
 import { AudioPlayer } from "../../components/AudioPlayer";
 import { ItemQuiz } from "../../components/ItemQuiz";
 import { TapText } from "../../components/TapText";
+import { ReadSentences } from "../../components/ReadAloud";
 import { LISTENINGS, DICTATIONS } from "../../content/listening";
 import { BASICS } from "../../content/basics";
 import { useStore, setState, award } from "../../lib/store";
@@ -52,6 +53,7 @@ export function ListeningRun({ id }: { id: string }) {
             <Card className="space-y-3 p-4">
               <p className="text-[15.5px] leading-relaxed"><TapText text={l.text} /></p>
               <AudioPlayer text={l.text} label="Torna-la a escoltar llegint" />
+              <ReadSentences text={l.text} />
             </Card>
           </Section>
           <div className="mt-4"><Btn block variant="soft" onClick={() => { setScore(null); setRun((x) => x + 1); }}>Torna-hi</Btn></div>
