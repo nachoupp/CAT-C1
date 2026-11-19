@@ -58,7 +58,7 @@ export function LiveEditor({ id, value, onChange, rows = 12, target, placeholder
   const total = hits.length + lt.length;
   return (
     <div className="space-y-3">
-      <StyleGuide value={value} onInsert={(t) => onChange(value + (value && !/[\s\n]$/.test(value) ? " " : "") + t + (/[,:]$/.test(t) ? "\n" : " "))} />
+      <StyleGuide target={target} value={value} onInsert={(t) => onChange(value + (value && !/[\s\n]$/.test(value) ? " " : "") + t + (/[,:]$/.test(t) ? "\n" : " "))} />
       <textarea id={id} aria-label="El teu text" rows={rows} value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder ?? "Escriu aquí…"}
         spellCheck={false} className="w-full resize-y rounded-xl bg-bg p-3 text-[17px] leading-relaxed" />
       <div className="flex items-center justify-between text-[13.5px] text-muted tabular">
