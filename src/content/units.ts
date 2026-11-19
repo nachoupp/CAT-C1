@@ -5,6 +5,7 @@
 
 import { MORE } from "./units-more";
 import { U7, U8, U9 } from "./units-c";
+import { U10, U11, U12 } from "./units-d";
 import { EXTRA } from "./units-extra";
 import { U4, U5, U6 } from "./units-b";
 
@@ -340,9 +341,9 @@ export const UNITS: Unit[] = [
   { id: "u7", n: 7, phase: 2, title: "Tecnologia", grammar: "Subjuntiu i condicionals", genre: "Article d'opinió (250)", oralTask: "Debat", content: U7 },
   { id: "u8", n: 8, phase: 2, title: "Cultura i art", grammar: "Combinació de pronoms", genre: "Ressenya", oralTask: "Recomanar i valorar", content: U8 },
   { id: "u9", n: 9, phase: 2, title: "Educació", grammar: "Connectors i cohesió", genre: "Carta al director", oralTask: "Argumentar i rebatre", content: U9 },
-  { id: "u10", n: 10, phase: 3, title: "Burocràcia", grammar: "Tractament (vostè, vós) i fórmules", genre: "Convocatòria i acta", oralTask: "Reunió de veïns" },
-  { id: "u11", n: 11, phase: 3, title: "Economia i consum", grammar: "Com / com a, derivació", genre: "Reclamació", oralTask: "Negociar un acord" },
-  { id: "u12", n: 12, phase: 3, title: "Disseny i publicitat", grammar: "Locucions amb fer, tenir, anar", genre: "Text publicitari", oralTask: "Analitzar un eslògan amb doble sentit" },
+  { id: "u10", n: 10, phase: 3, title: "Burocràcia", grammar: "Tractament (vostè, vós) i fórmules", genre: "Convocatòria i acta", oralTask: "Reunió de veïns", content: U10 },
+  { id: "u11", n: 11, phase: 3, title: "Economia i consum", grammar: "Com / com a, derivació", genre: "Reclamació", oralTask: "Negociar un acord", content: U11 },
+  { id: "u12", n: 12, phase: 3, title: "Disseny i publicitat", grammar: "Locucions amb fer, tenir, anar", genre: "Text publicitari", oralTask: "Analitzar un eslògan amb doble sentit", content: U12 },
   { id: "u13", n: 13, phase: 3, title: "Paisatge i gastronomia", grammar: "Ser, estar, haver-hi; gerundi", genre: "Fitxa i descripció", oralTask: "Explicar una ruta o un plat" },
   { id: "u14", n: 14, phase: 3, title: "Humor i ironia", grammar: "Frases fetes, refranys, sentit implícit", genre: "Crònica", oralTask: "Explicar un acudit o una vinyeta" },
   { id: "u15", n: 15, phase: 3, title: "Societat: son, felicitat, vellesa", grammar: "Concordança, prou, pas", genre: "Editorial", oralTask: "Defensar una proposta" },

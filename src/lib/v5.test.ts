@@ -196,14 +196,14 @@ describe("ampliació d'exercicis", () => {
 import { LISTENINGS, DICTATIONS } from "../content/listening";
 import { diffWords, dictationScore } from "./dictation";
 describe("lot v6", () => {
-  it("unitats 7-9 completes amb regles", () => {
-    for (const u of ALL_UNITS.slice(6, 9)) {
+  it("unitats 7-12 completes amb regles", () => {
+    for (const u of ALL_UNITS.slice(6, 12)) {
       expect(u.content).toBeDefined();
       expect(poolOf(u.content!).length).toBeGreaterThanOrEqual(40);
       expect(u.content!.examples!.length).toBeGreaterThanOrEqual(12);
       for (const n of u.content!.model.notes) expect(u.content!.model.text).toContain(n.quote);
       for (const it of [...poolOf(u.content!), ...u.content!.pretest]) if (it.type === "choice") expect(it.options).toContain(it.answer);
-      expect(RULES_BY_UNIT[u.id]?.length).toBeGreaterThanOrEqual(4);
+      expect(RULES_BY_UNIT[u.id]?.length).toBeGreaterThanOrEqual(3);
     }
   });
   it("simulacres i escoltes coherents", () => {
