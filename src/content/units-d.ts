@@ -305,7 +305,7 @@ Reserva ara i obtindràs un 15 % de descompte. Truca'ns, escriu-nos o passa per 
 
 Pedals d'Es Vedrà. Perquè l'illa no s'ha de mirar, s'ha de viure.`,
     notes: [
-      { quote: "Fes camí, fes-ne el teu", note: "Eslògan: imperatiu + joc amb «fer camí» (avançar) i «fer-se el seu camí» (personalitzar). En = camí." },
+      { quote: "FES CAMÍ, FES-NE EL TEU", note: "Eslògan: imperatiu + joc amb «fer camí» (avançar) i «fer-se el seu camí» (personalitzar). En = camí." },
       { quote: "fa tanta calor", note: "Fer + fenomen atmosfèric." },
       { quote: "no ve de gust", note: "Venir de gust = apetir." },
       { quote: "et fa ganes d'anar-hi", note: "Fer ganes (+ infinitiu) = apetir; hi = a l'illa." },
