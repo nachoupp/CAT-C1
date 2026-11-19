@@ -66,6 +66,7 @@ export function ItemQuiz({ items, live = true, title, onFinish, rules = [] }: { 
           </div>
         )}
         {checked && it.type === "choice" && <WhyNot key={k} item={it} rules={rules} />}
+        {checked && it.type !== "choice" && last && !last.ok && last.given.trim() && <WhyYours key={k} q={it.q} given={last.given} right={correctText(it)} kind={LABEL[it.type]} />}
       </Card>
       {checked && <div className="mt-4"><Btn block onClick={() => advance()}>Continua</Btn></div>}
     </div>
@@ -154,6 +155,42 @@ Respon NOMÉS amb JSON on cada clau és l'opció exacta: {${item.options.map((o)
         {asEntry(ai?.[item.answer])?.explicacio && <li><span className="font-semibold text-good">✓ {item.answer}</span><div>{asEntry(ai?.[item.answer])!.explicacio}</div></li>}
       </ul>
       {err && <div className="mt-1.5 text-[13px] text-muted">{err} <button onClick={ask} disabled={busy} className="font-semibold text-accent">Reintenta</button></div>}
+    </div>
+  );
+}
+
+const yoursCache = new Map<string, WhyEntry>();
+
+/** Per què la teva resposta no encaixa (en exercicis de completar, corregir i transformar). */
+function WhyYours({ q, given, right, kind }: { q: string; given: string; right: string; kind: string }) {
+  const key = `${q}|${given}|${right}`;
+  const [e, setE] = useState<WhyEntry | null>(yoursCache.get(key) ?? null);
+  const [busy, setBusy] = useState(!yoursCache.has(key));
+  const [err, setErr] = useState<string | null>(null);
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    if (yoursCache.has(key)) return;
+    let alive = true;
+    setBusy(true); setErr(null);
+    askJSON<WhyEntry>(`Ets un professor de català (nivell C1, GOIB) que explica amb paciència a una alumna hispanoparlant. Ella no sap si el que ha escrit és incorrecte perquè NO EXISTEIX en català, perquè s'usa en UNA ALTRA ESTRUCTURA o perquè està en UN ALTRE TEMPS VERBAL: aclareix-ho sempre.
+Exercici (${kind}): «${q}»
+Resposta de l'alumna: «${given}»
+Resposta correcta: «${right}»
+Respon NOMÉS amb JSON: {"tipus":"un de: no_existeix, altra_estructura, altre_temps, altre_sentit, registre, castellanisme, ortografia","explicacio":"1-2 frases en castellà: per què la seva resposta no encaixa aquí i què és realment (si existeix, en quina estructura o temps s'usa)","exemple":"una frase curta en català on la seva resposta SÍ que és correcta (buit si no existeix)"}`, { timeoutMs: 40000 })
+      .then((r) => { yoursCache.set(key, r); if (alive) setE(r); })
+      .catch((x) => { if (alive) setErr(x instanceof AiError ? x.message : "No s'ha pogut consultar el professor."); })
+      .finally(() => { if (alive) setBusy(false); });
+    return () => { alive = false; };
+  }, [key, n]); // eslint-disable-line react-hooks/exhaustive-deps
+  return (
+    <div className="mt-3 rounded-xl border border-line px-3.5 py-3 text-[14.5px]">
+      <div className="mb-1.5 text-[12.5px] font-semibold uppercase tracking-wider text-muted">Per què la teva resposta no encaixa?</div>
+      <div><span className="font-semibold text-bad">✗ {given}</span>
+        {e?.tipus && TIPUS[e.tipus] && <span className="ml-2 rounded-full bg-bad/10 px-2 py-0.5 text-[11.5px] font-semibold text-bad">{TIPUS[e.tipus]}</span>}</div>
+      {busy && <div className="text-muted">El professor ho està mirant…</div>}
+      {e?.explicacio && <div>{e.explicacio}</div>}
+      {e?.exemple && <div className="mt-0.5 border-l-2 border-accent/40 pl-2.5 text-[13.5px] text-muted">Així sí: {e.exemple}</div>}
+      {err && <div className="mt-1 text-[13px] text-muted">{err} <button onClick={() => setN((x) => x + 1)} className="font-semibold text-accent">Reintenta</button></div>}
     </div>
   );
 }

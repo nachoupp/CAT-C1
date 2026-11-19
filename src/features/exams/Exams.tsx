@@ -24,7 +24,7 @@ export default function Exams() {
   const keys = useStore((s) => s.officialKeys);
   const today = isoDate();
   return (
-    <Page title="Exàmens" subtitle="Simulacres complets dins l'app, amb correcció en directe o al final i informe de millora.">
+    <Page title="Exàmens" subtitle="Aquí t'examines com el dia real: format oficial, rellotge, nota i informe de millora. Per entrenar sense pressió, ves a Practica.">
       <Section title="Exàmens Parla · format GOIB">
         <List>
           {MOCKS.map((m) => {
@@ -32,6 +32,11 @@ export default function Exams() {
             return <Row key={m.id} left={<Icon tone="sist">P</Icon>} title={m.title} detail={last ? `Últim intent: ${new Date(last.at).toLocaleDateString("ca-ES")}` : "4 àrees · comprensió, gramàtica, escrit i oral"} to={`exam-${m.id}`} />;
           })}
           <Row left={<Icon tone="fg">+</Icon>} title="Examen Parla 2 i 3" detail="En preparació" right={<Pill tone="muted">Aviat</Pill>} chevron={false} />
+        </List>
+      </Section>
+      <Section title="Simulacre ràpid">
+        <List>
+          <Row left={<Icon tone="bad">⏱</Icon>} title="Simulacre de l'Àrea 2" detail="15 o 30 preguntes de gramàtica amb rellotge, com a l'examen" to="simulacre" />
         </List>
       </Section>
       <Section title="Exàmens oficials GOIB">

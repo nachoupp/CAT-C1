@@ -10,7 +10,7 @@ const RATES = [0.75, 0.9, 1, 1.15];
  * Reproductor d'àudio: per a un fitxer (src) o per a un text (veu neuronal o del dispositiu).
  * Velocitat, avançar/retrocedir 5 s, repetició i límit d'audicions (per als simulacres).
  */
-export function AudioPlayer({ src, text, label, maxPlays }: { src?: string; text?: string; label?: string; maxPlays?: number }) {
+export function AudioPlayer({ src, text, label, maxPlays, onPrev, onNext, autoPlay }: { src?: string; text?: string; label?: string; maxPlays?: number; onPrev?: () => void; onNext?: () => void; autoPlay?: boolean }) {
   const rate = useStore((s) => s.settings.rate ?? 1);
   const ref = useRef<HTMLAudioElement>(null);
   const [url, setUrl] = useState<string | null>(src ?? null);
@@ -55,6 +55,12 @@ export function AudioPlayer({ src, text, label, maxPlays }: { src?: string; text
     if (a.currentTime === 0) setPlays((p) => p + 1);
     await a.play().catch(() => undefined);
   };
+  // Quan es canvia d'àudio amb ⏭ / ⏮, el nou comença sol.
+  const started = useRef(false);
+  useEffect(() => {
+    if (!autoPlay || started.current) return;
+    if ((mode === "file" && url && ref.current) || mode === "device") { started.current = true; void toggle(); }
+  }, [mode, url]); // eslint-disable-line react-hooks/exhaustive-deps
   const seek = (d: number) => { const a = ref.current; if (a) a.currentTime = Math.max(0, Math.min(dur, a.currentTime + d)); };
   const setRate = (r: number) => setState((s) => ({ ...s, settings: { ...s.settings, rate: r } }));
 
@@ -74,12 +80,22 @@ export function AudioPlayer({ src, text, label, maxPlays }: { src?: string; text
           onTimeUpdate={(e) => setT(e.currentTarget.currentTime)} onLoadedMetadata={(e) => setDur(e.currentTarget.duration || 0)} />
       )}
       <div className="flex items-center gap-3">
+        {(onPrev || onNext) && (
+          <button onClick={onPrev} disabled={!onPrev} aria-label="Àudio anterior" className="grid size-9 flex-none place-items-center rounded-full bg-card disabled:opacity-30">
+            <svg viewBox="0 0 24 24" className="size-4 fill-current" aria-hidden><path d="M6 5h2v14H6zM20 5.5v13a.8.8 0 01-1.25.66L9.5 12.66a.8.8 0 010-1.32l9.25-6.5A.8.8 0 0120 5.5z" /></svg>
+          </button>
+        )}
         <button onClick={toggle} disabled={mode === "loading" || exhausted} aria-label={playing ? "Pausa" : "Reprodueix"}
           className="grid size-11 flex-none place-items-center rounded-full bg-accent text-white disabled:opacity-40">
           {mode === "loading" ? <span className="text-xs">…</span> : playing
             ? <svg viewBox="0 0 24 24" className="size-5 fill-current" aria-hidden><rect x="6" y="5" width="4" height="14" rx="1" /><rect x="14" y="5" width="4" height="14" rx="1" /></svg>
             : <svg viewBox="0 0 24 24" className="ml-0.5 size-5 fill-current" aria-hidden><path d="M8 5.5v13a1 1 0 001.5.86l10.5-6.5a1 1 0 000-1.72L9.5 4.64A1 1 0 008 5.5z" /></svg>}
         </button>
+        {(onPrev || onNext) && (
+          <button onClick={onNext} disabled={!onNext} aria-label="Àudio següent" className="grid size-9 flex-none place-items-center rounded-full bg-card disabled:opacity-30">
+            <svg viewBox="0 0 24 24" className="size-4 fill-current" aria-hidden><path d="M16 5h2v14h-2zM4 5.5v13a.8.8 0 001.25.66l9.25-6.5a.8.8 0 000-1.32L5.25 4.84A.8.8 0 004 5.5z" /></svg>
+          </button>
+        )}
         <div className="min-w-0 flex-1">
           {mode === "file" ? (
             <>

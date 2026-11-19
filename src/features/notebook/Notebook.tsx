@@ -16,7 +16,7 @@ export default function Notebook() {
   const total = s.notebook.length;
   const areas = [...new Set(LESSONS.map((l) => l.area))];
   return (
-    <Page title="Quadern" subtitle="Els teus errors, les píndoles i el diccionari">
+    <Page title="Quadern" subtitle="El que has de recordar: els teus errors, les teves paraules i la teoria per consultar">
       <Card className="space-y-3 p-4">
         <div className="flex items-baseline justify-between"><span className="font-semibold">Errors vius</span><span className="text-[28px] font-bold tabular">{live.length}</span></div>
         <Bar value={total ? ((total - live.length) / total) * 100 : 0} tone="good" />
@@ -31,9 +31,9 @@ export default function Notebook() {
           ))}</List>
         </Section>
       )}
-      <Section title="Diccionari"><Dictionary /></Section>
+      <Section title="Diccionari i les meves paraules"><Dictionary /></Section>
       {areas.map((a) => (
-        <Section key={a} title={`Píndoles · ${a}`}>
+        <Section key={a} title={`Teoria · ${a}`}>
           <List>{LESSONS.filter((l) => l.area === a).map((l) => <Row key={l.id} left={<Icon tone={s.lessons[l.id] ? "good" : "sist"}>{s.lessons[l.id] ? "✓" : "i"}</Icon>} title={l.title} to={`lesson-${l.id}`} />)}</List>
         </Section>
       ))}

@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { go } from "../../lib/router";
 import { Page, Section, Card, Btn, List, Row, Pill, Note } from "../../components/ui";
 import { AudioPlayer } from "../../components/AudioPlayer";
 import { ItemQuiz } from "../../components/ItemQuiz";
@@ -28,10 +29,11 @@ export function ListeningRun({ id }: { id: string }) {
   const l = LISTENINGS.find((x) => x.id === id);
   const [score, setScore] = useState<number | null>(null);
   const [run, setRun] = useState(0);
+  const idx = LISTENINGS.findIndex((x) => x.id === id);
   if (!l) return <Page title="No trobat" back={{ to: "audios", label: "Àudios" }}><Note>Aquesta escolta no existeix.</Note></Page>;
   return (
     <Page title={l.title} subtitle={`${l.kind} · com a l'Àrea 1: llegeix les preguntes, escolta dues vegades i respon.`} back={{ to: "audios", label: "Àudios" }}>
-      <Card className="p-4"><AudioPlayer key={run} text={l.text} label="Àudio" maxPlays={2} /></Card>
+      <Card className="p-4"><AudioPlayer key={`${l.id}-${run}`} text={l.text} label={`Àudio ${idx + 1} de ${LISTENINGS.length}`} maxPlays={2} onPrev={idx > 0 ? () => go(`audio-${LISTENINGS[idx - 1].id}`) : undefined} onNext={idx + 1 < LISTENINGS.length ? () => go(`audio-${LISTENINGS[idx + 1].id}`) : undefined} /></Card>
       <Section title="Preguntes">
         <ItemQuiz key={run} items={l.items} live={false} title={l.title} onFinish={(r) => {
           const ok = r.filter((x) => x.ok).length;
@@ -95,7 +97,7 @@ export function DictationRunner({ sentences, shuffle = true, onDone }: { sentenc
   return (
     <Card className="space-y-3 p-4">
       <div className="text-[13px] text-muted">Frase {k + 1}{!shuffle ? ` de ${order.length}` : ""}{total.n ? ` · mitjana ${Math.round(total.sum / total.n)}%` : ""}</div>
-      <AudioPlayer key={k} text={target} label="Dictat" />
+      <AudioPlayer key={k} text={target} label="Dictat" autoPlay={k > 0} onPrev={k > 0 ? () => { setK((x) => x - 1); setGiven(""); setRes(null); } : undefined} onNext={shuffle || k + 1 < order.length ? next : undefined} />
       <textarea value={given} onChange={(e) => setGiven(e.target.value)} disabled={!!res} rows={3} autoCapitalize="sentences" spellCheck={false}
         placeholder="Escriu aquí el que sents…" className="w-full rounded-xl border border-line bg-bg p-3 text-[17px]" />
       {!res ? <Btn block onClick={check} disabled={!given.trim()}>Comprova</Btn> : (
