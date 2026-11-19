@@ -40,7 +40,7 @@ export function TapText({ text }: { text: string }) {
   return <>{out}{sel && <GlossSheet key={sel.w + sel.ctx} w={sel.w} ctx={sel.ctx} onClose={() => setSel(null)} />}</>;
 }
 
-function GlossSheet({ w, ctx, onClose }: { w: string; ctx: string; onClose: () => void }) {
+export function GlossSheet({ w, ctx, onClose, anchor }: { w: string; ctx: string; onClose: () => void; anchor?: { x: number; y: number } }) {
   const key = `${w.toLowerCase()}|${ctx}`;
   const [g, setG] = useState<Gloss | null>(cache.get(key) ?? null);
   const [err, setErr] = useState<string | null>(null);
@@ -55,8 +55,9 @@ function GlossSheet({ w, ctx, onClose }: { w: string; ctx: string; onClose: () =
     return () => { alive = false; };
   }, [key, w, ctx]);
   return (
-    <span className="fixed inset-x-0 bottom-0 z-50 block" role="dialog" aria-label={`Paraula ${w}`}>
-      <span className="mx-auto block max-w-xl space-y-2 rounded-t-3xl border border-line bg-card p-4 pb-6 text-left font-sans text-[15px] leading-normal shadow-2xl">
+    <span data-nogloss className={anchor ? "fixed z-50 block w-[min(26rem,calc(100vw-1.5rem))]" : "fixed inset-x-0 bottom-0 z-50 block"} role="dialog" aria-label={`Paraula ${w}`}
+      style={anchor ? { left: Math.max(12, Math.min(anchor.x, window.innerWidth - 424)), top: Math.max(12, Math.min(anchor.y, window.innerHeight - 340)) } : undefined}>
+      <span className={anchor ? "block space-y-2 rounded-2xl border border-line bg-card p-4 text-left font-sans text-[15px] leading-normal shadow-2xl" : "mx-auto block max-w-xl space-y-2 rounded-t-3xl border border-line bg-card p-4 pb-6 text-left font-sans text-[15px] leading-normal shadow-2xl"}>
         <span className="flex items-center justify-between gap-2">
           <span className="text-[20px] font-bold">{g?.lema && g.lema.toLowerCase() !== w.toLowerCase() ? `${w} → ${g.lema}` : w}
             {g?.categoria && <i className="ml-2 text-[13px] font-normal text-muted">{g.categoria}</i>}</span>

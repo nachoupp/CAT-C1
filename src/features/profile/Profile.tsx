@@ -68,6 +68,7 @@ export default function Profile() {
       </Section>
 
       <VoiceSection />
+      <GlossSection />
 
       <Section title="Organització">
         <List>
@@ -113,6 +114,18 @@ const VOICE_NOTE: Record<string, string> = {
   azure: "Veus neuronals de Microsoft Azure en català central.",
   elevenlabs: "Veu d'ElevenLabs (model v3) en català."
 };
+
+function GlossSection() {
+  const on = useStore((x) => x.settings.gloss !== false);
+  return (
+    <Section title="Paraules">
+      <Card className="space-y-2 p-4">
+        <Btn variant="soft" onClick={() => setState((x) => ({ ...x, settings: { ...x.settings, gloss: !on } }))}>{on ? "Consulta de paraules: activada" : "Consulta de paraules: desactivada"}</Btn>
+        <p className="text-[13px] text-muted">Toca qualsevol paraula de l'app (o deixa-hi el ratolí a sobre uns segons a l'ordinador) i la IA te la tradueix, la defineix i t'hi proposa paraules relacionades.</p>
+      </Card>
+    </Section>
+  );
+}
 
 function VoiceSection() {
   const saved = useStore((x) => x.settings.voice);

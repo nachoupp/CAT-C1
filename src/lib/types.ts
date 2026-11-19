@@ -32,7 +32,7 @@ export interface AppState {
   lessons: Record<string, string>;
   drafts: Record<string, string>;
   games: { match?: number; barb?: number };
-  settings: { tts: boolean; nextExam: string; goalExam: string; voice?: string; rate?: number };
+  settings: { tts: boolean; nextExam: string; goalExam: string; voice?: string; rate?: number; gloss?: boolean };
   updatedAt?: number;
 }
 

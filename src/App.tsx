@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { useRoute, go } from "./lib/router";
 import { useToast } from "./lib/toast";
+import { GlobalGloss } from "./components/GlobalGloss";
 import Route from "./features/route/Route";
 import { UnitHome, UnitStep } from "./features/route/Unit";
 import Checkpoint from "./features/route/Checkpoint";
@@ -99,6 +100,7 @@ export default function App() {
       {toast && (
         <div role="status" className="fixed bottom-[calc(84px+env(safe-area-inset-bottom))] left-1/2 z-50 -translate-x-1/2 rounded-full bg-fg px-4 py-2.5 text-sm font-medium text-bg">{toast}</div>
       )}
+      <GlobalGloss />
       <nav aria-label="Seccions" className="fixed inset-x-0 bottom-0 z-10 border-t border-line bg-[var(--bar)] pb-[env(safe-area-inset-bottom)] backdrop-blur-xl backdrop-saturate-150 print:hidden">
         <div className="mx-auto grid max-w-[680px] grid-cols-5">
           {TABS.map((t) => (
