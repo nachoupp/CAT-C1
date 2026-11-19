@@ -225,7 +225,7 @@ function WritingArea({ m, onDone }: { m: MockExam; onDone: (o: AreaOutcome) => v
             <LiveEditor id={w.id} value={drafts[w.id] ?? ""} onChange={(v) => setState((s) => ({ ...s, drafts: { ...s.drafts, [w.id]: v } }))} target={w.words} />
             <Btn block disabled={busy !== null} onClick={() => correct(w)}>{busy === w.id ? "Corregint…" : res[w.id] ? "Torna a corregir" : "Corregeix"}</Btn>
           </Card>
-          {res[w.id] && <CorrectionCard c={res[w.id]} />}
+          {res[w.id] && <CorrectionCard c={res[w.id]} text={drafts[w.id] ?? ""} />}
         </Section>
       ))}
       <div className="mt-5"><Btn block disabled={!all} onClick={() => onDone({ score, wrong: [] })}>{all ? `Tanca l'àrea (${score}/100)` : "Corregeix els dos textos per tancar l'àrea"}</Btn></div>

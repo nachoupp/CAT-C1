@@ -122,7 +122,7 @@ Text:
         </Section>
       )}
 
-      {res && <CorrectionCard c={res} />}
+      {res && <CorrectionCard c={res} text={text} />}
       {quick && (
         <Section title={quick.length ? `${quick.length} errors (desats al quadern)` : "Cap error trobat"}>
           {quick.length > 0 ? (

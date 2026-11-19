@@ -18,7 +18,7 @@ import { askJSON, AiError } from "../../lib/ai";
 import { addError } from "../../lib/notebook";
 import { go } from "../../lib/router";
 import { toast } from "../../lib/toast";
-import { rubricPrompt, normalize, CRITERIA, type Correction } from "../write/rubric";
+import { rubricPrompt, normalize, markText, CRITERIA, type Correction } from "../write/rubric";
 import { markStep, stepDone, unitUnlocked } from "./progress";
 
 const TONE: Record<StepKey, IconTone> = { descobreix: "sist", practica: "accent", escriu: "escr", parla: "oral", examen: "good" };
@@ -403,7 +403,7 @@ function UnitExam({ u, c }: { u: Unit; c: UnitContent }) {
         <Btn block disabled={busy || n < 60} onClick={() => correct(v1, false)}>{busy ? "Corregint…" : "Lliura i corregeix"}</Btn>
       </Card>
 
-      {res && <CorrectionCard c={res} />}
+      {res && <CorrectionCard c={res} text={v2 ?? v1} />}
 
       {res && (
         <Section title="Reescriu-lo (+20 XP)">
@@ -434,7 +434,12 @@ function RulesSticky({ rules }: { rules: Parameters<typeof RulesBar>[0]["rules"]
   return <RulesBar rules={rules} open={open} setOpen={setOpen} />;
 }
 
-export function CorrectionCard({ c }: { c: Correction }) {
+const TIPUS_COLOR = "bg-bad/10 text-bad";
+
+export function CorrectionCard({ c, text }: { c: Correction; text?: string }) {
+  const [sel, setSel] = useState<number | null>(null);
+  const segs = text ? markText(text, c.errors) : [];
+  const marked = segs.some((x) => x.err !== undefined);
   return (
     <>
       <Section title="Correcció">
@@ -447,12 +452,69 @@ export function CorrectionCard({ c }: { c: Correction }) {
             <div key={k.key}>
               <div className="mb-1 flex justify-between text-[14px]"><span>{k.label}</span><span className="tabular">{c.puntuacio[k.key]}/10</span></div>
               <Bar value={c.puntuacio[k.key] * 10} tone={c.puntuacio[k.key] >= 6 ? "good" : "warn"} />
+              {c.puntuacio[k.key] < 8 && c.per_criteri?.[k.key] && <div className="mt-1 text-[13px] text-muted">Per pujar-ho: {c.per_criteri[k.key]}</div>}
             </div>
           ))}
         </Card>
       </Section>
       {c.consell && <Section title="Com plantejar-lo millor"><Card className="bg-accent/10 p-4">{c.consell}</Card></Section>}
-      {c.errors.length > 0 && <Section title="Errors (desats al quadern)"><List>{c.errors.map((e, i) => <Row key={i} title={<><s className="text-bad">{e.original}</s> → <b className="text-good">{e.correccio}</b></>} detail={e.explicacio} />)}</List></Section>}
+
+      {marked && (
+        <Section title="El teu text, marcat">
+          <Card className="space-y-3 p-4">
+            <p className="whitespace-pre-wrap text-[15.5px] leading-relaxed">
+              {segs.map((x, i) => x.err === undefined ? <span key={i}>{x.text}</span> : (
+                <button key={i} onClick={() => setSel(sel === x.err ? null : x.err!)} className={`rounded-sm px-0.5 underline decoration-wavy underline-offset-4 ${sel === x.err ? "bg-bad/25" : "bg-bad/10"} decoration-bad`}>{x.text}</button>
+              ))}
+            </p>
+            {sel !== null && c.errors[sel] && (
+              <div className="space-y-1 rounded-xl bg-bg p-3 text-[14.5px]">
+                <div><s className="text-bad">{c.errors[sel].original}</s> → <b className="text-good">{c.errors[sel].correccio}</b></div>
+                {c.errors[sel].tipus && <span className={`inline-block rounded-full px-2 py-0.5 text-[11.5px] font-semibold ${TIPUS_COLOR}`}>{c.errors[sel].tipus}</span>}
+                <div className="text-muted">{c.errors[sel].explicacio}</div>
+              </div>
+            )}
+            <div className="text-[12.5px] text-muted">Toca una part subratllada per veure per què és un error.</div>
+          </Card>
+        </Section>
+      )}
+
+      {c.errors.length > 0 && (
+        <Section title="Errors (desats al quadern)">
+          <List>{c.errors.map((e, i) => (
+            <Row key={i} title={<><s className="text-bad">{e.original}</s> → <b className="text-good">{e.correccio}</b></>}
+              detail={<>{e.tipus && <span className={`mr-1.5 rounded-full px-2 py-0.5 text-[11px] font-semibold ${TIPUS_COLOR}`}>{e.tipus}</span>}{e.explicacio}</>} />
+          ))}</List>
+        </Section>
+      )}
+
+      {c.frases_millorables && c.frases_millorables.length > 0 && (
+        <Section title="Frases correctes però millorables (més C1)">
+          <Card className="divide-y divide-line">
+            {c.frases_millorables.map((f, i) => (
+              <div key={i} className="space-y-0.5 p-4 text-[14.5px]">
+                <div className="text-muted">Tu: {f.original}</div>
+                <div><b>Millor:</b> {f.millor}</div>
+                {f.per_que && <div className="text-[13px] text-muted">{f.per_que}</div>}
+              </div>
+            ))}
+          </Card>
+        </Section>
+      )}
+
+      {c.estructura && c.estructura.passos.length > 0 && (
+        <Section title={`Estructura${c.estructura.tipus_text ? ` · ${c.estructura.tipus_text}` : ""}`}>
+          <Card className="space-y-2 p-4">
+            {c.estructura.passos.map((p, i) => (
+              <div key={i} className="text-[14.5px]">
+                <span className={p.present ? "text-good" : "text-bad"}>{p.present ? "✓" : "✗"}</span> <b>{p.pas}</b>
+                {p.comentari && <span className="text-muted"> · {p.comentari}</span>}
+              </div>
+            ))}
+          </Card>
+        </Section>
+      )}
+
       {c.punts_forts.length > 0 && <Section title="Punts forts"><Card className="space-y-1.5 p-4 text-[15px]">{c.punts_forts.map((x) => <div key={x}>✓ {x}</div>)}</Card></Section>}
       {c.versio_millorada && (
         <Section title="Versió millorada">

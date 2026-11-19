@@ -20,3 +20,15 @@ describe("correcció amb rúbrica", () => {
     expect(rubricPrompt(p)).toContain(String(p.words));
   });
 });
+
+import { markText } from "./rubric";
+describe("markText", () => {
+  it("marca la primera aparició de cada error sense solapar", () => {
+    const segs = markText("No va venir perquè estava malalt. Ell va venir perquè sí.", [{ original: "No va venir" }, { original: "perquè" }]);
+    expect(segs.filter((x) => x.err !== undefined).map((x) => x.text)).toEqual(["No va venir", "perquè"]);
+    expect(segs.map((x) => x.text).join("")).toBe("No va venir perquè estava malalt. Ell va venir perquè sí.");
+  });
+  it("ignora errors que no apareixen al text", () => {
+    expect(markText("Hola", [{ original: "adéu" }]).every((x) => x.err === undefined)).toBe(true);
+  });
+});

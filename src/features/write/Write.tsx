@@ -99,7 +99,7 @@ export default function Write() {
 
       {busy && <Card className="mt-3 p-4 text-muted">{busy}</Card>}
 
-      {res && <CorrectionCard c={res} />}
+      {res && <CorrectionCard c={res} text={draft} />}
 
       <Section title="Fitxes en paper"><List><Row title="Diagnòstic i fitxes de reforç" detail="Per fer a mà i enviar-ne la foto" to="fitxes" /></List></Section>
     </Page>
