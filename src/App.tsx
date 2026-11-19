@@ -20,6 +20,7 @@ import Speak, { UnitSpeak } from "./features/speak/Speak";
 import OralTimer from "./features/speak/OralTimer";
 import OralCoachPage from "./features/speak/OralCoach";
 import Conversa from "./features/speak/Conversa";
+import Tutor from "./features/tutor/Tutor";
 import Scan from "./features/write/Scan";
 import { ListeningRun, Dictation } from "./features/practice/Listen";
 import { BasicLesson } from "./features/basics/Basics";
@@ -43,7 +44,7 @@ function tabOf(route: string): string {
   if (route.startsWith("fon-")) return "ruta";
   if (route.startsWith("parla") || route.startsWith("audio-") || route === "dictat" || route === "audios") return "practica";
   if (["calendari", "compte", "nova-contrasenya"].includes(route)) return "perfil";
-  if (["test", "test-ia", "simulacre", "joc-frases", "joc-barbarismes", "connectors", "escriu", "fitxes", "fitxa0", "parla", "oral", "escolta", "conversa", "escaneja"].includes(route)) return "practica";
+  if (["test", "test-ia", "simulacre", "joc-frases", "joc-barbarismes", "connectors", "escriu", "fitxes", "fitxa0", "parla", "oral", "escolta", "conversa", "profe", "escaneja"].includes(route)) return "practica";
   return TABS.some((t) => t.id === route) ? route : "ruta";
 }
 
@@ -82,6 +83,7 @@ function screen(route: string): ReactNode {
     case "oral": return <OralTimer />;
     case "escolta": return <OralCoachPage />;
     case "conversa": return <Conversa />;
+    case "profe": return <Tutor />;
     case "escaneja": return <Scan />;
     default: return <Route />;
   }
