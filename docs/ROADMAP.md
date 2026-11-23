@@ -26,6 +26,7 @@ Metodologia completa: document «Método Parla C1 · Metodología y hoja de ruta
 - **v6.2**: Profe IA amb límit de temps i cadena de models Gemini (2.5-flash, lite…) amb reintents; voces estables (cua i reintents, sense canvi silenciós de veu); globus de paraula en tocar-la; explicació de cada opció incorrecta (no existeix / altra estructura / altre temps); truc D-U-C dels nombres i trucs d'estudi; guia d'estil per tipus de text.
 - **v6.3**: conversa en veu amb micro (mans lliures) i correcció final; diccionari amb historial, família de paraules, locucions, registre, sinònims per matís i «Les meves paraules» amb repàs espaiat; correcció de textos amb errors marcats, tipus d'error, consells per criteri, frases millorables i revisió d'estructura; guia d'estil interactiva (connectors, registre, frases llargues, repeticions); Profe IA en xat amb context del quadern, fotos i dictat.
 - **v6.4**: unitats 10–12 completes (burocràcia, economia i consum, disseny i publicitat) amb lliçó, model, exemples, 40+ exercicis, esquelet, oral, examen i regles. Contingut generat amb IA: cal revisar-lo.
+- **v6.5**: unitats 13–15 completes (paisatge i gastronomia, humor i ironia, societat) amb lliçó, model, exemples, 40+ exercicis, esquelet, oral, examen i regles. Contingut generat amb IA: cal revisar-lo (sobretot frases fetes i refranys).
 
 ## Proper
 1. Unitats 7-9 (fase 2) i Control 3.

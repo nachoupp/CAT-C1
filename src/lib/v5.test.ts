@@ -196,8 +196,8 @@ describe("ampliació d'exercicis", () => {
 import { LISTENINGS, DICTATIONS } from "../content/listening";
 import { diffWords, dictationScore } from "./dictation";
 describe("lot v6", () => {
-  it("unitats 7-12 completes amb regles", () => {
-    for (const u of ALL_UNITS.slice(6, 12)) {
+  it("unitats 7-15 completes amb regles", () => {
+    for (const u of ALL_UNITS.slice(6, 15)) {
       expect(u.content).toBeDefined();
       expect(poolOf(u.content!).length).toBeGreaterThanOrEqual(40);
       expect(u.content!.examples!.length).toBeGreaterThanOrEqual(12);

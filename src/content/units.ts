@@ -6,6 +6,7 @@
 import { MORE } from "./units-more";
 import { U7, U8, U9 } from "./units-c";
 import { U10, U11, U12 } from "./units-d";
+import { U13, U14, U15 } from "./units-e";
 import { EXTRA } from "./units-extra";
 import { U4, U5, U6 } from "./units-b";
 
@@ -344,9 +345,9 @@ export const UNITS: Unit[] = [
   { id: "u10", n: 10, phase: 3, title: "Burocràcia", grammar: "Tractament (vostè, vós) i fórmules", genre: "Convocatòria i acta", oralTask: "Reunió de veïns", content: U10 },
   { id: "u11", n: 11, phase: 3, title: "Economia i consum", grammar: "Com / com a, derivació", genre: "Reclamació", oralTask: "Negociar un acord", content: U11 },
   { id: "u12", n: 12, phase: 3, title: "Disseny i publicitat", grammar: "Locucions amb fer, tenir, anar", genre: "Text publicitari", oralTask: "Analitzar un eslògan amb doble sentit", content: U12 },
-  { id: "u13", n: 13, phase: 3, title: "Paisatge i gastronomia", grammar: "Ser, estar, haver-hi; gerundi", genre: "Fitxa i descripció", oralTask: "Explicar una ruta o un plat" },
-  { id: "u14", n: 14, phase: 3, title: "Humor i ironia", grammar: "Frases fetes, refranys, sentit implícit", genre: "Crònica", oralTask: "Explicar un acudit o una vinyeta" },
-  { id: "u15", n: 15, phase: 3, title: "Societat: son, felicitat, vellesa", grammar: "Concordança, prou, pas", genre: "Editorial", oralTask: "Defensar una proposta" },
+  { id: "u13", n: 13, phase: 3, title: "Paisatge i gastronomia", grammar: "Ser, estar, haver-hi; gerundi", genre: "Fitxa i descripció", oralTask: "Explicar una ruta o un plat", content: U13 },
+  { id: "u14", n: 14, phase: 3, title: "Humor i ironia", grammar: "Frases fetes, refranys, sentit implícit", genre: "Crònica", oralTask: "Explicar un acudit o una vinyeta", content: U14 },
+  { id: "u15", n: 15, phase: 3, title: "Societat: son, felicitat, vellesa", grammar: "Concordança, prou, pas", genre: "Editorial", oralTask: "Defensar una proposta", content: U15 },
   { id: "u16", n: 16, phase: 4, title: "Opinió a partir d'una notícia", grammar: "Repertori C1", genre: "Article d'opinió", oralTask: "—" },
   { id: "u17", n: 17, phase: 4, title: "L'oral d'examen", grammar: "Estratègies per guanyar temps", genre: "—", oralTask: "Interacció i exposició completes" },
   { id: "u18", n: 18, phase: 4, title: "Àrea 2 intensiva", grammar: "Repàs intercalat de tot", genre: "—", oralTask: "—" }
