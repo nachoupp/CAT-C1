@@ -49,6 +49,7 @@ export function Review() {
   const [given, setGiven] = useState("");
   const [res, setRes] = useState<boolean | null>(null);
   const [ok, setOk] = useState(0);
+  const [hint, setHint] = useState(false);
   const back = { to: "quadern", label: "Quadern" };
   if (!queue.length) return <Page title="Repàs d'errors" back={back}><Note>No tens errors pendents de repàs avui. Bona feina!</Note></Page>;
   if (k >= queue.length) {
@@ -67,19 +68,32 @@ export function Review() {
   };
   const next = () => {
     if (k + 1 >= queue.length) award("review", "repas");
-    setK(k + 1); setGiven(""); setRes(null);
+    setK(k + 1); setGiven(""); setRes(null); setHint(false);
   };
+  const giveUp = () => {
+    setGiven(e.right.split(/\s*\/\s*/)[0]); setRes(false);
+    setState((x) => reviewError(x, e.id, false, today));
+  };
+  const FROM: Record<string, string> = { escriptura: "un text teu", oral: "la pràctica oral", test: "un test", examen: "un examen", ia: "la correcció de la IA", dictat: "un dictat" };
+  const first = e.right.split(/\s*\/\s*/)[0];
   return (
     <Page title="Repàs d'errors" subtitle={`${k + 1} de ${queue.length}`} back={back}>
       <Bar value={(k / queue.length) * 100} />
       <Card className="mt-4 space-y-4 p-5">
-        <div className="text-[13.5px] text-muted">Vas escriure això. Com és correcte?</div>
+        <div className="text-[14px] text-muted">Això és un error teu de {FROM[e.source] ?? "l'app"}{e.count > 1 ? ` (l'has fet ${e.count} cops)` : ""}. <b className="text-fg">Escriu-ne la forma correcta</b> i repassa-la fins que et surti sola.</div>
         <div className="text-[26px] font-bold text-bad"><s>{e.wrong}</s></div>
+        {res === null && (
+          <div className="space-y-2">
+            {!hint ? <button type="button" onClick={() => setHint(true)} className="rounded-full bg-accent/10 px-3.5 py-2 text-[13.5px] font-semibold text-accent">💡 Una pista</button>
+              : <div className="rounded-xl bg-warn/15 px-3.5 py-3 text-[14.5px]">Comença per «<b>{first.slice(0, 1)}</b>» i té {first.length} lletres.{e.note ? <> <span className="text-muted">{e.note}</span></> : null}</div>}
+          </div>
+        )}
         <form onSubmit={(ev) => { ev.preventDefault(); if (res === null) check(); else next(); }} className="space-y-2">
           <input id="review-answer" aria-label="Forma correcta" value={given} onChange={(ev) => setGiven(ev.target.value)} disabled={res !== null} autoComplete="off" autoCapitalize="none" spellCheck={false}
             className={`w-full rounded-xl px-4 py-3.5 text-[18px] ${res === null ? "bg-bg" : res ? "bg-good/15 text-good" : "bg-bad/10 text-bad"}`} placeholder="Forma correcta…" />
           {res !== null && <div className="rounded-xl bg-accent/10 px-3.5 py-3 text-[15px]"><b>{res ? "Correcte." : `Correcta: ${e.right}.`}</b> {e.note}</div>}
           <Btn type="submit" block disabled={!given.trim() && res === null}>{res === null ? "Comprova" : "Continua"}</Btn>
+          {res === null && <button type="button" onClick={giveUp} className="w-full py-2 text-[14px] font-medium text-muted">No ho sé · mostra la solució</button>}
         </form>
       </Card>
     </Page>
