@@ -14,7 +14,8 @@ import { LessonView } from "./features/learn/Learn";
 import Practice from "./features/practice/Practice";
 import Quiz from "./features/practice/Quiz";
 import ExamSim from "./features/practice/ExamSim";
-import { MatchGame, BarbGame, Flashcards } from "./features/practice/Games";
+import { MatchGame, BarbGame } from "./features/practice/Games";
+import { Connectors } from "./features/practice/Connectors";
 import Audios from "./features/practice/Audios";
 import Write from "./features/write/Write";
 import { PaperList, Diagnostic } from "./features/write/Paper";
@@ -75,7 +76,7 @@ function screen(route: string): ReactNode {
     case "simulacre": return <ExamSim />;
     case "joc-frases": return <MatchGame />;
     case "joc-barbarismes": return <BarbGame />;
-    case "connectors": return <Flashcards />;
+    case "connectors": return <Connectors />;
     case "audios": return <Audios />;
     case "dictat": return <Dictation />;
     case "escriu": return <Write />;

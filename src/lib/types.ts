@@ -40,7 +40,7 @@ export interface Milestone { date: string; title: string; detail: string; kind: 
 export interface BankItem { id: string; prompt: string; answer: string; distractors: string[]; explanation: string }
 export interface Idiom { expr: string; meaning: string }
 export interface Barbarism { form: string; correct: boolean; fix: string }
-export interface Connector { term: string; use: string; example: string }
+export interface Connector { term: string; use: string; example: string; cat?: string; reg?: "F" | "N" | "O"; blank?: string; note?: string }
 export interface Lesson { id: string; area: string; title: string; html: string; example: string }
 export interface Exam { id: string; label: string; note: string; pdf: string; audio1: string; audio2: string; reserved: boolean }
 export interface WritingPrompt { id: string; title: string; words: number; minutes: number; exercise: string; brief: string }

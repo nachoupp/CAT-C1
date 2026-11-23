@@ -1,77 +1,1371 @@
 [
  {
   "term": "En primer lloc",
-  "use": "Ordenar · obrir l'argumentació",
-  "example": "En primer lloc, cal dir que el problema ve de lluny."
+  "use": "Obrir l'argumentació",
+  "example": "En primer lloc, cal dir que el problema ve de lluny.",
+  "cat": "ord",
+  "reg": "N",
+  "blank": "En primer lloc"
+ },
+ {
+  "term": "En segon lloc",
+  "use": "Continuar l'ordre",
+  "example": "En segon lloc, convé revisar el pressupost.",
+  "cat": "ord",
+  "reg": "N",
+  "blank": "En segon lloc"
+ },
+ {
+  "term": "Per començar",
+  "use": "Obrir una exposició",
+  "example": "Per començar, presentaré les dades més recents.",
+  "cat": "ord",
+  "reg": "N",
+  "blank": "Per començar"
+ },
+ {
+  "term": "Abans de res",
+  "use": "Obrir amb una precisió",
+  "example": "Abans de res, voldria agrair la vostra presència.",
+  "cat": "ord",
+  "reg": "N",
+  "blank": "Abans de res"
+ },
+ {
+  "term": "D'una banda",
+  "use": "Obrir una contraposició",
+  "example": "D'una banda, el projecte crea llocs de feina.",
+  "cat": "ord",
+  "reg": "N",
+  "blank": "D'una banda",
+  "note": "Va amb «de l'altra»."
+ },
+ {
+  "term": "De l'altra",
+  "use": "Tancar una contraposició",
+  "example": "D'una banda, és car; de l'altra, és duradora.",
+  "cat": "ord",
+  "reg": "N",
+  "blank": "de l'altra",
+  "note": "També: d'altra banda."
+ },
+ {
+  "term": "D'altra banda",
+  "use": "Afegir un altre punt de vista",
+  "example": "D'altra banda, no podem oblidar l'impacte ambiental.",
+  "cat": "ord",
+  "reg": "N",
+  "blank": "D'altra banda"
+ },
+ {
+  "term": "Així doncs",
+  "use": "Enllaçar amb el que s'ha dit",
+  "example": "Així doncs, la decisió depèn dels veïns.",
+  "cat": "ord",
+  "reg": "F",
+  "blank": "Així doncs"
+ },
+ {
+  "term": "Finalment",
+  "use": "Tancar una sèrie",
+  "example": "Finalment, cal esmentar les propostes de millora.",
+  "cat": "ord",
+  "reg": "N",
+  "blank": "Finalment"
+ },
+ {
+  "term": "Per acabar",
+  "use": "Tancar un text o una intervenció",
+  "example": "Per acabar, voldria fer una proposta.",
+  "cat": "ord",
+  "reg": "N",
+  "blank": "Per acabar"
+ },
+ {
+  "term": "Pel que fa a",
+  "use": "Introduir un aspecte",
+  "example": "Pel que fa a l'horari, no hi ha canvis.",
+  "cat": "ord",
+  "reg": "F",
+  "blank": "Pel que fa a",
+  "note": "❌ en cuanto a."
+ },
+ {
+  "term": "Quant a",
+  "use": "Introduir un aspecte",
+  "example": "Quant a les ajudes, encara no se sap res.",
+  "cat": "ord",
+  "reg": "F",
+  "blank": "Quant a",
+  "note": "Variant de «pel que fa a»."
+ },
+ {
+  "term": "En relació amb",
+  "use": "Referir-se a un tema",
+  "example": "En relació amb la seva sol·licitud, li comuniquem el següent.",
+  "cat": "ord",
+  "reg": "F",
+  "blank": "En relació amb",
+  "note": "❌ en relació a."
+ },
+ {
+  "term": "Respecte a",
+  "use": "Referir-se a un tema",
+  "example": "Respecte a la reunió, ja s'ha fixat la data.",
+  "cat": "ord",
+  "reg": "F",
+  "blank": "Respecte a"
+ },
+ {
+  "term": "A més",
+  "use": "Afegir informació",
+  "example": "A més, el curs inclou pràctiques.",
+  "cat": "add",
+  "reg": "N",
+  "blank": "A més"
+ },
+ {
+  "term": "A més a més",
+  "use": "Afegir (més emfàtic)",
+  "example": "A més a més, el preu és assequible.",
+  "cat": "add",
+  "reg": "N",
+  "blank": "A més a més"
  },
  {
   "term": "Així mateix",
   "use": "Afegir una idea",
-  "example": "Així mateix, caldria ampliar l'horari de la biblioteca."
+  "example": "Així mateix, caldria ampliar l'horari de la biblioteca.",
+  "cat": "add",
+  "reg": "F",
+  "blank": "Així mateix"
  },
  {
-  "term": "A més a més",
+  "term": "Igualment",
+  "use": "Afegir en la mateixa línia",
+  "example": "Igualment, s'ha de millorar la senyalització.",
+  "cat": "add",
+  "reg": "F",
+  "blank": "Igualment"
+ },
+ {
+  "term": "També",
   "use": "Afegir",
-  "example": "A més a més, el preu és assequible."
+  "example": "Cal reduir el soroll i també la contaminació.",
+  "cat": "add",
+  "reg": "N",
+  "blank": "també"
+ },
+ {
+  "term": "Tampoc",
+  "use": "Afegir una negació",
+  "example": "No hi va anar ningú, ni tampoc va trucar.",
+  "cat": "add",
+  "reg": "N",
+  "blank": "tampoc"
+ },
+ {
+  "term": "Fins i tot",
+  "use": "Afegir amb èmfasi",
+  "example": "Va venir tothom, fins i tot els que no estaven convidats.",
+  "cat": "add",
+  "reg": "N",
+  "blank": "fins i tot",
+  "note": "❌ incluso."
+ },
+ {
+  "term": "Encara més",
+  "use": "Reforçar l'argument",
+  "example": "Encara més, la mesura redueix els costos.",
+  "cat": "add",
+  "reg": "F",
+  "blank": "Encara més"
+ },
+ {
+  "term": "No només… sinó també",
+  "use": "Sumar amb èmfasi",
+  "example": "No només és útil, sinó també necessari.",
+  "cat": "add",
+  "reg": "N",
+  "blank": "No només"
+ },
+ {
+  "term": "Cal afegir que",
+  "use": "Afegir una dada",
+  "example": "Cal afegir que el termini s'ha ampliat.",
+  "cat": "add",
+  "reg": "F",
+  "blank": "Cal afegir que"
+ },
+ {
+  "term": "Sense oblidar que",
+  "use": "Afegir recordant",
+  "example": "Sense oblidar que cal preservar el paisatge, proposem una ruta nova.",
+  "cat": "add",
+  "reg": "F",
+  "blank": "Sense oblidar que"
  },
  {
   "term": "Tanmateix",
   "use": "Contrast",
-  "example": "La proposta és bona; tanmateix, és cara."
+  "example": "La proposta és bona; tanmateix, és cara.",
+  "cat": "con",
+  "reg": "F",
+  "blank": "tanmateix",
+  "note": "❌ sin embargo."
  },
  {
   "term": "No obstant això",
   "use": "Contrast",
-  "example": "Hi ha millores; no obstant això, falta molt per fer."
+  "example": "Hi ha millores; no obstant això, falta molt per fer.",
+  "cat": "con",
+  "reg": "F",
+  "blank": "no obstant això"
+ },
+ {
+  "term": "Ara bé",
+  "use": "Matisar o contrastar",
+  "example": "Ara bé, no tothom hi està d'acord.",
+  "cat": "con",
+  "reg": "N",
+  "blank": "Ara bé"
+ },
+ {
+  "term": "En canvi",
+  "use": "Oposar dos fets",
+  "example": "El nord és humit; en canvi, el sud és sec.",
+  "cat": "con",
+  "reg": "N",
+  "blank": "en canvi",
+  "note": "❌ en cambio."
+ },
+ {
+  "term": "Per contra",
+  "use": "Oposar amb força",
+  "example": "Per contra, les vendes han caigut.",
+  "cat": "con",
+  "reg": "F",
+  "blank": "Per contra"
+ },
+ {
+  "term": "Contràriament",
+  "use": "Oposar a una idea",
+  "example": "Contràriament al que es diu, no hi ha cap risc.",
+  "cat": "con",
+  "reg": "F",
+  "blank": "Contràriament"
+ },
+ {
+  "term": "Sinó que",
+  "use": "Rectificar després d'una negació",
+  "example": "No és que no vulgui, sinó que no puc.",
+  "cat": "con",
+  "reg": "N",
+  "blank": "sinó que",
+  "note": "❌ si no que."
+ },
+ {
+  "term": "Més aviat",
+  "use": "Corregir amb matís",
+  "example": "No és un error: més aviat és una falta d'informació.",
+  "cat": "con",
+  "reg": "N",
+  "blank": "més aviat"
+ },
+ {
+  "term": "Mentre que",
+  "use": "Contrastar dues situacions",
+  "example": "Ell és ordenat, mentre que ella és més desendreçada.",
+  "cat": "con",
+  "reg": "N",
+  "blank": "mentre que",
+  "note": "Indicatiu."
+ },
+ {
+  "term": "Així i tot",
+  "use": "Contrast després d'una dificultat",
+  "example": "Estava malalt; així i tot, va venir.",
+  "cat": "con",
+  "reg": "N",
+  "blank": "així i tot"
+ },
+ {
+  "term": "Amb tot",
+  "use": "Contrast final",
+  "example": "Amb tot, la valoració és positiva.",
+  "cat": "con",
+  "reg": "F",
+  "blank": "Amb tot"
+ },
+ {
+  "term": "Tot i això",
+  "use": "Contrast",
+  "example": "Tot i això, no ens rendirem.",
+  "cat": "con",
+  "reg": "N",
+  "blank": "Tot i això"
+ },
+ {
+  "term": "Això no obstant",
+  "use": "Contrast",
+  "example": "Això no obstant, cal esperar els resultats.",
+  "cat": "con",
+  "reg": "F",
+  "blank": "Això no obstant"
  },
  {
   "term": "Tot i que",
-  "use": "Concessió + verb",
-  "example": "Tot i que plovia, vam sortir."
+  "use": "Concessió amb verb",
+  "example": "Tot i que plovia, vam sortir.",
+  "cat": "cnc",
+  "reg": "N",
+  "blank": "Tot i que",
+  "note": "Indicatiu o subjuntiu segons el cas."
  },
  {
-  "term": "Malgrat + nom",
-  "use": "Concessió + nom",
-  "example": "Malgrat la pluja, vam sortir."
+  "term": "Encara que",
+  "use": "Concessió amb verb",
+  "example": "Encara que sigui tard, vindré.",
+  "cat": "cnc",
+  "reg": "N",
+  "blank": "Encara que",
+  "note": "Subjuntiu si és hipotètic."
+ },
+ {
+  "term": "Malgrat",
+  "use": "Concessió amb nom",
+  "example": "Malgrat la pluja, vam sortir.",
+  "cat": "cnc",
+  "reg": "N",
+  "blank": "Malgrat",
+  "note": "❌ a pesar de."
+ },
+ {
+  "term": "Malgrat que",
+  "use": "Concessió amb verb",
+  "example": "Malgrat que és jove, té molta experiència.",
+  "cat": "cnc",
+  "reg": "N",
+  "blank": "Malgrat que"
+ },
+ {
+  "term": "Per bé que",
+  "use": "Concessió amb verb",
+  "example": "Per bé que no hi ha diners, el projecte avança.",
+  "cat": "cnc",
+  "reg": "F",
+  "blank": "Per bé que"
+ },
+ {
+  "term": "Si bé",
+  "use": "Concessió formal",
+  "example": "Si bé és cert que hi ha dificultats, hi ha solucions.",
+  "cat": "cnc",
+  "reg": "F",
+  "blank": "Si bé"
+ },
+ {
+  "term": "Ni que",
+  "use": "Concessió irreal",
+  "example": "Ni que ho jurés, no el creuria.",
+  "cat": "cnc",
+  "reg": "O",
+  "blank": "Ni que",
+  "note": "Imperfet de subjuntiu."
+ },
+ {
+  "term": "Per molt que",
+  "use": "Concessió gradual",
+  "example": "Per molt que s'esforci, no ho aconseguirà.",
+  "cat": "cnc",
+  "reg": "N",
+  "blank": "Per molt que",
+  "note": "Subjuntiu."
+ },
+ {
+  "term": "Tot i + infinitiu",
+  "use": "Concessió reduïda",
+  "example": "Tot i ser jove, té molta experiència.",
+  "cat": "cnc",
+  "reg": "N",
+  "blank": "Tot i",
+  "note": "Tot i + infinitiu."
+ },
+ {
+  "term": "Perquè",
+  "use": "Causa neutra",
+  "example": "No he vingut perquè estava malalt.",
+  "cat": "cau",
+  "reg": "N",
+  "blank": "perquè",
+  "note": "Indicatiu."
  },
  {
   "term": "Atès que",
   "use": "Causa formal",
-  "example": "Atès que no hi ha quòrum, s'ajorna la sessió."
+  "example": "Atès que no hi ha quòrum, s'ajorna la sessió.",
+  "cat": "cau",
+  "reg": "F",
+  "blank": "Atès que"
+ },
+ {
+  "term": "Com que",
+  "use": "Causa abans del fet",
+  "example": "Com que plovia, vam quedar-nos a casa.",
+  "cat": "cau",
+  "reg": "N",
+  "blank": "Com que",
+  "note": "Va al començament."
+ },
+ {
+  "term": "Ja que",
+  "use": "Causa coneguda",
+  "example": "Ja que tothom hi és, començarem.",
+  "cat": "cau",
+  "reg": "N",
+  "blank": "Ja que"
+ },
+ {
+  "term": "Pel fet que",
+  "use": "Causa com a fet",
+  "example": "Pel fet que no ha vingut, la reunió s'ha ajornat.",
+  "cat": "cau",
+  "reg": "F",
+  "blank": "Pel fet que"
+ },
+ {
+  "term": "Donat que",
+  "use": "Causa formal (alternativa)",
+  "example": "Donat que el termini acaba demà, cal actuar ja.",
+  "cat": "cau",
+  "reg": "F",
+  "blank": "Donat que",
+  "note": "També: atès que."
+ },
+ {
+  "term": "A causa de",
+  "use": "Causa amb nom",
+  "example": "A causa de la pluja, es va suspendre el concert.",
+  "cat": "cau",
+  "reg": "N",
+  "blank": "A causa de"
+ },
+ {
+  "term": "Per culpa de",
+  "use": "Causa negativa",
+  "example": "Per culpa del trànsit, vaig arribar tard.",
+  "cat": "cau",
+  "reg": "N",
+  "blank": "Per culpa de"
+ },
+ {
+  "term": "Gràcies a",
+  "use": "Causa positiva",
+  "example": "Gràcies a l'ajuda dels veïns, vam acabar a temps.",
+  "cat": "cau",
+  "reg": "N",
+  "blank": "Gràcies a"
+ },
+ {
+  "term": "Arran de",
+  "use": "Causa i punt de partida",
+  "example": "Arran de la crisi, moltes empreses van tancar.",
+  "cat": "cau",
+  "reg": "F",
+  "blank": "Arran de"
+ },
+ {
+  "term": "Per",
+  "use": "Causa + infinitiu",
+  "example": "Va ser multat per aparcar malament.",
+  "cat": "cau",
+  "reg": "N",
+  "blank": "per",
+  "note": "Per + infinitiu."
+ },
+ {
+  "term": "Vist que",
+  "use": "Causa després d'observar",
+  "example": "Vist que no hi ha acord, votarem.",
+  "cat": "cau",
+  "reg": "F",
+  "blank": "Vist que"
  },
  {
   "term": "Per tant",
   "use": "Conseqüència",
-  "example": "No hi ha pressupost; per tant, cal esperar."
+  "example": "El curs és car; per tant, molts no s'hi apuntaran.",
+  "cat": "cns",
+  "reg": "N",
+  "blank": "per tant"
  },
  {
   "term": "En conseqüència",
   "use": "Conseqüència formal",
-  "example": "En conseqüència, sol·licito una resposta."
+  "example": "En conseqüència, es va decidir tancar l'oficina.",
+  "cat": "cns",
+  "reg": "F",
+  "blank": "En conseqüència"
+ },
+ {
+  "term": "Per això",
+  "use": "Conseqüència de manera directa",
+  "example": "He estudiat molt; per això he aprovat.",
+  "cat": "cns",
+  "reg": "N",
+  "blank": "per això"
+ },
+ {
+  "term": "Així doncs",
+  "use": "Conseqüència",
+  "example": "Així doncs, cal buscar una altra solució.",
+  "cat": "cns",
+  "reg": "F",
+  "blank": "Així doncs"
+ },
+ {
+  "term": "De manera que",
+  "use": "Conseqüència amb verb",
+  "example": "No va avisar, de manera que ens vam quedar sense taula.",
+  "cat": "cns",
+  "reg": "N",
+  "blank": "de manera que",
+  "note": "Indicatiu."
+ },
+ {
+  "term": "Per la qual cosa",
+  "use": "Conseqüència formal",
+  "example": "Hi ha pocs voluntaris, per la qual cosa s'ha de reorganitzar.",
+  "cat": "cns",
+  "reg": "F",
+  "blank": "per la qual cosa"
+ },
+ {
+  "term": "Fins al punt que",
+  "use": "Conseqüència intensa",
+  "example": "Plovia fins al punt que es van inundar els carrers.",
+  "cat": "cns",
+  "reg": "N",
+  "blank": "fins al punt que"
+ },
+ {
+  "term": "Tan… que",
+  "use": "Conseqüència intensiva",
+  "example": "Estava tan cansat que es va adormir al sofà.",
+  "cat": "cns",
+  "reg": "N",
+  "blank": "tan"
+ },
+ {
+  "term": "Així que",
+  "use": "Conseqüència oral",
+  "example": "Així que ho sàpigues, ja no hi vaig.",
+  "cat": "cns",
+  "reg": "O",
+  "blank": "Així que"
+ },
+ {
+  "term": "D'aquí que",
+  "use": "Conseqüència amb subjuntiu",
+  "example": "El preu és alt; d'aquí que moltes persones no ho comprin.",
+  "cat": "cns",
+  "reg": "F",
+  "blank": "d'aquí que",
+  "note": "Subjuntiu."
+ },
+ {
+  "term": "Per tal que",
+  "use": "Finalitat",
+  "example": "Ho explico per tal que tothom ho entengui.",
+  "cat": "fin",
+  "reg": "F",
+  "blank": "per tal que",
+  "note": "Subjuntiu."
+ },
+ {
+  "term": "Perquè",
+  "use": "Finalitat",
+  "example": "Parla més alt perquè et sentin.",
+  "cat": "fin",
+  "reg": "N",
+  "blank": "perquè",
+  "note": "Subjuntiu."
+ },
+ {
+  "term": "A fi que",
+  "use": "Finalitat formal",
+  "example": "S'ha creat una comissió a fi que es resolgui el conflicte.",
+  "cat": "fin",
+  "reg": "F",
+  "blank": "a fi que",
+  "note": "Subjuntiu."
+ },
+ {
+  "term": "Amb la finalitat de",
+  "use": "Finalitat amb infinitiu",
+  "example": "Amb la finalitat de millorar el servei, s'han fet canvis.",
+  "cat": "fin",
+  "reg": "F",
+  "blank": "Amb la finalitat de"
+ },
+ {
+  "term": "Amb l'objectiu de",
+  "use": "Finalitat amb infinitiu",
+  "example": "Amb l'objectiu de reduir costos, s'ha apujat el preu.",
+  "cat": "fin",
+  "reg": "F",
+  "blank": "Amb l'objectiu de"
+ },
+ {
+  "term": "Per",
+  "use": "Finalitat amb infinitiu",
+  "example": "He vingut per parlar amb tu.",
+  "cat": "fin",
+  "reg": "N",
+  "blank": "per"
+ },
+ {
+  "term": "A fi de",
+  "use": "Finalitat amb infinitiu",
+  "example": "A fi de guanyar temps, començarem ja.",
+  "cat": "fin",
+  "reg": "F",
+  "blank": "A fi de"
+ },
+ {
+  "term": "Amb vista a",
+  "use": "Finalitat amb vista al futur",
+  "example": "Amb vista a l'estiu, cal preparar la campanya.",
+  "cat": "fin",
+  "reg": "F",
+  "blank": "Amb vista a"
+ },
+ {
+  "term": "Si",
+  "use": "Condició",
+  "example": "Si plou, no sortirem.",
+  "cat": "cdn",
+  "reg": "N",
+  "blank": "Si",
+  "note": "Mai «si» + condicional."
+ },
+ {
+  "term": "Sempre que",
+  "use": "Condició + subjuntiu",
+  "example": "Hi aniré sempre que em convidin.",
+  "cat": "cdn",
+  "reg": "N",
+  "blank": "sempre que",
+  "note": "Subjuntiu."
+ },
+ {
+  "term": "A condició que",
+  "use": "Condició formal",
+  "example": "T'ho deixo a condició que me'l tornis.",
+  "cat": "cdn",
+  "reg": "F",
+  "blank": "a condició que",
+  "note": "Subjuntiu."
+ },
+ {
+  "term": "Només si",
+  "use": "Condició restrictiva",
+  "example": "Només si hi ha prou gent, farem l'activitat.",
+  "cat": "cdn",
+  "reg": "N",
+  "blank": "Només si"
+ },
+ {
+  "term": "En cas que",
+  "use": "Possibilitat",
+  "example": "En cas que plogui, ho ajornarem.",
+  "cat": "cdn",
+  "reg": "F",
+  "blank": "En cas que",
+  "note": "Subjuntiu."
+ },
+ {
+  "term": "Tret que",
+  "use": "Excepció",
+  "example": "Vindrem, tret que ens avisin del contrari.",
+  "cat": "cdn",
+  "reg": "F",
+  "blank": "tret que",
+  "note": "Subjuntiu."
+ },
+ {
+  "term": "A menys que",
+  "use": "Excepció",
+  "example": "No hi aniré, a menys que m'ho demanin.",
+  "cat": "cdn",
+  "reg": "N",
+  "blank": "a menys que",
+  "note": "Subjuntiu."
+ },
+ {
+  "term": "Posat que",
+  "use": "Condició hipotètica",
+  "example": "Posat que ho aprovin, començarem demà.",
+  "cat": "cdn",
+  "reg": "F",
+  "blank": "Posat que"
+ },
+ {
+  "term": "Altrament",
+  "use": "Si no",
+  "example": "Cal pagar a temps; altrament, hi haurà recàrrec.",
+  "cat": "cdn",
+  "reg": "F",
+  "blank": "altrament"
+ },
+ {
+  "term": "Si no",
+  "use": "Condició negativa",
+  "example": "Si no hi ha acord, anirem a judici.",
+  "cat": "cdn",
+  "reg": "N",
+  "blank": "Si no"
+ },
+ {
+  "term": "Per exemple",
+  "use": "Exemplificar",
+  "example": "Hi ha opcions, per exemple, el tren.",
+  "cat": "exe",
+  "reg": "N",
+  "blank": "per exemple"
+ },
+ {
+  "term": "Com ara",
+  "use": "Enumerar exemples",
+  "example": "Hi ha molts problemes, com ara el soroll.",
+  "cat": "exe",
+  "reg": "N",
+  "blank": "com ara"
+ },
+ {
+  "term": "Per posar un exemple",
+  "use": "Exemplificar",
+  "example": "Per posar un exemple, pensem en el cas de Sóller.",
+  "cat": "exe",
+  "reg": "N",
+  "blank": "Per posar un exemple"
+ },
+ {
+  "term": "En particular",
+  "use": "Concretar",
+  "example": "M'interessa la història, en particular la medieval.",
+  "cat": "exe",
+  "reg": "F",
+  "blank": "en particular"
+ },
+ {
+  "term": "Sobretot",
+  "use": "Destacar",
+  "example": "M'agrada l'estiu, sobretot al mar.",
+  "cat": "exe",
+  "reg": "N",
+  "blank": "sobretot",
+  "note": "❌ sobre todo."
+ },
+ {
+  "term": "Concretament",
+  "use": "Precisar",
+  "example": "Concretament, el problema és el sostre.",
+  "cat": "exe",
+  "reg": "F",
+  "blank": "Concretament"
+ },
+ {
+  "term": "Tal com",
+  "use": "Introduir una font o semblança",
+  "example": "Tal com diu el reglament, cal avisar amb antelació.",
+  "cat": "exe",
+  "reg": "N",
+  "blank": "Tal com"
+ },
+ {
+  "term": "Entre d'altres",
+  "use": "Mostrar que n'hi ha més",
+  "example": "Hi van ser el director, entre d'altres.",
+  "cat": "exe",
+  "reg": "N",
+  "blank": "entre d'altres"
  },
  {
   "term": "És a dir",
   "use": "Reformular",
-  "example": "Cal estalviar aigua, és a dir, consumir-ne menys."
+  "example": "Serà festiu, és a dir, no hi haurà classe.",
+  "cat": "ref",
+  "reg": "N",
+  "blank": "és a dir"
  },
  {
-  "term": "Pel que fa a",
-  "use": "Introduir tema",
-  "example": "Pel que fa a l'horari, proposo canviar-lo."
+  "term": "Dit d'una altra manera",
+  "use": "Reformular",
+  "example": "Dit d'una altra manera, no ho hem aconseguit.",
+  "cat": "ref",
+  "reg": "N",
+  "blank": "Dit d'una altra manera"
  },
  {
-  "term": "Ara bé",
-  "use": "Matisar",
-  "example": "És una bona idea. Ara bé, s'ha d'estudiar."
+  "term": "Vull dir que",
+  "use": "Aclarir",
+  "example": "Vull dir que no cal que vinguis demà.",
+  "cat": "ref",
+  "reg": "O",
+  "blank": "Vull dir que"
+ },
+ {
+  "term": "O sigui",
+  "use": "Aclarir (oral)",
+  "example": "O sigui, que no hi ha res a fer.",
+  "cat": "ref",
+  "reg": "O",
+  "blank": "O sigui"
+ },
+ {
+  "term": "En altres paraules",
+  "use": "Reformular",
+  "example": "En altres paraules, cal canviar el model.",
+  "cat": "ref",
+  "reg": "F",
+  "blank": "En altres paraules"
+ },
+ {
+  "term": "Això és",
+  "use": "Aclarir",
+  "example": "Va ser puntual, això és, va arribar a l'hora.",
+  "cat": "ref",
+  "reg": "F",
+  "blank": "això és"
+ },
+ {
+  "term": "Més ben dit",
+  "use": "Corregir-se",
+  "example": "Va ser un error, més ben dit, una imprudència.",
+  "cat": "ref",
+  "reg": "N",
+  "blank": "més ben dit"
  },
  {
   "term": "En definitiva",
   "use": "Concloure",
-  "example": "En definitiva, el català ens uneix."
+  "example": "En definitiva, el projecte és viable.",
+  "cat": "cnl",
+  "reg": "F",
+  "blank": "En definitiva"
  },
  {
-  "term": "Per acabar",
-  "use": "Tancar el text",
-  "example": "Per acabar, agraeixo la vostra atenció."
+  "term": "En resum",
+  "use": "Resumir",
+  "example": "En resum, hi ha tres propostes.",
+  "cat": "cnl",
+  "reg": "N",
+  "blank": "En resum"
+ },
+ {
+  "term": "En conclusió",
+  "use": "Concloure",
+  "example": "En conclusió, cal reformar el sistema.",
+  "cat": "cnl",
+  "reg": "F",
+  "blank": "En conclusió"
+ },
+ {
+  "term": "Per concloure",
+  "use": "Tancar",
+  "example": "Per concloure, voldria agrair l'atenció.",
+  "cat": "cnl",
+  "reg": "F",
+  "blank": "Per concloure"
+ },
+ {
+  "term": "En síntesi",
+  "use": "Resumir",
+  "example": "En síntesi, la idea és senzilla.",
+  "cat": "cnl",
+  "reg": "F",
+  "blank": "En síntesi"
+ },
+ {
+  "term": "Tot plegat",
+  "use": "Resumir tot el dit",
+  "example": "Tot plegat, la jornada va ser un èxit.",
+  "cat": "cnl",
+  "reg": "N",
+  "blank": "Tot plegat"
+ },
+ {
+  "term": "Al capdavall",
+  "use": "Concloure amb perspectiva",
+  "example": "Al capdavall, és una qüestió de voluntat.",
+  "cat": "cnl",
+  "reg": "F",
+  "blank": "Al capdavall"
+ },
+ {
+  "term": "Després de tot",
+  "use": "Concloure rebatent",
+  "example": "Després de tot, no és tan greu.",
+  "cat": "cnl",
+  "reg": "N",
+  "blank": "Després de tot"
+ },
+ {
+  "term": "Mentrestant",
+  "use": "Simultaneïtat",
+  "example": "Mentrestant, els veïns esperaven.",
+  "cat": "tmp",
+  "reg": "N",
+  "blank": "Mentrestant"
+ },
+ {
+  "term": "Alhora",
+  "use": "Simultaneïtat",
+  "example": "Cal reduir costos i, alhora, millorar el servei.",
+  "cat": "tmp",
+  "reg": "F",
+  "blank": "alhora"
+ },
+ {
+  "term": "Aleshores",
+  "use": "Moment passat",
+  "example": "Aleshores no hi havia mòbils.",
+  "cat": "tmp",
+  "reg": "N",
+  "blank": "Aleshores"
+ },
+ {
+  "term": "Tot seguit",
+  "use": "Immediatesa",
+  "example": "Tot seguit, es va obrir el torn de paraules.",
+  "cat": "tmp",
+  "reg": "F",
+  "blank": "Tot seguit"
+ },
+ {
+  "term": "Més tard",
+  "use": "Posterioritat",
+  "example": "Més tard, es va saber la notícia.",
+  "cat": "tmp",
+  "reg": "N",
+  "blank": "Més tard"
+ },
+ {
+  "term": "Abans que",
+  "use": "Anterioritat",
+  "example": "Truca'm abans que marxis.",
+  "cat": "tmp",
+  "reg": "N",
+  "blank": "abans que",
+  "note": "Subjuntiu."
+ },
+ {
+  "term": "Després que",
+  "use": "Posterioritat",
+  "example": "Després que ho van saber, van trucar.",
+  "cat": "tmp",
+  "reg": "N",
+  "blank": "Després que"
+ },
+ {
+  "term": "Tan bon punt",
+  "use": "Immediatesa",
+  "example": "Tan bon punt arribi, t'avisaré.",
+  "cat": "tmp",
+  "reg": "N",
+  "blank": "Tan bon punt",
+  "note": "Subjuntiu al futur."
+ },
+ {
+  "term": "Mentre",
+  "use": "Simultaneïtat",
+  "example": "Mentre cuinava, escoltava música.",
+  "cat": "tmp",
+  "reg": "N",
+  "blank": "Mentre"
+ },
+ {
+  "term": "Fins que",
+  "use": "Límit",
+  "example": "No pararé fins que ho aconsegueixi.",
+  "cat": "tmp",
+  "reg": "N",
+  "blank": "fins que",
+  "note": "Subjuntiu al futur."
+ },
+ {
+  "term": "Sobretot",
+  "use": "Destacar",
+  "example": "Sobretot, cal ser prudent.",
+  "cat": "enf",
+  "reg": "N",
+  "blank": "Sobretot"
+ },
+ {
+  "term": "Cal destacar que",
+  "use": "Posar en relleu",
+  "example": "Cal destacar que la participació va ser alta.",
+  "cat": "enf",
+  "reg": "F",
+  "blank": "Cal destacar que"
+ },
+ {
+  "term": "Convé subratllar que",
+  "use": "Posar en relleu",
+  "example": "Convé subratllar que el termini és improrrogable.",
+  "cat": "enf",
+  "reg": "F",
+  "blank": "Convé subratllar que"
+ },
+ {
+  "term": "De fet",
+  "use": "Reforçar amb una dada",
+  "example": "De fet, ja ho havíem dit.",
+  "cat": "enf",
+  "reg": "N",
+  "blank": "De fet",
+  "note": "❌ de hecho."
+ },
+ {
+  "term": "Efectivament",
+  "use": "Confirmar",
+  "example": "Efectivament, el preu ha pujat.",
+  "cat": "enf",
+  "reg": "F",
+  "blank": "Efectivament"
+ },
+ {
+  "term": "Certament",
+  "use": "Concedir amb força",
+  "example": "Certament, hi ha motius per preocupar-se.",
+  "cat": "enf",
+  "reg": "F",
+  "blank": "Certament"
+ },
+ {
+  "term": "Òbviament",
+  "use": "Assenyalar l'evident",
+  "example": "Òbviament, no es pot fer tot alhora.",
+  "cat": "enf",
+  "reg": "N",
+  "blank": "Òbviament"
+ },
+ {
+  "term": "Ni més ni menys",
+  "use": "Èmfasi de precisió",
+  "example": "Va ser ni més ni menys que un desastre.",
+  "cat": "enf",
+  "reg": "N",
+  "blank": "ni més ni menys"
+ },
+ {
+  "term": "Per sobre de tot",
+  "use": "Prioritzar",
+  "example": "Per sobre de tot, volem seguretat.",
+  "cat": "enf",
+  "reg": "F",
+  "blank": "Per sobre de tot"
+ },
+ {
+  "term": "Al meu parer",
+  "use": "Opinió formal",
+  "example": "Al meu parer, la mesura és insuficient.",
+  "cat": "opi",
+  "reg": "F",
+  "blank": "Al meu parer"
+ },
+ {
+  "term": "Des del meu punt de vista",
+  "use": "Opinió",
+  "example": "Des del meu punt de vista, cal replantejar-ho.",
+  "cat": "opi",
+  "reg": "F",
+  "blank": "Des del meu punt de vista"
+ },
+ {
+  "term": "Segons el meu criteri",
+  "use": "Opinió",
+  "example": "Segons el meu criteri, no és prioritari.",
+  "cat": "opi",
+  "reg": "F",
+  "blank": "Segons el meu criteri"
+ },
+ {
+  "term": "Em sembla que",
+  "use": "Opinió moderada",
+  "example": "Em sembla que tens raó.",
+  "cat": "opi",
+  "reg": "N",
+  "blank": "Em sembla que"
+ },
+ {
+  "term": "Crec que",
+  "use": "Opinió simple",
+  "example": "Crec que és una bona idea.",
+  "cat": "opi",
+  "reg": "N",
+  "blank": "Crec que",
+  "note": "Indicatiu; «no crec que» + subjuntiu."
+ },
+ {
+  "term": "Personalment",
+  "use": "Opinió pròpia",
+  "example": "Personalment, ho trobo exagerat.",
+  "cat": "opi",
+  "reg": "N",
+  "blank": "Personalment"
+ },
+ {
+  "term": "Estic convençut que",
+  "use": "Opinió ferma",
+  "example": "Estic convençut que sortirà bé.",
+  "cat": "opi",
+  "reg": "N",
+  "blank": "Estic convençut que"
+ },
+ {
+  "term": "Sóc de l'opinió que",
+  "use": "Opinió formal",
+  "example": "Sóc de l'opinió que cal prudència.",
+  "cat": "opi",
+  "reg": "F",
+  "blank": "Sóc de l'opinió que"
+ },
+ {
+  "term": "Considero que",
+  "use": "Opinió formal",
+  "example": "Considero que la proposta és adequada.",
+  "cat": "opi",
+  "reg": "F",
+  "blank": "Considero que"
+ },
+ {
+  "term": "Hi estic d'acord",
+  "use": "Acord",
+  "example": "Hi estic d'acord amb tu.",
+  "cat": "opi",
+  "reg": "N",
+  "blank": "Hi estic d'acord"
+ },
+ {
+  "term": "No hi estic d'acord",
+  "use": "Desacord",
+  "example": "No hi estic d'acord: les dades diuen el contrari.",
+  "cat": "opi",
+  "reg": "N",
+  "blank": "No hi estic d'acord"
+ },
+ {
+  "term": "Igual que",
+  "use": "Semblança",
+  "example": "Igual que l'any passat, hi haurà càtering.",
+  "cat": "cmp",
+  "reg": "N",
+  "blank": "Igual que"
+ },
+ {
+  "term": "A diferència de",
+  "use": "Diferència",
+  "example": "A diferència de Menorca, Eivissa és més turística.",
+  "cat": "cmp",
+  "reg": "F",
+  "blank": "A diferència de"
+ },
+ {
+  "term": "Tant… com",
+  "use": "Igualtat",
+  "example": "Tant els joves com els grans hi van participar.",
+  "cat": "cmp",
+  "reg": "N",
+  "blank": "Tant"
+ },
+ {
+  "term": "Més… que",
+  "use": "Superioritat",
+  "example": "El curs és més llarg que l'anterior.",
+  "cat": "cmp",
+  "reg": "N",
+  "blank": "més"
+ },
+ {
+  "term": "Com més… més",
+  "use": "Proporció",
+  "example": "Com més llegeixes, més aprens.",
+  "cat": "cmp",
+  "reg": "N",
+  "blank": "Com més"
+ },
+ {
+  "term": "De la mateixa manera",
+  "use": "Semblança",
+  "example": "De la mateixa manera, cal revisar el contracte.",
+  "cat": "cmp",
+  "reg": "F",
+  "blank": "De la mateixa manera",
+  "note": "❌ del mismo modo, del mateix modo."
+ },
+ {
+  "term": "Així com",
+  "use": "Comparar i sumar",
+  "example": "Els nens, així com els adults, van gaudir de l'espectacle.",
+  "cat": "cmp",
+  "reg": "F",
+  "blank": "així com"
+ },
+ {
+  "term": "Pel que fa a",
+  "use": "Introduir un aspecte",
+  "example": "Pel que fa a l'aparcament, hi ha una zona gratuïta.",
+  "cat": "tem",
+  "reg": "F",
+  "blank": "Pel que fa a"
+ },
+ {
+  "term": "Cal tenir en compte que",
+  "use": "Introduir un matís",
+  "example": "Cal tenir en compte que no tothom té cotxe.",
+  "cat": "tem",
+  "reg": "F",
+  "blank": "Cal tenir en compte que"
+ },
+ {
+  "term": "És evident que",
+  "use": "Presentar un fet com a clar",
+  "example": "És evident que cal fer canvis.",
+  "cat": "tem",
+  "reg": "N",
+  "blank": "És evident que",
+  "note": "Indicatiu."
+ },
+ {
+  "term": "Resulta que",
+  "use": "Revelar un fet",
+  "example": "Resulta que ningú no havia avisat.",
+  "cat": "tem",
+  "reg": "N",
+  "blank": "Resulta que"
+ },
+ {
+  "term": "No es pot negar que",
+  "use": "Admetre abans de rebatre",
+  "example": "No es pot negar que hi ha avenços.",
+  "cat": "tem",
+  "reg": "F",
+  "blank": "No es pot negar que"
+ },
+ {
+  "term": "Val a dir que",
+  "use": "Aclarir",
+  "example": "Val a dir que no és fàcil.",
+  "cat": "tem",
+  "reg": "N",
+  "blank": "Val a dir que"
+ },
+ {
+  "term": "Cal dir que",
+  "use": "Aclarir",
+  "example": "Cal dir que el servei ha millorat.",
+  "cat": "tem",
+  "reg": "N",
+  "blank": "Cal dir que"
+ },
+ {
+  "term": "Bé,",
+  "use": "Prendre el torn",
+  "example": "Bé, a veure com ho explico.",
+  "cat": "ora",
+  "reg": "O",
+  "blank": "Bé"
+ },
+ {
+  "term": "A veure",
+  "use": "Guanyar temps",
+  "example": "A veure, deixa'm pensar un moment.",
+  "cat": "ora",
+  "reg": "O",
+  "blank": "A veure"
+ },
+ {
+  "term": "Mira",
+  "use": "Cridar l'atenció",
+  "example": "Mira, el que passa és que no ho tinc clar.",
+  "cat": "ora",
+  "reg": "O",
+  "blank": "Mira"
+ },
+ {
+  "term": "Doncs",
+  "use": "Continuar o concloure",
+  "example": "Doncs, com et deia, no hi aniré.",
+  "cat": "ora",
+  "reg": "O",
+  "blank": "Doncs",
+  "note": "❌ pues."
+ },
+ {
+  "term": "Ja ho veus",
+  "use": "Concloure amb evidència",
+  "example": "Ja ho veus, tinc raó.",
+  "cat": "ora",
+  "reg": "O",
+  "blank": "Ja ho veus"
+ },
+ {
+  "term": "Sigui com sigui",
+  "use": "Passar a una altra cosa",
+  "example": "Sigui com sigui, hem de decidir avui.",
+  "cat": "ora",
+  "reg": "N",
+  "blank": "Sigui com sigui"
+ },
+ {
+  "term": "En fi",
+  "use": "Tancar un tema",
+  "example": "En fi, ja veurem què passa.",
+  "cat": "ora",
+  "reg": "O",
+  "blank": "En fi"
+ },
+ {
+  "term": "Deixa'm que t'expliqui",
+  "use": "Prendre la paraula",
+  "example": "Deixa'm que t'expliqui per què ho vaig fer.",
+  "cat": "ora",
+  "reg": "O",
+  "blank": "Deixa'm que t'expliqui"
+ },
+ {
+  "term": "Si no ho veig malament",
+  "use": "Cortesia en opinar",
+  "example": "Si no ho veig malament, ens queda una hora.",
+  "cat": "ora",
+  "reg": "N",
+  "blank": "Si no ho veig malament"
+ },
+ {
+  "term": "Com deia abans",
+  "use": "Retornar a una idea",
+  "example": "Com deia abans, el problema és el temps.",
+  "cat": "ora",
+  "reg": "N",
+  "blank": "Com deia abans"
+ },
+ {
+  "term": "Per cert",
+  "use": "Afegir un tema lateral",
+  "example": "Per cert, has parlat amb la Maria?",
+  "cat": "ora",
+  "reg": "O",
+  "blank": "Per cert",
+  "note": "❌ por cierto."
+ },
+ {
+  "term": "Anem a pams",
+  "use": "Ordenar un tema complex",
+  "example": "Anem a pams: primer els comptes i després les obres.",
+  "cat": "ora",
+  "reg": "O",
+  "blank": "Anem a pams"
  }
 ]

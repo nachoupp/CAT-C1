@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Page, Card, Btn, Bar } from "../../components/ui";
-import { IDIOMS, BARBARISMS, CONNECTORS } from "../../content";
+import { IDIOMS, BARBARISMS } from "../../content";
 import { setState, award } from "../../lib/store";
 import { shuffle } from "../../lib/text";
 import { go } from "../../lib/router";
@@ -95,22 +95,6 @@ export function BarbGame() {
           </div>
         )}
       </Card>
-    </Page>
-  );
-}
-
-export function Flashcards() {
-  const [k, setK] = useState(0);
-  const [flip, setFlip] = useState(false);
-  const c = CONNECTORS[k];
-  const move = (d: number) => { setK((k + d + CONNECTORS.length) % CONNECTORS.length); setFlip(false); };
-  return (
-    <Page title="Connectors" subtitle={`${k + 1} de ${CONNECTORS.length} · toca la targeta per girar-la`} back={back}>
-      <button onClick={() => setFlip(!flip)} className="flex min-h-52 w-full flex-col items-center justify-center gap-2 rounded-2xl bg-card p-6 text-center">
-        {flip ? (<><div className="text-[13.5px] text-muted">{c.use}</div><div className="text-[19px] font-medium">{c.example}</div></>)
-          : (<><div className="text-[30px] font-bold tracking-tight">{c.term}</div><div className="text-[13.5px] text-muted">Per a què serveix?</div></>)}
-      </button>
-      <div className="mt-3 grid grid-cols-2 gap-2"><Btn variant="soft" onClick={() => move(-1)}>Anterior</Btn><Btn onClick={() => move(1)}>Següent</Btn></div>
     </Page>
   );
 }
