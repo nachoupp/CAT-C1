@@ -64,20 +64,20 @@ JSON: {"infinitiu":"...","gerundi":"...","participi":"masculí, femení","temps"
 }
 
 /** Diccionari català ⇄ castellà, sinònims i conjugador, amb historial i paraules pròpies per repassar. */
-export function Dictionary() {
+export function Dictionary({ initial }: { initial?: string } = {}) {
   const [tab, setTab] = useState<Tab>("cerca");
   const n = useStore((s) => s.vocab.length);
   const due = useStore((s) => dueWords(s, isoDate()).length);
   return (
     <div className="space-y-3">
       <Segmented value={tab} onChange={(v) => setTab(v as Tab)} options={[{ value: "cerca", label: "Cerca" }, { value: "paraules", label: `Les meves paraules${n ? ` (${n}${due ? ` · ${due} per repassar` : ""})` : ""}` }]} />
-      {tab === "cerca" ? <Search /> : <MyWords />}
+      {tab === "cerca" ? <Search initial={initial} /> : <MyWords />}
     </div>
   );
 }
 
-function Search() {
-  const [w, setW] = useState("");
+function Search({ initial }: { initial?: string }) {
+  const [w, setW] = useState(initial ?? "");
   const [dir, setDir] = useState<Dir>("ca-es");
   const [tool, setTool] = useState<Tool | null>(null);
   const [busy, setBusy] = useState(false);
@@ -103,6 +103,7 @@ function Search() {
       setErr(e instanceof AiError ? e.message : "No s'ha pogut consultar. Comprova la connexió.");
     } finally { setBusy(false); }
   }
+  useEffect(() => { if (initial?.trim()) void run("dicc", initial.trim()); }, []); // eslint-disable-line react-hooks/exhaustive-deps
   // Tocar una paraula d'un resultat la busca en català.
   const again = (word: string, t: Tool = "dicc") => { setDir("ca-es"); void run(t, word, "ca-es"); };
 

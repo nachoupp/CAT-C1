@@ -6,6 +6,7 @@ import { addWord, hasWord } from "../lib/vocab";
 import { isoDate } from "../lib/dates";
 import { toast } from "../lib/toast";
 import { ReadAloud } from "./ReadAloud";
+import { openDictionary } from "./FloatingDictionary";
 
 interface Gloss { relacionades?: string[]; lema?: string; categoria?: string; es?: string; definicio?: string; exemple?: string }
 const cache = new Map<string, Gloss>();
@@ -71,6 +72,7 @@ export function GlossSheet({ w, ctx, onClose, anchor }: { w: string; ctx: string
         {err && <span className="block text-bad">{err}</span>}
         {g?.es && <span className="block"><b>{g.es}</b></span>}
         {g?.definicio && <span className="block">{g.definicio}</span>}
+        <button onClick={() => { onClose(); openDictionary(g?.lema ?? w); }} className="rounded-full bg-bg px-3.5 py-2 text-[13.5px] font-semibold">📖 Sinònims i conjugació</button>
         {g?.es && <SaveWord word={g.lema ?? w} es={g.es} note={g.categoria} ex={g.exemple} />}
         {(g?.relacionades ?? []).length > 0 && <span className="block text-[13.5px]"><b>Per ampliar:</b> {g!.relacionades!.join(" · ")}</span>}
         <span className="flex gap-2 pt-1 text-[13px]">
