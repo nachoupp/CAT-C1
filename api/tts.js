@@ -4,6 +4,7 @@
 //   AZURE_SPEECH_KEY + AZURE_SPEECH_REGION (p. ex. westeurope)  → veus ca-ES-JoanaNeural, ca-ES-EnricNeural, ca-ES-AlbaNeural
 //   ELEVENLABS_API_KEY (+ opcional ELEVENLABS_VOICE_ID)           → model eleven_v3 (admet català)
 import { requireUser } from "./_auth.js";
+import { spellNumbers } from "./_num.js";
 
 const VOICES = { joana: "ca-ES-JoanaNeural", enric: "ca-ES-EnricNeural", alba: "ca-ES-AlbaNeural" };
 // Aina / Matxa: veu → codi d'accent
@@ -48,7 +49,7 @@ export default async function handler(req, res) {
     const voices = list.length ? LISTS[list[0]].map(([id, label]) => ({ id, label })) : [];
     return res.status(200).json({ provider: list[0] || null, voices });
   }
-  const text = String(req.query.t || "").slice(0, 2500).trim();
+  const text = spellNumbers(String(req.query.t || "").slice(0, 2500)).trim();
   if (!text) return res.status(400).json({ error: "text buit" });
   const rate = Math.max(0.6, Math.min(1.4, Number(req.query.r) || 1));
   if (!list.length) return res.status(404).json({ error: "Falta AINA_TTS_URL, AZURE_SPEECH_KEY o ELEVENLABS_API_KEY" });
@@ -85,12 +86,17 @@ async function eleven(env, text) {
   const id = env.ELEVENLABS_VOICE_ID || "JBFqnCBsd6RMkjVDRZzb";
   const models = env.ELEVENLABS_MODEL ? [env.ELEVENLABS_MODEL] : ["eleven_v4", "eleven_v3"];
   let last = 0;
+  // Una paraula sola (set, nou, quatre…) pot ser detectada com a francès: hi afegim un context català que no es pronuncia.
+  const short = text.split(/\s+/).length <= 3 && !/[.!?]$/.test(text);
+  const say = short ? text + "." : text;
   for (const model_id of models) {
-    const r = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${id}?output_format=mp3_44100_64`, {
+    const post = (extra) => fetch(`https://api.elevenlabs.io/v1/text-to-speech/${id}?output_format=mp3_44100_64`, {
       method: "POST",
       headers: { "xi-api-key": env.ELEVENLABS_API_KEY, "Content-Type": "application/json" },
-      body: JSON.stringify({ text, model_id, language_code: "ca" })
+      body: JSON.stringify({ text: say, model_id, language_code: "ca", ...extra })
     });
+    let r = await post(short ? { previous_text: "Els nombres en català: un, dos, tres, quatre, cinc, sis, set, vuit, nou, deu." } : {});
+    if (!r.ok && short && r.status !== 401 && r.status !== 429) r = await post({});
     if (r.ok) return { audio: Buffer.from(await r.arrayBuffer()), type: "audio/mpeg" };
     last = r.status;
     if (r.status === 401 || r.status === 429) break; // clau o quota: no té sentit provar un altre model
