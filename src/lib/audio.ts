@@ -58,7 +58,7 @@ export async function neuralUrl(text: string, rate = 1): Promise<string | null> 
     for (let i = 0; i < 3; i++) {
       try {
         const token = await accessToken();
-        const r = await fetch(`/api/tts?v=${voice}&r=${rate}&t=${encodeURIComponent(text)}`, { headers: token ? { Authorization: `Bearer ${token}` } : {} });
+        const r = await fetch(`/api/tts?c=3&v=${voice}&r=${rate}&t=${encodeURIComponent(text)}`, { headers: token ? { Authorization: `Bearer ${token}` } : {} });
         if (r.status === 404) { neuralOff = true; return null; }
         if (r.ok && (r.headers.get("content-type") ?? "").includes("audio")) {
           const url = URL.createObjectURL(await r.blob());

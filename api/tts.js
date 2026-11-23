@@ -87,8 +87,9 @@ async function eleven(env, text) {
   const models = env.ELEVENLABS_MODEL ? [env.ELEVENLABS_MODEL] : ["eleven_v4", "eleven_v3"];
   let last = 0;
   // Una paraula sola (set, nou, quatre…) pot ser detectada com a francès: hi afegim un context català que no es pronuncia.
-  const short = text.split(/\s+/).length <= 3 && !/[.!?]$/.test(text);
-  const say = short ? text + "." : text;
+  const spaced = text.replace(/(\p{L})-(?=\p{L})/gu, "$1 "); // «trenta-quatre» → «trenta quatre»: el guionet confon la detecció d'idioma
+  const short = spaced.split(/\s+/).length <= 3 && !/[.!?]$/.test(spaced);
+  const say = short ? spaced + "." : spaced;
   for (const model_id of models) {
     const post = (extra) => fetch(`https://api.elevenlabs.io/v1/text-to-speech/${id}?output_format=mp3_44100_64`, {
       method: "POST",
