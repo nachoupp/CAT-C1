@@ -116,7 +116,7 @@ const VOICE_NOTE: Record<string, string> = {
 };
 
 function GlossSection() {
-  const on = useStore((x) => x.settings.gloss !== false);
+  const on = useStore((x) => x.settings.gloss === true);
   return (
     <Section title="Paraules">
       <Card className="space-y-2 p-4">

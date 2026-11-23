@@ -42,7 +42,7 @@ function wordAt(x: number, y: number, target: EventTarget | null): Hit | null {
 
 /** Qualsevol paraula de l'app és consultable: toca-la (mòbil) o deixa-hi el ratolí uns instants (ordinador). */
 export function GlobalGloss() {
-  const on = useStore((s) => s.settings.gloss !== false);
+  const on = useStore((s) => s.settings.gloss === true);
   const [hit, setHit] = useState<(Hit & { sheet: boolean }) | null>(null);
   const timer = useRef<number>(0);
   const last = useRef("");
