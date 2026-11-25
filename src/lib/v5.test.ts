@@ -236,3 +236,19 @@ describe("fonaments", () => {
     expect(LISTENINGS.length).toBeGreaterThanOrEqual(14);
   });
 });
+
+import { GRAMMAR } from "../content/grammar";
+describe("gramàtica a fons", () => {
+  it("lliçons coherents i ids únics", () => {
+    const ids = new Set([...BASICS, ...GRAMMAR].map((b) => b.id));
+    expect(ids.size).toBe(BASICS.length + GRAMMAR.length);
+    for (const b of GRAMMAR) {
+      expect(b.items.length).toBeGreaterThanOrEqual(25);
+      expect(b.dictation.length).toBeGreaterThanOrEqual(6);
+      for (const it of b.items) {
+        if (it.type === "choice") expect(it.options).toContain(it.answer);
+        else expect(isCorrectItem(it.answers[0], it)).toBe(true);
+      }
+    }
+  });
+});

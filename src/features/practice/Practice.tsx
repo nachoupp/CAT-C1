@@ -22,7 +22,8 @@ export default function Practice() {
           <Row left={<Icon tone="fg">IA</Icon>} title="Preguntes noves amb IA" detail="10 preguntes inèdites sobre els teus punts febles" to="test-ia" />
           <Row left={<Icon tone="good">FF</Icon>} title="Emparella frases fetes" detail={s.games.match !== undefined ? `Rècord: ${s.games.match} errors` : "Joc de parelles"} to="joc-frases" />
           <Row left={<Icon tone="bad">✕</Icon>} title="Correcte o barbarisme?" detail={s.games.barb !== undefined ? `Rècord: ${s.games.barb}/10` : "Decideix ràpid"} to="joc-barbarismes" />
-          <Row left={<Icon tone="warn">→</Icon>} title="Targetes de connectors" detail={`${CONNECTORS.length} connectors per a la redacció i l'oral`} to="connectors" />
+          <Row left={<Icon tone="good">✎</Icon>} title="Gramàtica a fons" detail="Pronoms febles explicats pas a pas, amb exercicis" to="gramatica" />
+        <Row left={<Icon tone="warn">→</Icon>} title="Targetes de connectors" detail={`${CONNECTORS.length} connectors per a la redacció i l'oral`} to="connectors" />
         </List>
       </Section>
 

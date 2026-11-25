@@ -26,7 +26,8 @@ import Conversa from "./features/speak/Conversa";
 import Tutor from "./features/tutor/Tutor";
 import Scan from "./features/write/Scan";
 import { ListeningRun, Dictation } from "./features/practice/Listen";
-import { BasicLesson } from "./features/basics/Basics";
+import { GRAMMAR } from "./content/grammar";
+import { BasicLesson, GrammarCourse } from "./features/basics/Basics";
 import type { StepKey } from "./lib/types";
 import Account, { NewPassword } from "./features/account/Account";
 
@@ -40,14 +41,16 @@ const TABS = [
 
 const STEP_KEYS: StepKey[] = ["descobreix", "practica", "escriu", "parla", "examen"];
 
+const GRAMMAR_IDS = GRAMMAR.map((g) => g.id);
+
 function tabOf(route: string): string {
   if (/^(unit|checkpoint)-/.test(route) || route === "repas") return route === "repas" ? "quadern" : "ruta";
   if (/^(exam|official)-/.test(route)) return "examens";
   if (route.startsWith("lesson-")) return "quadern";
-  if (route.startsWith("fon-")) return "ruta";
+  if (route.startsWith("fon-")) return GRAMMAR_IDS.some((g) => route === `fon-${g}`) ? "practica" : "ruta";
   if (route.startsWith("parla") || route.startsWith("audio-") || route === "dictat" || route === "audios") return "practica";
   if (["calendari", "compte", "nova-contrasenya"].includes(route)) return "perfil";
-  if (["test", "test-ia", "simulacre", "joc-frases", "joc-barbarismes", "connectors", "escriu", "fitxes", "fitxa0", "parla", "oral", "escolta", "conversa", "profe", "escaneja"].includes(route)) return "practica";
+  if (["test", "test-ia", "simulacre", "joc-frases", "joc-barbarismes", "connectors", "gramatica", "escriu", "fitxes", "fitxa0", "parla", "oral", "escolta", "conversa", "profe", "escaneja"].includes(route)) return "practica";
   return TABS.some((t) => t.id === route) ? route : "ruta";
 }
 
@@ -77,6 +80,7 @@ function screen(route: string): ReactNode {
     case "joc-frases": return <MatchGame />;
     case "joc-barbarismes": return <BarbGame />;
     case "connectors": return <Connectors />;
+    case "gramatica": return <GrammarCourse />;
     case "audios": return <Audios />;
     case "dictat": return <Dictation />;
     case "escriu": return <Write />;

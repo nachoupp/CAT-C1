@@ -4,6 +4,7 @@ import { AudioPlayer } from "../../components/AudioPlayer";
 import { ItemQuiz } from "../../components/ItemQuiz";
 import { DictationRunner } from "../practice/Listen";
 import { BASICS, type Basic } from "../../content/basics";
+import { GRAMMAR } from "../../content/grammar";
 import { useStore, setState, award, getState } from "../../lib/store";
 import type { AppState } from "../../lib/types";
 import { isoDate } from "../../lib/dates";
@@ -64,14 +65,17 @@ type Tab = "apren" | "practica" | "dictat";
 
 /** Una lliçó de Fonaments: explicació i vocabulari amb àudio → pràctica → dictat. */
 export function BasicLesson({ id }: { id: string }) {
-  const i = BASICS.findIndex((b) => b.id === id);
-  const b = BASICS[i];
+  const isG = GRAMMAR.some((x) => x.id === id);
+  const LIST = isG ? GRAMMAR : BASICS;
+  const pre = isG ? "G" : "F";
+  const i = LIST.findIndex((b) => b.id === id);
+  const b = LIST[i];
   const [tab, setTab] = useState<Tab>("apren");
   const [score, setScore] = useState<number | null>(null);
   const [run, setRun] = useState(0);
   const done = useStore((s) => (b ? basicDone(s, b.id) : false));
   if (!b) return <Page title="No trobada" back={{ to: "ruta", label: "Ruta" }}><Note>Aquesta lliçó no existeix.</Note></Page>;
-  const next = BASICS[i + 1];
+  const next = LIST[i + 1];
 
   function finish(ok: number, total: number) {
     const pct = Math.round((ok / total) * 100);
@@ -81,7 +85,7 @@ export function BasicLesson({ id }: { id: string }) {
   }
 
   return (
-    <Page title={`F${b.n} · ${b.title}`} subtitle={b.goal} back={{ to: "ruta", label: "Ruta" }}>
+    <Page title={`${pre}${b.n} · ${b.title}`} subtitle={b.goal} back={isG ? { to: "gramatica", label: "Gramàtica" } : { to: "ruta", label: "Ruta" }}>
       <Segmented value={tab} onChange={(v) => setTab(v as Tab)} options={[{ value: "apren", label: "1 · Aprèn" }, { value: "practica", label: "2 · Practica" }, { value: "dictat", label: "3 · Dictat" }]} />
       {done && <div className="mt-3"><Pill tone="good">Lliçó feta</Pill></div>}
 
@@ -128,10 +132,30 @@ export function BasicLesson({ id }: { id: string }) {
       {tab === "dictat" && (
         <div className="mt-4 space-y-4">
           <DictationRunner key={b.id} sentences={b.dictation} shuffle={false} />
-          {next ? <Btn block variant="soft" onClick={() => { setTab("apren"); setScore(null); go(`fon-${next.id}`); }}>Següent lliçó: F{next.n} · {next.title} ›</Btn>
-            : <Btn block variant="soft" onClick={() => go("ruta")}>Has acabat els Fonaments: torna a la ruta ›</Btn>}
+          {next ? <Btn block variant="soft" onClick={() => { setTab("apren"); setScore(null); go(`fon-${next.id}`); }}>Següent lliçó: {pre}{next.n} · {next.title} ›</Btn>
+            : <Btn block variant="soft" onClick={() => go(isG ? "gramatica" : "ruta")}>{isG ? "Has acabat aquest bloc: torna a Gramàtica ›" : "Has acabat els Fonaments: torna a la ruta ›"}</Btn>}
         </div>
       )}
+    </Page>
+  );
+}
+
+/** Llista de «Gramàtica a fons». */
+export function GrammarCourse() {
+  const s = useStore((x) => x);
+  const done = GRAMMAR.filter((b) => basicDone(s, b.id)).length;
+  return (
+    <Page title="Gramàtica a fons" subtitle="Explicació de professor, molts exemples i exercicis. Pronoms febles ara; puntuació, accents i formes verbals vindran després." back={{ to: "practica", label: "Practica" }}>
+      <Section title={`Pronoms febles · ${done}/${GRAMMAR.length} fetes`}>
+        <div className="space-y-2">
+          {GRAMMAR.map((b) => (
+            <button key={b.id} onClick={() => go(`fon-${b.id}`)} className="w-full rounded-2xl bg-card px-4 py-3 text-left">
+              <div className="flex items-center justify-between"><span className="font-semibold">G{b.n} · {b.title}</span>{basicDone(s, b.id) && <Pill tone="good">Feta</Pill>}</div>
+              <div className="mt-0.5 text-[13px] text-muted">{b.goal}</div>
+            </button>
+          ))}
+        </div>
+      </Section>
     </Page>
   );
 }
